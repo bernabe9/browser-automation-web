@@ -1,0 +1,22 @@
+{
+  "presets": [
+    [
+      "env", {
+        "targets": {}
+      }
+    ],
+    "react",
+    "stage-1"
+  ],
+  "env": {
+    "production": {
+      "plugins": [
+        "transform-react-constant-elements",
+        "transform-react-remove-prop-types",
+        ["babel-plugin-styled-components", {
+          "ssr": true
+        }]
+      ]
+    }
+  }
+}
