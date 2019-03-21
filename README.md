@@ -1,4 +1,4 @@
-# React Redux Base
+# Browser Automation UI
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/e334cf37c246c64bf052/maintainability)](https://codeclimate.com/github/rootstrap/react-redux-base/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/e334cf37c246c64bf052/test_coverage)](https://codeclimate.com/github/rootstrap/react-redux-base/test_coverage)
