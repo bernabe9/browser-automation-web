@@ -33,7 +33,7 @@
     "humps": "2.0.1",
     "immutable": "3.8.2",
     "isomorphic-fetch": "2.2.1",
-    "lodash": "4.17.10",
+    "lodash": "4.17.11",
     "mc-components": "1.1.4",
     "prop-types": "15.6.2",
     "query-string": "5.1.1",
