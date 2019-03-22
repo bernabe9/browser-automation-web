@@ -1,25 +1,23 @@
 // This file merely configures the store for hot reloading.
 // This boilerplate file is likely to be the same for each project that uses Redux.
-// With Redux, the actual stores are in /reducers.
+// With Redux, the actual stores are in /modules.
 
 import { createStore, compose, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
-import { Iterable } from 'immutable'
 import { createLogger } from 'redux-logger'
 import _ from 'lodash'
 
-import rootReducer from 'reducers'
+import rootReducer from 'state/modules'
+import api from 'state/middleware/api'
 
 export default function configureStore(initialState) {
   const logger = createLogger({
     collapsed: true,
     predicate: (getState, { type }) =>
-      !_.startsWith(type, '@@router') && !_.startsWith(type, '@@redux-form'),
-    stateTransformer: state =>
-      Iterable.isIterable(state) ? state.toJS() : state
+      !_.startsWith(type, '@@router') && !_.startsWith(type, '@@redux-form')
   })
 
-  const middewares = [thunkMiddleware, logger]
+  const middewares = [thunkMiddleware, api, logger]
 
   const store = createStore(
     rootReducer,
@@ -32,8 +30,8 @@ export default function configureStore(initialState) {
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
-    module.hot.accept('../reducers', () => {
-      const nextReducer = require('../reducers').default // eslint-disable-line global-require
+    module.hot.accept('state/modules', () => {
+      const nextReducer = require('state/modules').default // eslint-disable-line global-require
       store.replaceReducer(nextReducer)
     })
   }
