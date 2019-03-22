@@ -1,6 +1,6 @@
-import routesPaths from 'constants/routesPaths';
-import HomePage from 'containers/HomePage';
-import NotFoundPage from 'containers/NotFoundPage';
+import routesPaths from 'constants/routesPaths'
+import HomePage from 'containers/HomePage'
+import NotFoundPage from 'containers/NotFoundPage'
 
 const routes = [
   {
@@ -12,6 +12,6 @@ const routes = [
   {
     component: NotFoundPage
   }
-];
+]
 
-export default routes;
+export default routes

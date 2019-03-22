@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 
-import RunTest from './RunTest';
-import Executions from './Executions';
+import RunTest from './RunTest'
+import Executions from './Executions'
 
 const HomePage = () => {
-  const [executions, setExecutions] = useState([]);
+  const [executions, setExecutions] = useState([])
 
   const fetchExecutions = () => {
     fetch(`${process.env.API_URL}/executions`)
       .then(res => res.json())
-      .then(setExecutions);
-  };
+      .then(setExecutions)
+  }
 
-  useEffect(fetchExecutions, []);
+  useEffect(fetchExecutions, [])
 
   return (
     <div>
@@ -20,7 +20,7 @@ const HomePage = () => {
       <RunTest onSuccess={fetchExecutions} />
       <Executions executions={executions} />
     </div>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage
