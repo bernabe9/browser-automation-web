@@ -18,7 +18,7 @@ const ExecutionRow = props => {
         {errorMessage && (
           <Fragment>
             <p>Error:</p>
-            <p>{unescape(errorMessage)}</p>
+            <p style={{ whiteSpace: 'pre' }}>{unescape(errorMessage)}</p>
           </Fragment>
         )}
       </div>
