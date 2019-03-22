@@ -23,6 +23,20 @@ const TestPanel = ({ executions }) => {
     }
   }
 
+  const getTestExecutions = () =>
+    executions.filter(({ test }) => test === cursor.path)
+
+  const getTestStatus = () => {
+    const testExecutions = getTestExecutions()
+    const sortedExecutions = [...testExecutions].sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    )
+    if (!sortedExecutions.length) {
+      return 'Run this test to generate a status'
+    }
+    return sortedExecutions[0].status
+  }
+
   return (
     <div className="container mc-mt-5 mc-p-5 mc-invert mc-background--color-light">
       <div className="row">
@@ -31,8 +45,10 @@ const TestPanel = ({ executions }) => {
           {structure && (
             <TreeView
               data={structure}
+              executions={executions}
               onToggle={onToggle}
               activeNode={cursor && cursor.path}
+              isExpanded
             />
           )}
         </div>
@@ -40,7 +56,7 @@ const TestPanel = ({ executions }) => {
           <div className="col-9">
             <div>
               <h5 className="mc-text-h5 mc-mb-3">{cursor.name}</h5>
-              <p>Status: (result of the last completed execution)</p>
+              <p>Status: {getTestStatus()}</p>
               <div className="mc-mt-4">
                 <a onClick={() => setShowCode(!showCode)}>
                   {showCode ? 'Hide source code' : 'Show source code'}
@@ -56,11 +72,7 @@ const TestPanel = ({ executions }) => {
             <Separator />
             <div className="mc-my-6">
               <h6 className="mc-text-h6">Executions</h6>
-              <Executions
-                executions={executions.filter(
-                  ({ test }) => test === cursor.path
-                )}
-              />
+              <Executions executions={getTestExecutions()} />
             </div>
           </div>
         )}
