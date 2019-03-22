@@ -9,7 +9,7 @@ const Executions = ({ executions }) => {
 
   return (
     <div className="container mc-p-5 mc-invert mc-background--color-light">
-      <h5 className="mc-text-h5">Executions</h5>
+      <h5 className="mc-text-h5">All Executions</h5>
       <Separator />
       <div>
         {sortedExecutions.map(props =>

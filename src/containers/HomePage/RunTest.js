@@ -16,7 +16,7 @@ const RunTest = ({ onSuccess }) => {
       setUrlError("URL can't be empty ");
     }
     if (!test) {
-      setTestError("Test can't be empty ");
+      setTestError("Test path can't be empty ");
     }
     if (!url || !test) {
       return;
@@ -55,8 +55,8 @@ const RunTest = ({ onSuccess }) => {
           />
         </FormGroup>
         <FormGroup
-          help="Try: simple-example"
-          label="Test Name"
+          help="Try: __tests__/simple-example"
+          label="Test Path"
           name="test"
           error={testError}
           touched={!!testError}
