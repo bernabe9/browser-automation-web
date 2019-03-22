@@ -12,7 +12,7 @@ const getIcon = (isFile, expanded) => {
   return expanded ? <FolderOpenIcon /> : <FolderIcon />
 }
 
-const TreeView = ({ data, onToggle }) => {
+const TreeView = ({ data, activeNode, onToggle }) => {
   const [expanded, setExpanded] = useState(false)
 
   const handleToggle = node => {
@@ -20,16 +20,25 @@ const TreeView = ({ data, onToggle }) => {
     onToggle(node)
   }
 
+  const isActive = activeNode === data.path
+
   return (
     <div>
       <div onClick={() => handleToggle(data)}>
-        <span>{getIcon(data.type === 'file', expanded)}</span>
-        <span>{data.name}</span>
+        <a style={{ fontWeight: isActive ? 'bold' : 'normal' }}>
+          <span>{getIcon(data.type === 'file', expanded)}</span>
+          <span>{data.name}</span>
+        </a>
       </div>
       {expanded && data.children && (
         <div className="mc-ml-3">
           {data.children.map(node => (
-            <TreeView key={node.path} data={node} onToggle={onToggle} />
+            <TreeView
+              key={node.path}
+              data={node}
+              onToggle={onToggle}
+              activeNode={activeNode}
+            />
           ))}
         </div>
       )}
