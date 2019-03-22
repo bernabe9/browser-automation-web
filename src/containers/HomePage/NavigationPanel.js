@@ -5,7 +5,7 @@ import api from 'api'
 import TreeView from 'components/TreeView'
 
 const NavigationPanel = () => {
-  const [structure, setStructure] = useState([])
+  const [structure, setStructure] = useState()
   const [cursor, setCursor] = useState()
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const NavigationPanel = () => {
       <div className="row">
         <div className="col-3">
           <h5 className="mc-text-h5 mc-mb-3">Directories</h5>
-          <TreeView data={structure} onToggle={onToggle} />
+          {structure && <TreeView data={structure} onToggle={onToggle} />}
         </div>
         {cursor && (
           <div className="col-9">
