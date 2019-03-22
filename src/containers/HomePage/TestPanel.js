@@ -5,11 +5,13 @@ import { Separator } from 'mc-components'
 import api from 'api'
 import TreeView from 'components/TreeView'
 import RunTest from 'components/RunTest'
+import Code from 'components/Code'
 import Executions from './Executions'
 
 const TestPanel = ({ executions }) => {
   const [structure, setStructure] = useState()
   const [cursor, setCursor] = useState()
+  const [showCode, setShowCode] = useState(false)
 
   useEffect(() => {
     api('/folders').then(setStructure)
@@ -39,6 +41,12 @@ const TestPanel = ({ executions }) => {
             <div>
               <h5 className="mc-text-h5 mc-mb-3">{cursor.name}</h5>
               <p>Status: (result of the last completed execution)</p>
+              <div className="mc-mt-4">
+                <a onClick={() => setShowCode(!showCode)}>
+                  {showCode ? 'Hide source code' : 'Show source code'}
+                </a>
+                {showCode && <Code test={cursor.path} />}
+              </div>
             </div>
             <Separator />
             <div className="mc-my-6">
