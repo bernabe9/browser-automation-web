@@ -1,32 +1,40 @@
-import React, { Fragment, useState } from 'react';
-import { Separator } from 'mc-components';
+import React, { Fragment, useState } from 'react'
+import PropTypes from 'prop-types'
+import { Separator } from 'mc-components'
 
-const ExecutionRow = (props) => {
-  const [showData, setShowData] = useState(false);
+const ExecutionRow = props => {
+  const [showData, setShowData] = useState(false)
 
-  const onToggle = () => setShowData(!showData);
+  const onToggle = () => setShowData(!showData)
+  const { id, test, url, status, errorMessage } = props
 
   return (
     <Fragment>
       <div>
-        <p>{`Id: ${props.id}`}</p>
-        <p>{`Test: ${props.test}`}</p>
-        <p>{`URL: ${props.url}`}</p>
-        <p>{`Status: ${props.status}`}</p>
-        {props.errorMessage &&
+        <p>{`Id: ${id}`}</p>
+        <p>{`Test: ${test}`}</p>
+        <p>{`URL: ${url}`}</p>
+        <p>{`Status: ${status}`}</p>
+        {errorMessage && (
           <Fragment>
             <p>Error:</p>
-            <p>{unescape(props.errorMessage)}</p>
+            <p>{unescape(errorMessage)}</p>
           </Fragment>
-        }
+        )}
       </div>
       <a onClick={onToggle}>Toggle data</a>
-      {showData &&
-        <div>{JSON.stringify(props)}</div>
-      }
+      {showData && <div>{JSON.stringify(props)}</div>}
       <Separator />
     </Fragment>
-  );
-};
+  )
+}
 
-export default ExecutionRow;
+ExecutionRow.propTypes = {
+  id: PropTypes.string.isRequired,
+  test: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  status: PropTypes.string.isRequired,
+  errorMessage: PropTypes.string
+}
+
+export default ExecutionRow

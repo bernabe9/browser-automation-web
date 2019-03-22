@@ -1,51 +1,46 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Input, FormGroup, Button } from 'mc-components';
+import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import { Input, FormGroup, Button } from 'mc-components'
 
-import { applyQueryParams } from 'utils/helpers';
+import { applyQueryParams } from 'utils/helpers'
 
 const RunTest = ({ onSuccess }) => {
-  const [url, setUrl] = useState('');
-  const [test, setTest] = useState('');
-  const [urlError, setUrlError] = useState('');
-  const [testError, setTestError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [url, setUrl] = useState('')
+  const [test, setTest] = useState('')
+  const [urlError, setUrlError] = useState('')
+  const [testError, setTestError] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const onSubmit = () => {
     if (!url) {
-      setUrlError("URL can't be empty ");
+      setUrlError("URL can't be empty ")
     }
     if (!test) {
-      setTestError("Test path can't be empty ");
+      setTestError("Test path can't be empty ")
     }
     if (!url || !test) {
-      return;
+      return
     }
-    setLoading(true);
-    const path = applyQueryParams(
-      `${process.env.API_URL}/trigger`,
-      { test, url }
-    );
+    setLoading(true)
+    const path = applyQueryParams(`${process.env.API_URL}/trigger`, {
+      test,
+      url
+    })
     fetch(path)
-      .then((res) => {
-        setLoading(false);
+      .then(res => {
+        setLoading(false)
         if (res.ok) {
-          onSuccess();
+          onSuccess()
         }
       })
-      .catch(() => setLoading(false));
-  };
+      .catch(() => setLoading(false))
+  }
 
   return (
     <div className="container mc-p-5 mc-invert mc-background--color-light">
       <h5 className="mc-text-h5">Run test</h5>
       <div className="mc-my-4">
-        <FormGroup
-          label="URL"
-          name="url"
-          error={urlError}
-          touched={!!urlError}
-        >
+        <FormGroup label="URL" name="url" error={urlError} touched={!!urlError}>
           <Input
             onChange={e => setUrl(e.target.value)}
             value={url}
@@ -69,14 +64,16 @@ const RunTest = ({ onSuccess }) => {
             touched={!!testError}
           />
         </FormGroup>
-        <Button onClick={onSubmit} loading={loading}>RUN</Button>
+        <Button onClick={onSubmit} loading={loading}>
+          RUN
+        </Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
 RunTest.propTypes = {
   onSuccess: PropTypes.func.isRequired
-};
+}
 
-export default RunTest;
+export default RunTest

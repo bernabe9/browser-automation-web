@@ -1,31 +1,8 @@
-{
-  "extends": [
-    "eslint:recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "airbnb"
-  ],
-  "plugins": [
-    "react",
-    "react-hooks"
-  ],
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true,
-      "experimentalObjectRestSpread": true
-    }
-  },
-  "env": {
-    "es6": true,
-    "browser": true,
-    "node": true,
-    "jquery": true,
-    "jest": true
-  },
-  "rules": {
+module.exports = {
+  extends: ['airbnb', 'prettier', 'prettier/react'],
+  plugins: ['prettier', 'react-hooks'],
+  rules: {
+    "prettier/prettier": ["error"],
     "object-curly-newline": 0,
     "no-class-assign": 0,
     "no-param-reassign": 0,
@@ -39,7 +16,6 @@
     "no-console": [1, { "allow": ["warn", "error"] }],
     "no-debugger": 1,
     "no-var": 1,
-    "semi": [1, "always"],
     "no-trailing-spaces": 1,
     "eol-last": 1,
     "no-underscore-dangle": 0,
@@ -102,10 +78,23 @@
     "import/no-named-as-default": 0,
     "react-hooks/rules-of-hooks": "error"
   },
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "paths": ["src"]
+  globals: {
+    window: true,
+    document: true,
+    page: true,
+    browser: true,
+    navigator: true,
+    fetch: true
+  },
+  env: {
+    es6: true,
+    jest: true
+  },
+  parser: 'babel-eslint',
+  settings: {
+    'import/resolver': {
+      node: {
+        paths: ['src']
       }
     }
   }
