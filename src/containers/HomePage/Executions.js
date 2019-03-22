@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Separator } from 'mc-components'
 
 import ExecutionRow from './ExecutionRow'
 
@@ -10,14 +9,10 @@ const Executions = ({ executions }) => {
   )
 
   return (
-    <div className="container mc-mt-5 mc-p-5 mc-invert mc-background--color-light">
-      <h5 className="mc-text-h5">All Executions</h5>
-      <Separator />
-      <div>
-        {sortedExecutions.map(({ id, ...props }) => (
-          <ExecutionRow key={id} id={id} {...props} />
-        ))}
-      </div>
+    <div>
+      {sortedExecutions.map(({ id, ...props }) => (
+        <ExecutionRow key={id} id={id} {...props} />
+      ))}
     </div>
   )
 }

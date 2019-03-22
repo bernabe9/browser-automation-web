@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
+import { Separator } from 'mc-components'
 
-import RunTest from './RunTest'
 import Executions from './Executions'
-import NavigationPanel from './NavigationPanel'
+import TestPanel from './TestPanel'
 
 const HomePage = ({ fetchExecutions, executions }) => {
   useEffect(() => {
@@ -15,9 +15,12 @@ const HomePage = ({ fetchExecutions, executions }) => {
       <h2 className="mc-text-h2 mc-m-4 mc-text--center">
         Browser Automation | MasterClass
       </h2>
-      <NavigationPanel />
-      <RunTest onSuccess={fetchExecutions} />
-      <Executions executions={executions} />
+      <TestPanel executions={executions} />
+      <div className="container mc-mt-5 mc-p-5 mc-invert mc-background--color-light">
+        <h5 className="mc-text-h5">All Executions</h5>
+        <Separator />
+        <Executions executions={executions} />
+      </div>
     </div>
   )
 }
