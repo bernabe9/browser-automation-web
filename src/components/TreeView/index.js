@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 
 import FileIcon from './FileIcon'
 import FolderIcon from './FolderIcon'
@@ -34,6 +35,15 @@ const TreeView = ({ data, onToggle }) => {
       )}
     </div>
   )
+}
+
+TreeView.propTypes = {
+  data: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    path: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired
+  }).isRequired,
+  onToggle: PropTypes.func.isRequired
 }
 
 export default TreeView
