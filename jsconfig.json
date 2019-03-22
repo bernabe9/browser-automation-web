@@ -10,9 +10,7 @@
       "containers/*": ["src/containers/*"],
       "locales/*": ["src/locales/*"],
       "utils/*": ["src/utils/*"],
-      "reducers/*": ["src/reducers/*"],
-      "selectors/*": ["src/selectors/*"],
-      "store/*": ["src/store/*"],
+      "state/*": ["src/state/*"],
       "styles/*": ["src/styles/*"]
     }
   },

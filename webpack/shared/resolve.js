@@ -1,4 +1,4 @@
-import path from 'path';
+import path from 'path'
 
 export default {
   extensions: ['*', '.js', '.jsx', '.json'],
@@ -9,10 +9,8 @@ export default {
     constants: path.resolve(__dirname, '../../src/constants'),
     containers: path.resolve(__dirname, '../../src/containers'),
     locales: path.resolve(__dirname, '../../src/locales'),
-    reducers: path.resolve(__dirname, '../../src/reducers'),
-    selectors: path.resolve(__dirname, '../../src/selectors'),
-    store: path.resolve(__dirname, '../../src/store'),
+    state: path.resolve(__dirname, '../../src/state'),
     styles: path.resolve(__dirname, '../../src/styles'),
     utils: path.resolve(__dirname, '../../src/utils')
   }
-};
+}
