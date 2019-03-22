@@ -29,7 +29,7 @@ const TestPanel = ({ executions }) => {
             <TreeView
               data={structure}
               onToggle={onToggle}
-              activeNode={cursor.path}
+              activeNode={cursor && cursor.path}
             />
           )}
         </div>
