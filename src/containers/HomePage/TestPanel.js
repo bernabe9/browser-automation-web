@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 import { Separator } from 'mc-components'
 
 import api from 'api'
@@ -58,6 +59,10 @@ const TestPanel = ({ executions }) => {
       </div>
     </div>
   )
+}
+
+TestPanel.propTypes = {
+  executions: PropTypes.array.isRequired
 }
 
 export default TestPanel

@@ -52,7 +52,8 @@ TreeView.propTypes = {
     path: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired
   }).isRequired,
-  onToggle: PropTypes.func.isRequired
+  onToggle: PropTypes.func.isRequired,
+  activeNode: PropTypes.string
 }
 
 export default TreeView
