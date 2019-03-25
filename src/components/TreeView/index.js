@@ -1,21 +1,19 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { testStatus } from 'utils/helpers'
 import FileIcon from './FileIcon'
 import FolderIcon from './FolderIcon'
 import FolderOpenIcon from './FolderOpenIcon'
+import Node from './Node'
+import NodeName from './NodeName'
+import StatusDot from './StatusDot'
 
 const getIcon = (isFile, expanded) => {
   if (isFile) {
     return <FileIcon />
   }
   return expanded ? <FolderOpenIcon /> : <FolderIcon />
-}
-
-const statusColors = {
-  success: 'forestgreen',
-  error: 'red',
-  running: 'gold'
 }
 
 const TreeView = ({
@@ -35,46 +33,24 @@ const TreeView = ({
   const isFile = data.type === 'file'
   const isActive = activeNode === data.path
 
-  const getTestStatusColor = () => {
+  const getTestStatus = () => {
     if (!isFile) {
       return
     }
     const testExecutions = executions.filter(({ test }) => test === data.path)
-    const sortedExecutions = [...testExecutions].sort(
-      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-    )
-    if (!sortedExecutions.length) {
-      return
-    }
-    return statusColors[sortedExecutions[0].status]
+    return testStatus(testExecutions)
   }
 
-  const statusColor = getTestStatusColor()
+  const status = getTestStatus()
 
   return (
     <div>
       <div onClick={() => handleToggle(data)}>
-        <a
-          style={{
-            fontWeight: isActive ? 'bold' : 'normal',
-            display: 'flex',
-            alignItems: 'center'
-          }}
-        >
+        <Node isActive={isActive}>
           <span>{getIcon(isFile, expanded)}</span>
-          <span style={{ color: statusColor }}>{data.name}</span>
-          {statusColor && (
-            <span
-              style={{
-                height: '6px',
-                width: '6px',
-                borderRadius: '50%',
-                backgroundColor: statusColor
-              }}
-              className="mc-ml-1"
-            />
-          )}
-        </a>
+          <NodeName status={status}>{data.name}</NodeName>
+          {status && <StatusDot status={status} className="mc-ml-1" />}
+        </Node>
       </div>
       {expanded && data.children && (
         <div className="mc-ml-3">

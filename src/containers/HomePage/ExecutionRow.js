@@ -2,6 +2,8 @@ import React, { Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Separator } from 'mc-components'
 
+import StatusBadge from 'components/StatusBadge'
+
 const ExecutionRow = props => {
   const [showData, setShowData] = useState(false)
 
@@ -10,11 +12,15 @@ const ExecutionRow = props => {
 
   return (
     <Fragment>
-      <div>
-        <p>{`Id: ${id}`}</p>
-        <p>{`Test: ${test}`}</p>
+      <div className="mc-mb-3">
+        <p>{`id: ${id}`}</p>
+        <p>{`test: ${test}`}</p>
         <p>{`URL: ${url}`}</p>
-        <p>{`Status: ${status}`}</p>
+        <div>
+          <span>status: </span>
+          <StatusBadge status={status} small />
+        </div>
+
         {errorMessage && (
           <Fragment>
             <p>Error:</p>
@@ -22,7 +28,12 @@ const ExecutionRow = props => {
           </Fragment>
         )}
       </div>
-      <a onClick={onToggle}>Toggle data</a>
+      <a
+        className="mc-text-h8 mc-text--uppercase mc-text--muted"
+        onClick={onToggle}
+      >
+        Toggle data
+      </a>
       {showData && <div>{JSON.stringify(props)}</div>}
       <Separator />
     </Fragment>
