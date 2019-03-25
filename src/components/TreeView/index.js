@@ -1,9 +1,13 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
+import { testStatus } from 'utils/helpers'
 import FileIcon from './FileIcon'
 import FolderIcon from './FolderIcon'
 import FolderOpenIcon from './FolderOpenIcon'
+import Node from './Node'
+import NodeName from './NodeName'
+import StatusDot from './StatusDot'
 
 const getIcon = (isFile, expanded) => {
   if (isFile) {
@@ -12,23 +16,41 @@ const getIcon = (isFile, expanded) => {
   return expanded ? <FolderOpenIcon /> : <FolderIcon />
 }
 
-const TreeView = ({ data, activeNode, onToggle }) => {
-  const [expanded, setExpanded] = useState(false)
+const TreeView = ({
+  data,
+  activeNode,
+  executions,
+  isExpanded = false,
+  onToggle
+}) => {
+  const [expanded, setExpanded] = useState(isExpanded)
 
   const handleToggle = node => {
     setExpanded(!expanded)
     onToggle(node)
   }
 
+  const isFile = data.type === 'file'
   const isActive = activeNode === data.path
+
+  const getTestStatus = () => {
+    if (!isFile) {
+      return
+    }
+    const testExecutions = executions.filter(({ test }) => test === data.path)
+    return testStatus(testExecutions)
+  }
+
+  const status = getTestStatus()
 
   return (
     <div>
       <div onClick={() => handleToggle(data)}>
-        <a style={{ fontWeight: isActive ? 'bold' : 'normal' }}>
-          <span>{getIcon(data.type === 'file', expanded)}</span>
-          <span>{data.name}</span>
-        </a>
+        <Node isActive={isActive}>
+          <span>{getIcon(isFile, expanded)}</span>
+          <NodeName status={status}>{data.name}</NodeName>
+          {status && <StatusDot status={status} className="mc-ml-1" />}
+        </Node>
       </div>
       {expanded && data.children && (
         <div className="mc-ml-3">
@@ -36,6 +58,7 @@ const TreeView = ({ data, activeNode, onToggle }) => {
             <TreeView
               key={node.path}
               data={node}
+              executions={executions}
               onToggle={onToggle}
               activeNode={activeNode}
             />
@@ -53,7 +76,9 @@ TreeView.propTypes = {
     type: PropTypes.string.isRequired
   }).isRequired,
   onToggle: PropTypes.func.isRequired,
-  activeNode: PropTypes.string
+  activeNode: PropTypes.string,
+  isExpanded: PropTypes.bool,
+  executions: PropTypes.array
 }
 
 export default TreeView

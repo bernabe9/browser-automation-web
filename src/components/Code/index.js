@@ -5,13 +5,14 @@ import { tomorrowNightEighties } from 'react-syntax-highlighter/dist/esm/styles/
 import api from 'api'
 import { applyQueryParams } from 'utils/helpers'
 
-const Code = ({ test }) => {
+const Code = ({ test, onCodeLoaded }) => {
   const [code, setCode] = useState()
 
   useEffect(() => {
-    api(applyQueryParams('/file', { path: test })).then(({ content }) =>
+    api(applyQueryParams('/file', { path: test })).then(({ content }) => {
       setCode(content)
-    )
+      onCodeLoaded()
+    })
   }, [test])
 
   return (

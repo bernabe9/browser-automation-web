@@ -18,3 +18,13 @@ export const applyQueryParams = (url, params = {}) => {
   const queryParams = queryString.stringify(params)
   return `${url}?${queryParams}`
 }
+
+export const testStatus = testExecutions => {
+  const sortedExecutions = [...testExecutions].sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  )
+  if (!sortedExecutions.length) {
+    return
+  }
+  return sortedExecutions[0].status
+}
