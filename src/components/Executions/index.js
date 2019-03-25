@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import ExecutionRow from './ExecutionRow'
+import Wrapper from './Wrapper'
 
 const Executions = ({ executions }) => {
   const sortedExecutions = [...executions].sort(
@@ -9,11 +10,11 @@ const Executions = ({ executions }) => {
   )
 
   return (
-    <div>
+    <Wrapper>
       {sortedExecutions.map(({ id, ...props }) => (
         <ExecutionRow key={id} id={id} {...props} />
       ))}
-    </div>
+    </Wrapper>
   )
 }
 
