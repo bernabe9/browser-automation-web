@@ -19,9 +19,10 @@ const ExecutionRow = ({
 }) => {
   const [showData, setShowData] = useState(false)
 
-  const getDistance = distanceInWords(new Date(createdAt), {
-    includeSeconds: true
-  })
+  const getDistance = () =>
+    distanceInWords(new Date(createdAt), {
+      includeSeconds: true
+    })
 
   const [distance, setDistance] = useState(getDistance())
 
