@@ -4,9 +4,11 @@ import { Input, FormGroup, Button } from 'mc-components'
 
 import { applyQueryParams } from 'utils/helpers'
 
-const RunTest = ({ test, fetchExecutions }) => {
+const StressTest = ({ test, fetchExecutions }) => {
   const [url, setUrl] = useState('')
+  const [times, setTimes] = useState(1)
   const [urlError, setUrlError] = useState('')
+  const [timesError, setTimesError] = useState('')
   const [loading, setLoading] = useState(false)
 
   const onSubmit = () => {
@@ -14,10 +16,15 @@ const RunTest = ({ test, fetchExecutions }) => {
       setUrlError("URL can't be empty ")
       return
     }
+    if (!times) {
+      setTimesError("Times can't be empty")
+      return
+    }
     setLoading(true)
-    const path = applyQueryParams(`${process.env.API_URL}/trigger`, {
+    const path = applyQueryParams(`${process.env.API_URL}/stress`, {
       test,
-      url
+      url,
+      times
     })
     fetch(path)
       .then(res => {
@@ -48,6 +55,22 @@ const RunTest = ({ test, fetchExecutions }) => {
             />
           </FormGroup>
         </div>
+        <div className="col-3">
+          <FormGroup
+            label="times"
+            name="times"
+            error={timesError}
+            touched={!!timesError}
+          >
+            <Input
+              onChange={e => setTimes(e.target.value)}
+              value={times}
+              error={timesError}
+              touched={!!timesError}
+              type="number"
+            />
+          </FormGroup>
+        </div>
       </div>
       <Button onClick={onSubmit} loading={loading}>
         RUN
@@ -56,9 +79,9 @@ const RunTest = ({ test, fetchExecutions }) => {
   )
 }
 
-RunTest.propTypes = {
+StressTest.propTypes = {
   fetchExecutions: PropTypes.func.isRequired,
   test: PropTypes.string.isRequired
 }
 
-export default RunTest
+export default StressTest

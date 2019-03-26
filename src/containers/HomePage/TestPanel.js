@@ -5,6 +5,7 @@ import { Separator, Button } from 'mc-components'
 import { testStatus as getTestStatus } from 'utils/helpers'
 import StatusBadge from 'components/StatusBadge'
 import RunTest from 'components/RunTest'
+import StressTest from 'components/StressTest'
 import Code from 'components/Code'
 import Executions from 'components/Executions'
 
@@ -45,6 +46,12 @@ const TestPanel = ({ executions, cursor }) => {
       <div className="mc-my-6">
         <h6 className="mc-text-h6">Run test</h6>
         <RunTest test={cursor.path} />
+      </div>
+      <Separator />
+      <div className="mc-my-6">
+        <h6 className="mc-text-h6">Stress testing</h6>
+        <p>Run this test multiple times to check how stable it is</p>
+        <StressTest test={cursor.path} />
       </div>
       <Separator />
       <div className="mc-my-6">
