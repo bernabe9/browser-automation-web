@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Separator } from 'mc-components'
 
-import Executions from './Executions'
+import Executions from 'components/Executions'
 import MainPanel from './MainPanel'
 
 const HomePage = ({ fetchExecutions, executions }) => {

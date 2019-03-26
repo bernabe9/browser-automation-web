@@ -6,7 +6,7 @@ import { testStatus as getTestStatus } from 'utils/helpers'
 import StatusBadge from 'components/StatusBadge'
 import RunTest from 'components/RunTest'
 import Code from 'components/Code'
-import Executions from './Executions'
+import Executions from 'components/Executions'
 
 const TestPanel = ({ executions, cursor }) => {
   const [showCode, setShowCode] = useState(false)
