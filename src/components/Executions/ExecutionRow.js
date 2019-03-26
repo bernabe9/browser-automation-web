@@ -6,6 +6,7 @@ import distanceInWords from 'date-fns/distance_in_words_to_now'
 import StatusBadge from 'components/StatusBadge'
 import TestResults from 'components/TestResults'
 import Timer from 'components/Timer'
+import ResultWrapper from './ResultsWrapper'
 
 const ExecutionRow = ({
   id,
@@ -63,7 +64,7 @@ const ExecutionRow = ({
             Toggle results
           </a>
           {showData && (
-            <Fragment>
+            <ResultWrapper className="mc-p-4 mc-my-3">
               <TestResults testResults={JSON.parse(testResults)} />
               {errorMessage && (
                 <Fragment>
@@ -71,7 +72,7 @@ const ExecutionRow = ({
                   <p style={{ whiteSpace: 'pre' }}>{unescape(errorMessage)}</p>
                 </Fragment>
               )}
-            </Fragment>
+            </ResultWrapper>
           )}
         </Fragment>
       )}
