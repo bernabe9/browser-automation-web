@@ -3,26 +3,55 @@ import { denormalize } from 'normalizr'
 
 import request from 'state/modules/request'
 import {
-  normalizeData,
+  normalizeData as executionNormalizeData,
   executions as executionSchema
 } from 'state/schemas/execution'
+import {
+  normalizeData as stressExecutionNormalizeData,
+  stressExecutions as stressExecutionSchema
+} from 'state/schemas/stressExecution'
 import HomePage from './HomePage'
 
 const mapState = state => {
-  if (!state.data.executions) {
-    return { executions: [] }
+  const newState = {
+    executions: [],
+    stressExecutions: []
   }
-  const executions = denormalize(
-    Object.keys(state.data.executions),
-    executionSchema,
-    state.data
-  )
-  return { executions }
+  if (state.data.executions) {
+    newState.executions = denormalize(
+      Object.keys(state.data.executions),
+      executionSchema,
+      state.data
+    )
+  }
+
+  if (state.data.executions && state.data.stressExecutions) {
+    const stressExecutions = denormalize(
+      Object.keys(state.data.stressExecutions),
+      stressExecutionSchema,
+      state.data
+    )
+
+    Object.values(stressExecutions).forEach(stressExecution => {
+      stressExecution.executions.values = stressExecution.executions.values.map(
+        execution => ({ ...state.data.executions[execution] })
+      )
+    })
+
+    newState.stressExecutions = stressExecutions
+  }
+  return newState
 }
 
 const mapDispatch = dispatch => ({
   fetchExecutions: () =>
-    dispatch(request('/executions', { normalizer: normalizeData }))
+    dispatch(request('/executions', { normalizer: executionNormalizeData })),
+  fetchStressExecutions: () =>
+    dispatch(
+      request('/stress-executions', {
+        normalizer: stressExecutionNormalizeData
+      })
+    )
 })
 
 export default connect(

@@ -6,7 +6,7 @@ import TreeView from 'components/TreeView'
 import LeftWrapper from './LeftWrapper'
 import TestPanel from './TestPanel'
 
-const MainPanel = ({ executions }) => {
+const MainPanel = ({ executions, stressExecutions }) => {
   const [structure, setStructure] = useState()
   const [cursor, setCursor] = useState()
 
@@ -37,14 +37,21 @@ const MainPanel = ({ executions }) => {
             )}
           </LeftWrapper>
         </div>
-        {cursor && <TestPanel executions={executions} cursor={cursor} />}
+        {cursor && (
+          <TestPanel
+            executions={executions}
+            stressExecutions={stressExecutions}
+            cursor={cursor}
+          />
+        )}
       </div>
     </div>
   )
 }
 
 MainPanel.propTypes = {
-  executions: PropTypes.array.isRequired
+  executions: PropTypes.array.isRequired,
+  stressExecutions: PropTypes.array.isRequired
 }
 
 export default MainPanel
