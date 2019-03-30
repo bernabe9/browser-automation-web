@@ -5,7 +5,7 @@ import distanceInWords from 'date-fns/distance_in_words_to_now'
 
 import ExecutionRow from './ExecutionRow'
 
-const StreeExecutionRow = ({
+const StressExecutionRow = ({
   id,
   successCount,
   errorCount,
@@ -47,10 +47,10 @@ const StreeExecutionRow = ({
           className="mc-text-h8 mc-text--uppercase mc-text--muted"
           onClick={onToggle}
         >
-          Toggle tests
+          Toggle test executions
         </a>
         {showData &&
-          executions.values.map(({ id, ...props }) => (
+          executions.map(({ id, ...props }) => (
             <div key={id} className="mc-m-4">
               <ExecutionRow id={id} {...props} />
             </div>
@@ -61,14 +61,14 @@ const StreeExecutionRow = ({
   )
 }
 
-StreeExecutionRow.propTypes = {
+StressExecutionRow.propTypes = {
   id: PropTypes.string.isRequired,
   successCount: PropTypes.number.isRequired,
   errorCount: PropTypes.number.isRequired,
-  times: PropTypes.string.isRequired,
+  times: PropTypes.number.isRequired,
   test: PropTypes.string.isRequired,
   createdAt: PropTypes.number.isRequired,
-  executions: PropTypes.object.isRequired
+  executions: PropTypes.array.isRequired
 }
 
-export default StreeExecutionRow
+export default StressExecutionRow

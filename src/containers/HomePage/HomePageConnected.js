@@ -1,46 +1,22 @@
 import { connect } from 'react-redux'
-import { denormalize } from 'normalizr'
 
 import request from 'state/modules/request'
-import {
-  normalizeData as executionNormalizeData,
-  executions as executionSchema
-} from 'state/schemas/execution'
-import {
-  normalizeData as stressExecutionNormalizeData,
-  stressExecutions as stressExecutionSchema
-} from 'state/schemas/stressExecution'
+import { normalizeData as executionNormalizeData } from 'state/schemas/execution'
+import { normalizeData as stressExecutionNormalizeData } from 'state/schemas/stressExecution'
+import ExecutionSelector from 'state/selectors/executionSelector'
+import StressExecutionSelector from 'state/selectors/stressExecutionSelector'
 import HomePage from './HomePage'
 
+const executionSelector = new ExecutionSelector()
+const stressExecutionSelector = new StressExecutionSelector()
+
 const mapState = state => {
-  const newState = {
-    executions: [],
-    stressExecutions: []
+  const executions = executionSelector.getAll(state)
+  let stressExecutions
+  if (executions) {
+    stressExecutions = stressExecutionSelector.getAll(state)
   }
-  if (state.data.executions) {
-    newState.executions = denormalize(
-      Object.keys(state.data.executions),
-      executionSchema,
-      state.data
-    )
-  }
-
-  if (state.data.executions && state.data.stressExecutions) {
-    const stressExecutions = denormalize(
-      Object.keys(state.data.stressExecutions),
-      stressExecutionSchema,
-      state.data
-    )
-
-    Object.values(stressExecutions).forEach(stressExecution => {
-      stressExecution.executions.values = stressExecution.executions.values.map(
-        execution => ({ ...state.data.executions[execution] })
-      )
-    })
-
-    newState.stressExecutions = stressExecutions
-  }
-  return newState
+  return { executions, stressExecutions }
 }
 
 const mapDispatch = dispatch => ({

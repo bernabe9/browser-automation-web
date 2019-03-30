@@ -4,15 +4,33 @@ import { Input, FormGroup, Button } from 'mc-components'
 
 import { applyQueryParams } from 'utils/helpers'
 
-const RunStressTest = ({ test, fetchExecutions, fetchStressExecutions }) => {
+const RunStressTest = ({
+  test,
+  stressExecutions,
+  fetchExecutions,
+  fetchStressExecutions
+}) => {
   const [url, setUrl] = useState('')
-  const [times, setTimes] = useState('1')
+  const [times, setTimes] = useState(1)
   const [urlError, setUrlError] = useState('')
+  const [timesError, setTimesError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  const getLastErrorRate = () => {
+    const { errorCount, successCount } = stressExecutions[0]
+    if (errorCount + successCount === 0) {
+      return 0
+    }
+    return (errorCount * 100) / (errorCount + successCount)
+  }
 
   const onSubmit = () => {
     if (!url) {
       setUrlError("URL can't be empty ")
+      return
+    }
+    if (!times) {
+      setTimesError("Times can't be empty")
       return
     }
     setLoading(true)
@@ -34,9 +52,20 @@ const RunStressTest = ({ test, fetchExecutions, fetchStressExecutions }) => {
 
   return (
     <div className="mc-my-4">
-      <FormGroup label="URL" name="url" error={urlError} touched={!!urlError}>
-        <div className="row">
-          <div className="col-6">
+      {!!stressExecutions.length && (
+        <div className="mc-mb-4">
+          <span>Last results error rate: </span>
+          <span className="mc-text-h6">{`${getLastErrorRate()}%`}</span>
+        </div>
+      )}
+      <div className="row">
+        <div className="col-6">
+          <FormGroup
+            label="URL"
+            name="url"
+            error={urlError}
+            touched={!!urlError}
+          >
             <Input
               onChange={e => setUrl(e.target.value)}
               value={url}
@@ -44,17 +73,25 @@ const RunStressTest = ({ test, fetchExecutions, fetchStressExecutions }) => {
               error={urlError}
               touched={!!urlError}
             />
-          </div>
-          <div className="col-3">
+          </FormGroup>
+        </div>
+        <div className="col-3">
+          <FormGroup
+            label="times"
+            name="times"
+            error={timesError}
+            touched={!!timesError}
+          >
             <Input
-              type="number"
               onChange={e => setTimes(e.target.value)}
               value={times}
-              placeholder="1"
+              error={timesError}
+              touched={!!timesError}
+              type="number"
             />
-          </div>
+          </FormGroup>
         </div>
-      </FormGroup>
+      </div>
       <Button onClick={onSubmit} loading={loading}>
         RUN
       </Button>
@@ -65,7 +102,8 @@ const RunStressTest = ({ test, fetchExecutions, fetchStressExecutions }) => {
 RunStressTest.propTypes = {
   fetchExecutions: PropTypes.func.isRequired,
   fetchStressExecutions: PropTypes.func.isRequired,
-  test: PropTypes.string.isRequired
+  test: PropTypes.string.isRequired,
+  stressExecutions: PropTypes.array
 }
 
 export default RunStressTest

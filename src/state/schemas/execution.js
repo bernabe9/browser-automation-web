@@ -1,6 +1,7 @@
-import { normalize, schema } from 'normalizr'
+import { schema } from 'normalizr'
+import normalize from './normalize'
 
-const execution = new schema.Entity('executions')
+export const execution = new schema.Entity('executions')
 
 export const executions = new schema.Array(execution)
 

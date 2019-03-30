@@ -58,16 +58,13 @@ const TestPanel = ({ executions, stressExecutions, cursor }) => {
       </div>
       <Separator />
       <div className="mc-my-6">
-        <div className="row">
-          <div className="col-auto">
-            <h6 className="mc-text-h6 mc-mb-4">Executions</h6>
-            <Executions executions={testExecutions} />
-          </div>
-          <div className="col-auto">
-            <h6 className="mc-text-h6 mc-mb-4">Stress Executions</h6>
-            <Executions executions={stressTestExecutions} stress />
-          </div>
-        </div>
+        <h6 className="mc-text-h6 mc-mb-4">Stress Executions</h6>
+        <Executions executions={stressTestExecutions} stress />
+      </div>
+      <Separator />
+      <div className="mc-my-6">
+        <h6 className="mc-text-h6 mc-mb-4">Executions</h6>
+        <Executions executions={testExecutions} />
       </div>
     </div>
   )
@@ -75,6 +72,7 @@ const TestPanel = ({ executions, stressExecutions, cursor }) => {
 
 TestPanel.propTypes = {
   executions: PropTypes.array.isRequired,
+  stressExecutions: PropTypes.array.isRequired,
   cursor: PropTypes.shape({
     path: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
