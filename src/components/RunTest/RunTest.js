@@ -31,15 +31,24 @@ const RunTest = ({ test, fetchExecutions }) => {
 
   return (
     <div className="mc-my-4">
-      <FormGroup label="URL" name="url" error={urlError} touched={!!urlError}>
-        <Input
-          onChange={e => setUrl(e.target.value)}
-          value={url}
-          placeholder="https://beta.masterclass.com"
-          error={urlError}
-          touched={!!urlError}
-        />
-      </FormGroup>
+      <div className="row">
+        <div className="col-6">
+          <FormGroup
+            label="URL"
+            name="url"
+            error={urlError}
+            touched={!!urlError}
+          >
+            <Input
+              onChange={e => setUrl(e.target.value)}
+              value={url}
+              placeholder="https://beta.masterclass.com"
+              error={urlError}
+              touched={!!urlError}
+            />
+          </FormGroup>
+        </div>
+      </div>
       <Button onClick={onSubmit} loading={loading}>
         RUN
       </Button>

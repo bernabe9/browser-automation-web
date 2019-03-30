@@ -5,10 +5,11 @@ import { Separator, Button } from 'mc-components'
 import { testStatus as getTestStatus } from 'utils/helpers'
 import StatusBadge from 'components/StatusBadge'
 import RunTest from 'components/RunTest'
+import RunStressTest from 'components/RunStressTest'
 import Code from 'components/Code'
 import Executions from 'components/Executions'
 
-const TestPanel = ({ executions, cursor }) => {
+const TestPanel = ({ executions, stressExecutions, cursor }) => {
   const [showCode, setShowCode] = useState(false)
   const [loadingCode, setLoadingCode] = useState(false)
 
@@ -21,6 +22,9 @@ const TestPanel = ({ executions, cursor }) => {
 
   const onCodeLoaded = () => setLoadingCode(false)
 
+  const stressTestExecutions = stressExecutions.filter(
+    ({ test }) => test === cursor.path
+  )
   const testExecutions = executions.filter(({ test }) => test === cursor.path)
   const testStatus = getTestStatus(testExecutions)
 
@@ -48,6 +52,17 @@ const TestPanel = ({ executions, cursor }) => {
       </div>
       <Separator />
       <div className="mc-my-6">
+        <h6 className="mc-text-h6">Stress Testing</h6>
+        <p>Run this test multiple times to check how stable it is</p>
+        <RunStressTest test={cursor.path} />
+      </div>
+      <Separator />
+      <div className="mc-my-6">
+        <h6 className="mc-text-h6 mc-mb-4">Stress Executions</h6>
+        <Executions executions={stressTestExecutions} stress />
+      </div>
+      <Separator />
+      <div className="mc-my-6">
         <h6 className="mc-text-h6 mc-mb-4">Executions</h6>
         <Executions executions={testExecutions} />
       </div>
@@ -57,6 +72,7 @@ const TestPanel = ({ executions, cursor }) => {
 
 TestPanel.propTypes = {
   executions: PropTypes.array.isRequired,
+  stressExecutions: PropTypes.array.isRequired,
   cursor: PropTypes.shape({
     path: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired

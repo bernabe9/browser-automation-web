@@ -2,8 +2,7 @@ import omit from 'lodash/omit'
 import { API_DATA_REQUEST, API_DATA_SUCCESS } from 'state/middleware/api'
 
 const initialState = {
-  meta: {},
-  data: {}
+  meta: {}
 }
 
 const mergeData = (state, response) => {
