@@ -21,7 +21,8 @@ const TreeView = ({
   activeNode,
   executions,
   isExpanded = false,
-  onToggle
+  onToggle,
+  queryPath
 }) => {
   const [expanded, setExpanded] = useState(isExpanded)
 
@@ -29,9 +30,8 @@ const TreeView = ({
     setExpanded(!expanded)
     onToggle(node)
   }
-
   const isFile = data.type === 'file'
-  const isActive = activeNode === data.path
+  const isActive = activeNode === data.path || queryPath === data.path
 
   const getTestStatus = () => {
     if (!isFile) {
@@ -61,6 +61,7 @@ const TreeView = ({
               executions={executions}
               onToggle={onToggle}
               activeNode={activeNode}
+              queryPath={queryPath}
             />
           ))}
         </div>
@@ -78,7 +79,8 @@ TreeView.propTypes = {
   onToggle: PropTypes.func.isRequired,
   activeNode: PropTypes.string,
   isExpanded: PropTypes.bool,
-  executions: PropTypes.array
+  executions: PropTypes.array,
+  queryPath: PropTypes.string
 }
 
 export default TreeView
