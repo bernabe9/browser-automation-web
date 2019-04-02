@@ -12,8 +12,7 @@ const routes = [
   {
     path: routesPaths.test,
     component: TestPage,
-    exact: true,
-    private: true
+    exact: true
   },
   {
     component: NotFoundPage

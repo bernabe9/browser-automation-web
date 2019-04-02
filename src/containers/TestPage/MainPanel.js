@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import queryString from 'query-string'
 
 import api from 'api'
+import routes from 'constants/routesPaths'
 import TreeView from 'components/TreeView'
 import LeftWrapper from './LeftWrapper'
 import TestPanel from './TestPanel'
@@ -16,17 +17,14 @@ const MainPanel = ({ executions, stressExecutions, history }) => {
   useEffect(() => {
     api('/folders').then(data => {
       setStructure(data)
-      if (queryPath) {
-        setCursor(queryPath)
-      }
     })
   }, [])
 
   const onToggle = node => {
     if (node.type === 'file') {
       history.push({
-        pathname: '/tests',
-        search: `?name=${node.name}&path=${node.path}`
+        pathname: routes.test,
+        search: `?path=${node.path}`
       })
       setCursor(node)
     }

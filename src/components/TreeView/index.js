@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import { testStatus } from 'utils/helpers'
@@ -31,7 +31,7 @@ const TreeView = ({
     onToggle(node)
   }
   const isFile = data.type === 'file'
-  const isActive = activeNode === data.path || queryPath === data.path
+  const isActive = activeNode === data.path
 
   const getTestStatus = () => {
     if (!isFile) {
@@ -42,6 +42,17 @@ const TreeView = ({
   }
 
   const status = getTestStatus()
+
+  useEffect(() => {
+    if (!queryPath || !queryPath.includes(data.path)) {
+      return
+    }
+    if (!isFile) {
+      setExpanded(true)
+    } else {
+      handleToggle(data)
+    }
+  }, [])
 
   return (
     <div>
