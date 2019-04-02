@@ -1,7 +1,6 @@
 const routes = {
   index: '/',
-  login: '/login',
-  signUp: '/sign-up'
+  createTestSuite: '/new-suite'
 }
 
 export default routes
