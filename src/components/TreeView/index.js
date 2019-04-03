@@ -94,4 +94,8 @@ TreeView.propTypes = {
   queryPath: PropTypes.string
 }
 
+TreeView.defaultProps = {
+  executions: []
+}
+
 export default TreeView
