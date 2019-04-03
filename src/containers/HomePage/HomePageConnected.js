@@ -1,33 +1,19 @@
 import { connect } from 'react-redux'
 
 import request from 'state/modules/request'
-import { normalizeData as executionNormalizeData } from 'state/schemas/execution'
-import { normalizeData as stressExecutionNormalizeData } from 'state/schemas/stressExecution'
-import ExecutionSelector from 'state/selectors/executionSelector'
-import StressExecutionSelector from 'state/selectors/stressExecutionSelector'
+import { normalizeData } from 'state/schemas/testSuite'
+import TestSuiteSelector from 'state/selectors/testSuiteSelector'
 import HomePage from './HomePage'
 
-const executionSelector = new ExecutionSelector()
-const stressExecutionSelector = new StressExecutionSelector()
+const testSuiteSelector = new TestSuiteSelector()
 
-const mapState = state => {
-  const executions = executionSelector.getAll(state)
-  let stressExecutions
-  if (executions) {
-    stressExecutions = stressExecutionSelector.getAll(state)
-  }
-  return { executions, stressExecutions }
-}
+const mapState = state => ({
+  testSuites: testSuiteSelector.getAll(state)
+})
 
 const mapDispatch = dispatch => ({
-  fetchExecutions: () =>
-    dispatch(request('/executions', { normalizer: executionNormalizeData })),
-  fetchStressExecutions: () =>
-    dispatch(
-      request('/stress-executions', {
-        normalizer: stressExecutionNormalizeData
-      })
-    )
+  fetchTestSuites: () =>
+    dispatch(request('/suites', { normalizer: normalizeData }))
 })
 
 export default connect(

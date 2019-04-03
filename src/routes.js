@@ -1,5 +1,5 @@
 import routesPaths from 'constants/routesPaths'
-import HomePage from 'containers/HomePage2'
+import HomePage from 'containers/HomePage'
 import TestPage from 'containers/TestPage'
 import NotFoundPage from 'containers/NotFoundPage'
 
