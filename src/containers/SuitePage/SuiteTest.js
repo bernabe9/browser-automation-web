@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom'
 import { Button, Separator } from 'mc-components'
 import distanceInWords from 'date-fns/distance_in_words_to_now'
 
+import StatusBadge from 'components/StatusBadge'
+
 const SuiteTest = ({
   test: { path, status, lastRunAt },
   handleRunSingleTest,
@@ -36,7 +38,10 @@ const SuiteTest = ({
             {path}
           </Link>
         </p>
-        <p>Status: {status}</p>
+        <div>
+          <span>Status: </span>
+          <StatusBadge status={status} small />
+        </div>
         <p>Last run at: {distance}</p>
       </div>
       <Button onClick={handleRunSingleTest(path)} loading={loading}>
