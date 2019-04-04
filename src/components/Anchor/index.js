@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import cn from 'classnames'
 
 const Anchor = styled.div`
   cursor: pointer;
@@ -10,17 +11,19 @@ const Anchor = styled.div`
   }
 `
 
-const StyledAnchor = ({ children, className = '' }) => (
-  <Anchor
-    className={`mc-text-h8 mc-text--uppercase mc-text--muted ${className}`}
-  >
-    {children}
-  </Anchor>
-)
+const StyledAnchor = ({ children, isActive = false, className = '' }) => {
+  const classNames = cn(
+    'mc-text-h8 mc-text--uppercase',
+    { 'mc-text--muted': !isActive },
+    { [className]: !!className }
+  )
+  return <Anchor className={classNames}>{children}</Anchor>
+}
 
 StyledAnchor.propTypes = {
   children: PropTypes.node.isRequired,
-  className: PropTypes.string
+  className: PropTypes.string,
+  isActive: PropTypes.bool
 }
 
 export default StyledAnchor

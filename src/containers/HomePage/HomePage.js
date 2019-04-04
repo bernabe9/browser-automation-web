@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
 import { Separator } from 'mc-components'
 
-import routes from 'constants/routesPaths'
 import TestSuites from 'components/TestSuites'
-import Anchor from 'components/Anchor'
 import Header from 'components/Header'
 
 const HomePage = ({ fetchTestSuites, testSuites }) => {
@@ -22,13 +19,6 @@ const HomePage = ({ fetchTestSuites, testSuites }) => {
         <div className="row">
           <div className="col-6">
             {!!testSuites && <TestSuites testSuites={testSuites} />}
-          </div>
-          <div className="col-6">
-            <Link to={routes.createTestSuite}>
-              <Anchor className="mc-text--right mc-mt-3">
-                CREATE NEW TEST SUITE
-              </Anchor>
-            </Link>
           </div>
         </div>
       </div>
