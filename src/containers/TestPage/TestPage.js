@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Separator } from 'mc-components'
 
@@ -18,23 +18,23 @@ const TestPage = ({
     fetchStressExecutions()
   }, [])
 
-  if (!executions || !stressExecutions) {
-    return null
-  }
-
   return (
     <div>
       <Header />
-      <MainPanel
-        executions={executions}
-        stressExecutions={stressExecutions}
-        history={history}
-      />
-      <div className="container mc-mt-5 mc-p-5 mc-invert mc-background--color-light">
-        <h5 className="mc-text-h5">All Executions</h5>
-        <Separator />
-        <Executions executions={executions} />
-      </div>
+      {executions && stressExecutions && (
+        <Fragment>
+          <MainPanel
+            executions={executions}
+            stressExecutions={stressExecutions}
+            history={history}
+          />
+          <div className="container mc-mt-5 mc-p-5 mc-invert mc-background--color-light">
+            <h5 className="mc-text-h5">All Executions</h5>
+            <Separator />
+            <Executions executions={executions} />
+          </div>
+        </Fragment>
+      )}
     </div>
   )
 }
