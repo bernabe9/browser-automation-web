@@ -2,6 +2,7 @@ import routesPaths from 'constants/routesPaths'
 import HomePage from 'containers/HomePage'
 import CreateTestSuite from 'containers/CreateTestSuite'
 import TestPage from 'containers/TestPage'
+import SuitePage from 'containers/SuitePage'
 import NotFoundPage from 'containers/NotFoundPage'
 
 const routes = [
@@ -18,6 +19,11 @@ const routes = [
   {
     path: routesPaths.test,
     component: TestPage,
+    exact: true
+  },
+  {
+    path: routesPaths.suite,
+    component: SuitePage,
     exact: true
   },
   {
