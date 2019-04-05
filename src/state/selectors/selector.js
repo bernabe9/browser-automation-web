@@ -40,6 +40,22 @@ export default class Selector {
     return this.getAll(state).filter(options)
   }
 
+  find = (state, fn) => {
+    if (state === undefined) {
+      return null
+    }
+
+    if (Array.isArray(state)) {
+      return state.find(fn)
+    }
+
+    const data = this.getAll(state)
+    if (Array.isArray(data)) {
+      return data.find(fn)
+    }
+    return null
+  }
+
   sortByFn = (state, fn) => {
     if (state === undefined) {
       return []
