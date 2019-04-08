@@ -6,7 +6,7 @@ import Anchor from 'components/Anchor'
 import Logo from './Logo'
 
 const isActive = path =>
-  matchPath(window.location.pathname, {
+  !!matchPath(window.location.pathname, {
     path,
     exact: true,
     strict: false
