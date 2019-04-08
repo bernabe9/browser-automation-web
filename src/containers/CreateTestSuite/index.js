@@ -29,7 +29,7 @@ const CreateTestSuite = ({ history }) => {
     if (selectedTests.size === 0) {
       return
     }
-    api('/suites', {
+    return api('/suites', {
       method: 'post',
       body: { ...suite, tests: selectedTests }
     }).then(() => {
