@@ -21,7 +21,7 @@ const TestSuiteRow = ({ id, name, status, tests, lastRunAt }) => {
         <Link className="mc-text-h6 mc-mr-2" to={`/test-suites/${id}`}>
           {name}
         </Link>
-        <StatusBadge className="d-inline-block" status={status} small />
+        <StatusBadge status={status} small />
         <p>{`${testsCount} tests`}</p>
         {lastRunAt && (
           <p>Last run at: {format(new Date(lastRunAt), 'MM/DD/YYYY HH:mm')}</p>

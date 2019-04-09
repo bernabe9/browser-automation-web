@@ -41,15 +41,11 @@ const SuitePage = ({ fetchSuite, suite }) => {
       {suite && suite.tests && (
         <div className="container mc-mt-5 mc-p-5 mc-invert mc-background--color-light">
           <div className="mc-mb-4">
-            <div className="d-flex">
-              <h5 className="mc-text-h5 mc-text--uppercase mc-mr-2">
+            <div>
+              <h5 className="d-inline mc-text-h5 mc-text--uppercase mc-mr-2">
                 {suite.name}
               </h5>
-              <StatusBadge
-                className="d-inline-block"
-                status={suite.status}
-                small
-              />
+              <StatusBadge status={suite.status} small />
             </div>
             <p>{suite.description}</p>
             <p className="mc-text--hinted">Default URL: {suite.url}</p>
