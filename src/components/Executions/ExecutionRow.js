@@ -53,7 +53,12 @@ const ExecutionRow = ({
         </div>
         <p>{`id: ${id}`}</p>
         <p>{`test: ${test}`}</p>
-        <p>{`URL: ${url}`}</p>
+        <p>
+          URL:{' '}
+          <a href={url} target="_blank" rel="noopener noreferrer">
+            {url}
+          </a>
+        </p>
       </div>
       {!!testResults && (
         <Fragment>

@@ -48,7 +48,12 @@ const SuitePage = ({ fetchSuite, suite }) => {
               <StatusBadge status={suite.status} small />
             </div>
             <p>{suite.description}</p>
-            <p className="mc-text--hinted">Default URL: {suite.url}</p>
+            <p className="mc-text--hinted">
+              Default URL:{' '}
+              <a href={suite.url} target="_blank" rel="noopener noreferrer">
+                {suite.url}
+              </a>
+            </p>
           </div>
           <FormGroup name="url">
             <div className="row align-items-center">
