@@ -5,7 +5,7 @@ const SelectedTests = ({ selectedTests, showError }) => (
   <div className="mc-mb-3">
     <p className="mc-text-h8 mc-mb-1">Selected tests</p>
     {selectedTests.size === 0 ? (
-      <p>Any test selected yet</p>
+      <p>No tests selected yet</p>
     ) : (
       Array.from(selectedTests).map(test => <p key={test}>{test}</p>)
     )}
