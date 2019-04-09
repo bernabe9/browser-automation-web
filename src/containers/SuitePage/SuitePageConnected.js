@@ -11,8 +11,7 @@ const getSuiteId = url => url.substr(url.lastIndexOf('/') + 1)
 
 const mapState = (state, ownProps) => {
   const suiteId = getSuiteId(ownProps.history.location.pathname)
-  const suites = testSuiteSelector.getAll(state)
-  const suite = suites ? suites.find(suite => suite.id === suiteId) : {}
+  const suite = testSuiteSelector.getSuite(state, suite => suite.id === suiteId)
   return { suite }
 }
 

@@ -8,7 +8,7 @@ import HomePage from './HomePage'
 const testSuiteSelector = new TestSuiteSelector()
 
 const mapState = state => ({
-  testSuites: testSuiteSelector.getAll(state)
+  testSuites: testSuiteSelector.getAllSuites(state)
 })
 
 const mapDispatch = dispatch => ({
