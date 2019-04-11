@@ -19,7 +19,13 @@ const SuitePage = ({ fetchSuite, suite }) => {
 
   const handleRunSuite = () => {
     setLoading(true)
-    api(applyQueryParams('/run-suite', { suite: suite.id, url })).then(() => {
+    api(
+      applyQueryParams('/run-suite', {
+        suite: suite.id,
+        url,
+        concurrencyCount: 2
+      })
+    ).then(() => {
       setLoading(false)
       fetchSuite()
     })
