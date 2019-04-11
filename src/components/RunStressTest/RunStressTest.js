@@ -81,6 +81,7 @@ const RunStressTest = ({
             name="times"
             error={timesError}
             touched={!!timesError}
+            min={1}
           >
             <Input
               onChange={e => setTimes(e.target.value)}
