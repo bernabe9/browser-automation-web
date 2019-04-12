@@ -20,9 +20,11 @@ const RunTest = ({ test, fetchExecutions }) => {
       url
     })
     fetch(path)
-      .then(res => {
+      .then(async res => {
         setLoading(false)
         if (res.ok) {
+          const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
+          await timeout(1000)
           fetchExecutions()
         }
       })

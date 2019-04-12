@@ -29,7 +29,9 @@ const SuitePage = ({ fetchSuite, suite }) => {
     if (concurrencyEnabled && concurrency) {
       params.concurrencyCount = parseInt(concurrency, 10)
     }
-    api(applyQueryParams('/run-suite', params)).then(() => {
+    api(applyQueryParams('/run-suite', params)).then(async () => {
+      const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
+      await timeout(1000)
       setLoading(false)
       fetchSuite()
     })

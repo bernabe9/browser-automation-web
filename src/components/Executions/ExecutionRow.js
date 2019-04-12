@@ -38,18 +38,20 @@ const ExecutionRow = ({
     <Fragment>
       <div className="mc-mb-3">
         <div className="mc-mb-4">
-          <p>{`${distance} ago`}</p>
+          {distance && <p>{`${distance} ago`}</p>}
           <div>
             <span>status: </span>
             <StatusBadge status={status} small />
           </div>
-          <Timer startDate={startedAt} endDate={endedAt}>
-            {(minutes, seconds) => (
-              <p>
-                duration: {minutes}:{seconds}
-              </p>
-            )}
-          </Timer>
+          {startedAt && (
+            <Timer startDate={startedAt} endDate={endedAt}>
+              {(minutes, seconds) => (
+                <p>
+                  duration: {minutes}:{seconds}
+                </p>
+              )}
+            </Timer>
+          )}
         </div>
         <p>{`id: ${id}`}</p>
         <p>{`test: ${test}`}</p>
