@@ -14,14 +14,14 @@ const ExecutionRow = ({
   url,
   status,
   errorMessage,
-  createdAt,
+  startedAt,
   endedAt,
   testResults
 }) => {
   const [showData, setShowData] = useState(false)
 
   const getDistance = () =>
-    distanceInWords(new Date(createdAt), {
+    distanceInWords(new Date(startedAt), {
       includeSeconds: true
     })
 
@@ -43,7 +43,7 @@ const ExecutionRow = ({
             <span>status: </span>
             <StatusBadge status={status} small />
           </div>
-          <Timer startDate={createdAt} endDate={endedAt}>
+          <Timer startDate={startedAt} endDate={endedAt}>
             {(minutes, seconds) => (
               <p>
                 duration: {minutes}:{seconds}
@@ -91,7 +91,7 @@ ExecutionRow.propTypes = {
   test: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
-  createdAt: PropTypes.number.isRequired,
+  startedAt: PropTypes.number.isRequired,
   testResults: PropTypes.string,
   endedAt: PropTypes.number,
   errorMessage: PropTypes.string

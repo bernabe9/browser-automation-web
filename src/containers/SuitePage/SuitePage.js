@@ -7,11 +7,14 @@ import Header from 'components/Header'
 import StatusBadge from 'components/StatusBadge'
 import { applyQueryParams } from 'utils/helpers'
 import SuiteTest from './SuiteTest'
+import ConcurrencyInput from './ConcurrencyInput'
 
 const SuitePage = ({ fetchSuite, suite }) => {
   const [inputURL, setInputURL] = useState(false)
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
+  const [concurrency, setConcurrency] = useState()
+  const [concurrencyEnabled, setConcurrencyEnabled] = useState(false)
 
   useEffect(() => {
     fetchSuite()
@@ -19,7 +22,14 @@ const SuitePage = ({ fetchSuite, suite }) => {
 
   const handleRunSuite = () => {
     setLoading(true)
-    api(applyQueryParams('/run-suite', { suite: suite.id, url })).then(() => {
+    const params = {
+      suite: suite.id,
+      url
+    }
+    if (concurrencyEnabled && concurrency) {
+      params.concurrencyCount = parseInt(concurrency, 10)
+    }
+    api(applyQueryParams('/run-suite', params)).then(() => {
       setLoading(false)
       fetchSuite()
     })
@@ -55,6 +65,12 @@ const SuitePage = ({ fetchSuite, suite }) => {
               </a>
             </p>
           </div>
+          <ConcurrencyInput
+            enabled={concurrencyEnabled}
+            onToggle={() => setConcurrencyEnabled(!concurrencyEnabled)}
+            concurrency={concurrency}
+            onChange={setConcurrency}
+          />
           <FormGroup name="url">
             <div className="row align-items-center">
               <div className="col-auto">

@@ -11,13 +11,22 @@ const Anchor = styled.div`
   }
 `
 
-const StyledAnchor = ({ children, isActive = false, className = '' }) => {
+const StyledAnchor = ({
+  children,
+  isActive = false,
+  className = '',
+  ...props
+}) => {
   const classNames = cn(
     'mc-text-h8 mc-text--uppercase',
     { 'mc-text--muted': !isActive },
     { [className]: !!className }
   )
-  return <Anchor className={classNames}>{children}</Anchor>
+  return (
+    <Anchor className={classNames} {...props}>
+      {children}
+    </Anchor>
+  )
 }
 
 StyledAnchor.propTypes = {
