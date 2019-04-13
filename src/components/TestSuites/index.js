@@ -15,7 +15,7 @@ TestSuites.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      tests: PropTypes.object.isRequired
+      tests: PropTypes.array.isRequired
     }).isRequired
   )
 }

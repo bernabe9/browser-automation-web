@@ -40,7 +40,7 @@ const CreateTestSuite = ({ history }) => {
   return (
     <div>
       <Header />
-      <div className="container mc-mt-5 mc-p-5 mc-invert mc-background--color-light">
+      <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
         <h5 className="mc-text-h5">Create Test Suite</h5>
         <Separator />
         <div className="row mc-my-4">

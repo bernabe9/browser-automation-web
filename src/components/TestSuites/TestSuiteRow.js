@@ -7,13 +7,13 @@ import StatusBadge from 'components/StatusBadge'
 import TestSuiteRowWrapper from './TestSuiteRowWrapper'
 
 const TestSuiteRow = ({ id, name, status, tests, lastRunAt }) => {
-  const testsCount = Object.keys(tests).length
-  const getCount = status =>
-    Object.keys(tests).filter(key => tests[key].status === status).length
-  const passingCount = getCount('success')
-  const failingCount = getCount('error')
-  const runningCount = getCount('running')
-  const readyCount = getCount('ready')
+  const testsCount = tests.length
+  // const getCount = status =>
+  //   Object.keys(tests).filter(key => tests[key].status === status).length
+  // const passingCount = getCount('success')
+  // const failingCount = getCount('error')
+  // const runningCount = getCount('running')
+  // const readyCount = getCount('ready')
 
   return (
     <TestSuiteRowWrapper className="mc-p-3 mc-my-3">
@@ -27,12 +27,6 @@ const TestSuiteRow = ({ id, name, status, tests, lastRunAt }) => {
           <p>Last run at: {format(new Date(lastRunAt), 'MM/DD/YYYY HH:mm')}</p>
         )}
       </div>
-      <div>
-        <p className="mc-text--right">{`${passingCount} tests passing`}</p>
-        <p className="mc-text--right">{`${failingCount} tests failing`}</p>
-        <p className="mc-text--right">{`${runningCount} tests running`}</p>
-        <p className="mc-text--right">{`${readyCount} tests ready`}</p>
-      </div>
     </TestSuiteRowWrapper>
   )
 }
@@ -41,7 +35,7 @@ TestSuiteRow.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
-  tests: PropTypes.object.isRequired,
+  tests: PropTypes.array.isRequired,
   lastRunAt: PropTypes.number
 }
 

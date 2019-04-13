@@ -6,10 +6,15 @@ import api from 'api'
 import Header from 'components/Header'
 import StatusBadge from 'components/StatusBadge'
 import { applyQueryParams } from 'utils/helpers'
-import SuiteTest from './SuiteTest'
 import ConcurrencyInput from './ConcurrencyInput'
+import SuiteExecutionRow from './SuiteExecutionRow'
 
-const SuitePage = ({ fetchSuite, suite }) => {
+const SuitePage = ({
+  fetchSuite,
+  fetchSuiteExecutions,
+  suite,
+  suiteExecutions
+}) => {
   const [inputURL, setInputURL] = useState(false)
   const [url, setUrl] = useState('')
   const [loading, setLoading] = useState(false)
@@ -18,6 +23,10 @@ const SuitePage = ({ fetchSuite, suite }) => {
 
   useEffect(() => {
     fetchSuite()
+  }, [])
+
+  useEffect(() => {
+    fetchSuiteExecutions()
   }, [])
 
   const handleRunSuite = () => {
@@ -33,17 +42,7 @@ const SuitePage = ({ fetchSuite, suite }) => {
       const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
       await timeout(1000)
       setLoading(false)
-      fetchSuite()
-    })
-  }
-
-  const handleRunSingleTest = (path, url) => () => {
-    setLoading(true)
-    api(
-      applyQueryParams('/run-suite', { suite: suite.id, test: path, url })
-    ).then(() => {
-      setLoading(false)
-      fetchSuite()
+      fetchSuiteExecutions()
     })
   }
 
@@ -51,13 +50,15 @@ const SuitePage = ({ fetchSuite, suite }) => {
     <div>
       <Header />
       {suite && suite.tests && (
-        <div className="container mc-mt-5 mc-p-5 mc-invert mc-background--color-light">
+        <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
           <div className="mc-mb-4">
             <div>
               <h5 className="d-inline mc-text-h5 mc-text--uppercase mc-mr-2">
                 {suite.name}
               </h5>
-              <StatusBadge status={suite.status} small />
+              {suite.lastSuiteExecution && (
+                <StatusBadge status={suite.lastSuiteExecution.status} small />
+              )}
             </div>
             <p>{suite.description}</p>
             <p className="mc-text--hinted">
@@ -99,15 +100,10 @@ const SuitePage = ({ fetchSuite, suite }) => {
             </div>
           </FormGroup>
           <Separator />
-          <div className="mc-py-4">
-            {Object.values(suite.tests).map(test => (
-              <SuiteTest
-                key={test.path}
-                loading={loading}
-                test={test}
-                defaultUrl={suite.url}
-                handleRunSingleTest={handleRunSingleTest}
-              />
+          <h5 className="mc-text-h5 mc-my-4">Suite Executions</h5>
+          <div>
+            {suiteExecutions.map(suiteExecution => (
+              <SuiteExecutionRow key={suiteExecution.id} {...suiteExecution} />
             ))}
           </div>
         </div>
@@ -118,12 +114,14 @@ const SuitePage = ({ fetchSuite, suite }) => {
 
 SuitePage.propTypes = {
   fetchSuite: PropTypes.func.isRequired,
+  fetchSuiteExecutions: PropTypes.func.isRequired,
   suite: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string,
     status: PropTypes.string,
-    tests: PropTypes.object
-  })
+    tests: PropTypes.array
+  }),
+  suiteExecutions: PropTypes.array
 }
 
 export default SuitePage

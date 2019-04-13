@@ -1,26 +1,39 @@
 import { connect } from 'react-redux'
 
 import request from 'state/modules/request'
-import { normalizeData } from 'state/schemas/testSuite'
+import { normalizeDataSuite as suiteNormalizer } from 'state/schemas/testSuite'
+import { normalizeData as suiteExecutionNormalizer } from 'state/schemas/suiteExecution'
 import TestSuiteSelector from 'state/selectors/testSuiteSelector'
+import SuiteExecutionSelector from 'state/selectors/suiteExecutionSelector'
 import SuitePage from './SuitePage'
 
 const testSuiteSelector = new TestSuiteSelector()
-
-const getSuiteId = url => url.substr(url.lastIndexOf('/') + 1)
+const suiteExecutionSelector = new SuiteExecutionSelector()
 
 const mapState = (state, ownProps) => {
-  const suiteId = getSuiteId(ownProps.history.location.pathname)
+  const suiteId = ownProps.match.params.id
   const suite = testSuiteSelector.getSuite(state, suite => suite.id === suiteId)
-  return { suite }
+  const suiteExecutions = suiteExecutionSelector.filter(
+    state,
+    suiteExecution => suiteExecution.suiteId === suiteId
+  )
+  const sortedExecutions = suiteExecutionSelector.sortByDate(
+    suiteExecutions,
+    'createdAt'
+  )
+  return { suite, suiteExecutions: sortedExecutions }
 }
 
 const mapDispatch = (dispatch, ownProps) => {
-  const suiteId = getSuiteId(ownProps.history.location.pathname)
+  const suiteId = ownProps.match.params.id
   return {
     fetchSuite: () =>
+      dispatch(request(`/suites/${suiteId}`, { normalizer: suiteNormalizer })),
+    fetchSuiteExecutions: () =>
       dispatch(
-        request(`/suites?suite=${suiteId}`, { normalizer: normalizeData })
+        request(`/suite-executions?suite=${suiteId}`, {
+          normalizer: suiteExecutionNormalizer
+        })
       )
   }
 }
