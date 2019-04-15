@@ -8,12 +8,6 @@ import TestSuiteRowWrapper from './TestSuiteRowWrapper'
 
 const TestSuiteRow = ({ id, name, status, tests, lastRunAt }) => {
   const testsCount = tests.length
-  // const getCount = status =>
-  //   Object.keys(tests).filter(key => tests[key].status === status).length
-  // const passingCount = getCount('success')
-  // const failingCount = getCount('error')
-  // const runningCount = getCount('running')
-  // const readyCount = getCount('ready')
 
   return (
     <TestSuiteRowWrapper className="mc-p-3 mc-my-3">
