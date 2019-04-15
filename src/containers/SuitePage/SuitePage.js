@@ -57,7 +57,7 @@ const SuitePage = ({
                 {suite.name}
               </h5>
               {suite.lastSuiteExecution && (
-                <StatusBadge status={suite.lastSuiteExecution.status} small />
+                <StatusBadge status={suite.lastSuiteExecution.status} />
               )}
             </div>
             <p>{suite.description}</p>
