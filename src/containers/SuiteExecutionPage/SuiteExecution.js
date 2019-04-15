@@ -46,7 +46,7 @@ const SuiteExecution = ({
       <p>suite id: {suiteId}</p>
       <p>URL: {url}</p>
       <p>created at: {format(new Date(createdAt), 'MM/DD/YYYY HH:mm')}</p>
-      {concurrencyCount && <p>Concurrency: {concurrencyCount}</p>}
+      {concurrencyCount && <p>concurrency: {concurrencyCount}</p>}
       {status !== 'running' && (
         <Button className="mc-my-3" onClick={onRerunAll} loading={loadingRerun}>
           RERUN ALL

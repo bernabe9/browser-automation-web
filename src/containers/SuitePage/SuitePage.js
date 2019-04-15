@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Separator, FormGroup, Input, Button } from 'mc-components'
+import { Separator, Button } from 'mc-components'
 
 import api from 'api'
 import Header from 'components/Header'
 import StatusBadge from 'components/StatusBadge'
 import { applyQueryParams } from 'utils/helpers'
 import ConcurrencyInput from './ConcurrencyInput'
+import TestList from './TestList'
 import SuiteExecutionRow from './SuiteExecutionRow'
+import URLInput from './URLInput'
+import WebhookInput from './WebhookInput'
 
 const SuitePage = ({
   fetchSuite,
@@ -15,11 +18,13 @@ const SuitePage = ({
   suite,
   suiteExecutions
 }) => {
-  const [inputURL, setInputURL] = useState(false)
-  const [url, setUrl] = useState('')
+  const [url, setUrl] = useState()
+  const [urlEnabled, setUrlEnabled] = useState(false)
   const [loading, setLoading] = useState(false)
   const [concurrency, setConcurrency] = useState()
   const [concurrencyEnabled, setConcurrencyEnabled] = useState(false)
+  const [webhook, setWebhook] = useState()
+  const [webhookEnabled, setWebhookEnabled] = useState(false)
 
   useEffect(() => {
     fetchSuite()
@@ -31,12 +36,15 @@ const SuitePage = ({
 
   const handleRunSuite = () => {
     setLoading(true)
-    const params = {
-      suite: suite.id,
-      url
-    }
+    const params = { suite: suite.id }
     if (concurrencyEnabled && concurrency) {
       params.concurrencyCount = parseInt(concurrency, 10)
+    }
+    if (urlEnabled && url) {
+      params.url = url
+    }
+    if (webhookEnabled && webhook) {
+      params.webhook = webhook
     }
     api(applyQueryParams('/run-suite', params)).then(async () => {
       const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
@@ -51,7 +59,7 @@ const SuitePage = ({
       <Header />
       {suite && suite.tests && (
         <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
-          <div className="mc-mb-4">
+          <div>
             <div>
               <h5 className="d-inline mc-text-h5 mc-text--uppercase mc-mr-2">
                 {suite.name}
@@ -68,37 +76,34 @@ const SuitePage = ({
               </a>
             </p>
           </div>
+          <TestList tests={suite.tests} />
+          <Separator />
+          <h5 className="mc-text-h5 mc-my-4">Run Suite</h5>
           <ConcurrencyInput
             enabled={concurrencyEnabled}
             onToggle={() => setConcurrencyEnabled(!concurrencyEnabled)}
             concurrency={concurrency}
             onChange={setConcurrency}
           />
-          <FormGroup name="url">
-            <div className="row align-items-center">
-              <div className="col-auto">
-                <Button onClick={handleRunSuite} loading={loading}>
-                  Run Entire suite
-                </Button>
-              </div>
-              <div className="col-12 col-sm-3">
-                {inputURL ? (
-                  <Input
-                    onChange={e => setUrl(e.target.value)}
-                    value={url}
-                    placeholder={suite.url}
-                  />
-                ) : (
-                  <a
-                    className="mc-text-h8 mc-text--uppercase mc-text--muted"
-                    onClick={() => setInputURL(true)}
-                  >
-                    Change url
-                  </a>
-                )}
-              </div>
-            </div>
-          </FormGroup>
+          <URLInput
+            enabled={urlEnabled}
+            onToggle={() => setUrlEnabled(!urlEnabled)}
+            url={url}
+            onChange={setUrl}
+          />
+          <WebhookInput
+            enabled={webhookEnabled}
+            onToggle={() => setWebhookEnabled(!webhookEnabled)}
+            webhook={webhook}
+            onChange={setWebhook}
+          />
+          <Button
+            className="mc-mb-4"
+            onClick={handleRunSuite}
+            loading={loading}
+          >
+            Run Entire suite
+          </Button>
           <Separator />
           <h5 className="mc-text-h5 mc-my-4">Suite Executions</h5>
           <div>

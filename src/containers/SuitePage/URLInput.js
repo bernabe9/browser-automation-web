@@ -4,22 +4,20 @@ import { Input, FormGroup } from 'mc-components'
 
 import Anchor from 'components/Anchor'
 
-const ConcurrencyInput = ({ enabled, concurrency, onToggle, onChange }) => {
+const URLInput = ({ enabled, url, onToggle, onChange }) => {
   return (
     <div className="row">
       <div className="col-3">
-        <Anchor onClick={onToggle}>{`${
-          enabled ? 'Disable' : 'Enable'
-        } concurrency`}</Anchor>
+        <Anchor onClick={onToggle}>
+          {enabled ? 'use default URL' : 'change url'}
+        </Anchor>
         {enabled && (
           <div className="mc-mt-4">
-            <FormGroup label="Concurrency" name="concurrency">
+            <FormGroup label="URL" name="url">
               <Input
                 onChange={e => onChange(e.target.value)}
-                value={concurrency}
-                type="number"
-                min={1}
-                max={100}
+                value={url}
+                placeholder="https://beta.masterclass.com"
               />
             </FormGroup>
           </div>
@@ -29,11 +27,11 @@ const ConcurrencyInput = ({ enabled, concurrency, onToggle, onChange }) => {
   )
 }
 
-ConcurrencyInput.propTypes = {
+URLInput.propTypes = {
   enabled: PropTypes.bool.isRequired,
   onToggle: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
-  concurrency: PropTypes.string
+  url: PropTypes.string
 }
 
-export default ConcurrencyInput
+export default URLInput

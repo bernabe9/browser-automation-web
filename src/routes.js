@@ -23,7 +23,7 @@ const routes = [
     exact: true
   },
   {
-    path: routesPaths.suite,
+    path: routesPaths.suite(),
     component: SuitePage,
     exact: true
   },

@@ -6,7 +6,7 @@ import format from 'date-fns/format'
 import StatusBadge from 'components/StatusBadge'
 import TestSuiteRowWrapper from './TestSuiteRowWrapper'
 
-const TestSuiteRow = ({ id, name, status, tests, lastRunAt }) => {
+const TestSuiteRow = ({ id, name, tests, lastSuiteExecution }) => {
   const testsCount = tests.length
 
   return (
@@ -15,10 +15,15 @@ const TestSuiteRow = ({ id, name, status, tests, lastRunAt }) => {
         <Link className="mc-text-h6 mc-mr-2" to={`/test-suites/${id}`}>
           {name}
         </Link>
-        <StatusBadge status={status} small />
+        {lastSuiteExecution && (
+          <StatusBadge status={lastSuiteExecution.status} small />
+        )}
         <p>{`${testsCount} tests`}</p>
-        {lastRunAt && (
-          <p>Last run at: {format(new Date(lastRunAt), 'MM/DD/YYYY HH:mm')}</p>
+        {lastSuiteExecution && (
+          <p>
+            Last run at:{' '}
+            {format(new Date(lastSuiteExecution.createdAt), 'MM/DD/YYYY HH:mm')}
+          </p>
         )}
       </div>
     </TestSuiteRowWrapper>
@@ -28,9 +33,8 @@ const TestSuiteRow = ({ id, name, status, tests, lastRunAt }) => {
 TestSuiteRow.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
   tests: PropTypes.array.isRequired,
-  lastRunAt: PropTypes.number
+  lastSuiteExecution: PropTypes.object
 }
 
 export default TestSuiteRow
