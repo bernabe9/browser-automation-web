@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
 import format from 'date-fns/format'
 import { Separator } from 'mc-components'
 
@@ -36,6 +37,18 @@ const SuiteExecutionPage = ({ suiteExecution, fetchSuiteExecution }) => {
       )}
     </div>
   )
+}
+
+SuiteExecutionPage.propTypes = {
+  suiteExecution: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    suiteId: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+    createdAt: PropTypes.number.isRequired,
+    execution: PropTypes.array.isRequired
+  }),
+  fetchSuiteExecution: PropTypes.func.isRequired
 }
 
 export default SuiteExecutionPage
