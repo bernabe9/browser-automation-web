@@ -59,7 +59,7 @@ const ExecutionRow = ({
     <Fragment>
       <div className="mc-mb-3">
         <div className="mc-mb-4">
-          {distance && <p>{`${distance} ago`}</p>}
+          {startedAt && <p>{`${distance} ago`}</p>}
           <div>
             <span>status: </span>
             <StatusBadge status={status} small />

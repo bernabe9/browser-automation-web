@@ -15,6 +15,7 @@ const SuiteExecution = ({
   createdAt,
   executions,
   concurrencyCount,
+  webhook,
   onRerunSuccess
 }) => {
   const [loadingRerun, setLoadingRerun] = useState(false)
@@ -47,6 +48,7 @@ const SuiteExecution = ({
       <p>URL: {url}</p>
       <p>created at: {format(new Date(createdAt), 'MM/DD/YYYY HH:mm')}</p>
       {concurrencyCount && <p>concurrency: {concurrencyCount}</p>}
+      {webhook && <p>webhook: {webhook}</p>}
       {status !== 'running' && (
         <Button className="mc-my-3" onClick={onRerunAll} loading={loadingRerun}>
           RERUN ALL
@@ -76,7 +78,8 @@ SuiteExecution.propTypes = {
   createdAt: PropTypes.number.isRequired,
   executions: PropTypes.array.isRequired,
   onRerunSuccess: PropTypes.func.isRequired,
-  concurrencyCount: PropTypes.number
+  concurrencyCount: PropTypes.number,
+  webhook: PropTypes.string
 }
 
 export default SuiteExecution
