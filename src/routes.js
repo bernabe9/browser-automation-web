@@ -1,11 +1,20 @@
 import routesPaths from 'constants/routesPaths'
 import HomePage from 'containers/HomePage'
+import LoginPage from 'containers/LoginPage'
 import CreateTestSuite from 'containers/CreateTestSuite'
 import TestPage from 'containers/TestPage'
 import SuitePage from 'containers/SuitePage'
 import NotFoundPage from 'containers/NotFoundPage'
 
-const routes = [
+export const publicRoutes = [
+  {
+    path: routesPaths.login,
+    component: LoginPage,
+    exact: true
+  }
+]
+
+export const protectedRoutes = [
   {
     path: routesPaths.index,
     component: HomePage,
@@ -30,5 +39,3 @@ const routes = [
     component: NotFoundPage
   }
 ]
-
-export default routes
