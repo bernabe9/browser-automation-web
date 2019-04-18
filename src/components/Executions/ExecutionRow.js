@@ -18,6 +18,9 @@ const ExecutionRow = ({
   startedAt,
   endedAt,
   testResults,
+  repositoryName,
+  repositoryOwner,
+  repositoryRef,
   rerunEnabled = false,
   onRerunSuccess
 }) => {
@@ -82,6 +85,10 @@ const ExecutionRow = ({
             {url}
           </a>
         </p>
+        {repositoryName && repositoryOwner && (
+          <p>repository: {`${repositoryOwner}/${repositoryName}`}</p>
+        )}
+        {repositoryRef && <p>ref: {repositoryRef}</p>}
         {status !== 'running' && rerunEnabled && (
           <Button className="mc-mt-4" onClick={onRerun} loading={loadingRerun}>
             RERUN

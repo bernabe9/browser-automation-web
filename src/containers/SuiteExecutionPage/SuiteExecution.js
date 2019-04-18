@@ -16,6 +16,9 @@ const SuiteExecution = ({
   executions,
   concurrencyCount,
   webhook,
+  repositoryName,
+  repositoryOwner,
+  repositoryRef,
   onRerunSuccess
 }) => {
   const [loadingRerun, setLoadingRerun] = useState(false)
@@ -47,6 +50,10 @@ const SuiteExecution = ({
       <p>suite id: {suiteId}</p>
       <p>URL: {url}</p>
       <p>created at: {format(new Date(createdAt), 'MM/DD/YYYY HH:mm')}</p>
+      {repositoryOwner && repositoryName && (
+        <p>repository: {`${repositoryOwner}/${repositoryName}`}</p>
+      )}
+      {repositoryRef && <p>ref: {repositoryRef}</p>}
       {concurrencyCount && <p>concurrency: {concurrencyCount}</p>}
       {webhook && <p>webhook: {webhook}</p>}
       {status !== 'running' && (

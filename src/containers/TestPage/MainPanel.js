@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import queryString from 'query-string'
 
 import api from 'api'
+import { applyQueryParams } from 'utils/helpers'
 import routes from 'constants/routesPaths'
 import TreeView from 'components/TreeView'
 import LeftWrapper from './LeftWrapper'
@@ -15,16 +16,21 @@ const MainPanel = ({ executions, stressExecutions, history }) => {
   const queryPath = queryString.parse(history.location.search)
 
   useEffect(() => {
-    api('/folders').then(data => {
-      setStructure(data)
+    const { repositoryName, repositoryOwner, repositoryRef } = queryPath
+    const path = applyQueryParams('/folders', {
+      repositoryName,
+      repositoryOwner,
+      repositoryRef
     })
+    api(path, { remote: true }).then(setStructure)
   }, [])
 
   const onToggle = node => {
+    const search = queryString.stringify({ ...queryPath, path: node.path })
     if (node.type === 'file') {
       history.push({
         pathname: routes.test,
-        search: `?path=${node.path}`
+        search
       })
       setCursor(node)
     }

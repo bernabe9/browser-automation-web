@@ -1,9 +1,11 @@
 import humps from 'humps'
 
 const api = async (path, opt = {}) => {
-  const response = await fetch(`${process.env.API_URL}${path}`, {
-    ...opt,
-    ...(opt.body && { body: JSON.stringify(opt.body) })
+  const { remote, ...options } = opt
+  const url = remote ? process.env.API_URL_REMOTE : process.env.API_URL
+  const response = await fetch(`${url}${path}`, {
+    ...options,
+    ...(options.body && { body: JSON.stringify(options.body) })
   })
   const json = await response.json()
   return humps.camelizeKeys(json)

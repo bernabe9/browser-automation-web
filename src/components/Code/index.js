@@ -1,4 +1,5 @@
 import React, { memo, useEffect, useState } from 'react'
+import queryString from 'query-string'
 
 import SyntaxHighlighter from 'react-syntax-highlighter'
 import { tomorrowNightEighties } from 'react-syntax-highlighter/dist/esm/styles/hljs'
@@ -9,7 +10,10 @@ const Code = ({ test, onCodeLoaded }) => {
   const [code, setCode] = useState()
 
   useEffect(() => {
-    api(applyQueryParams('/file', { path: test })).then(({ content }) => {
+    const queryPath = queryString.parse(window.location.search)
+    api(applyQueryParams('/file', { ...queryPath, path: test }), {
+      remote: true
+    }).then(({ content }) => {
       setCode(content)
       onCodeLoaded()
     })

@@ -4,6 +4,7 @@ import { Separator } from 'mc-components'
 
 import Executions from 'components/Executions'
 import Header from 'components/Header'
+import Environment from 'components/Environment'
 import MainPanel from './MainPanel'
 
 const TestPage = ({
@@ -21,6 +22,7 @@ const TestPage = ({
   return (
     <div>
       <Header />
+      <Environment />
       {executions && stressExecutions && (
         <Fragment>
           <MainPanel

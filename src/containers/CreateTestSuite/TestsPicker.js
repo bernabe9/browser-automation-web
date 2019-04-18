@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Modal, ModalClose, ModalContent } from 'mc-components'
+import queryString from 'query-string'
 
 import api from 'api'
+import { applyQueryParams } from 'utils/helpers'
 import TreeView from 'components/TreeView'
 import Code from 'components/Code'
 
@@ -13,7 +15,14 @@ const TestsPicker = ({ onAddTest, onRemoveTest, selectedTests }) => {
   const [loadingCode, setLoadingCode] = useState(false)
 
   useEffect(() => {
-    api('/folders').then(setStructure)
+    const queryPath = queryString.parse(window.location.search)
+    const { repositoryName, repositoryOwner, repositoryRef } = queryPath
+    const path = applyQueryParams('/folders', {
+      repositoryName,
+      repositoryOwner,
+      repositoryRef
+    })
+    api(path, { remote: true }).then(setStructure)
   }, [])
 
   const onToggle = node => {

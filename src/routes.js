@@ -19,8 +19,7 @@ const routes = [
   },
   {
     path: routesPaths.test,
-    component: TestPage,
-    exact: true
+    component: TestPage
   },
   {
     path: routesPaths.suite(),

@@ -4,6 +4,7 @@ import { Separator, Button } from 'mc-components'
 
 import api from 'api'
 import Header from 'components/Header'
+import Environment from 'components/Environment'
 import StatusBadge from 'components/StatusBadge'
 import { applyQueryParams } from 'utils/helpers'
 import ConcurrencyInput from './ConcurrencyInput'
@@ -57,6 +58,7 @@ const SuitePage = ({
   return (
     <div>
       <Header />
+      <Environment />
       {suite && suite.tests && (
         <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
           <div>
