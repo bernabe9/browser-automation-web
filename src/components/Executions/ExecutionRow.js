@@ -131,7 +131,10 @@ ExecutionRow.propTypes = {
   endedAt: PropTypes.number,
   errorMessage: PropTypes.string,
   rerunEnabled: PropTypes.bool,
-  onRerunSuccess: PropTypes.func
+  onRerunSuccess: PropTypes.func,
+  repositoryName: PropTypes.string,
+  repositoryOwner: PropTypes.string,
+  repositoryRef: PropTypes.string
 }
 
 export default ExecutionRow

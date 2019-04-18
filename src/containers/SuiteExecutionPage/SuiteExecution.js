@@ -86,7 +86,10 @@ SuiteExecution.propTypes = {
   executions: PropTypes.array.isRequired,
   onRerunSuccess: PropTypes.func.isRequired,
   concurrencyCount: PropTypes.number,
-  webhook: PropTypes.string
+  webhook: PropTypes.string,
+  repositoryName: PropTypes.string,
+  repositoryOwner: PropTypes.string,
+  repositoryRef: PropTypes.string
 }
 
 export default SuiteExecution
