@@ -1,6 +1,7 @@
 import routesPaths from 'constants/routesPaths'
 import HomePage from 'containers/HomePage'
 import LoginPage from 'containers/LoginPage'
+import RegisterPage from 'containers/RegisterPage'
 import CreateTestSuite from 'containers/CreateTestSuite'
 import TestPage from 'containers/TestPage'
 import SuitePage from 'containers/SuitePage'
@@ -14,7 +15,7 @@ export const publicRoutes = [
   }
 ]
 
-export const protectedRoutes = [
+export const privateRoutes = [
   {
     path: routesPaths.index,
     component: HomePage,
@@ -33,6 +34,11 @@ export const protectedRoutes = [
   {
     path: routesPaths.suite,
     component: SuitePage,
+    exact: true
+  },
+  {
+    path: routesPaths.register,
+    component: RegisterPage,
     exact: true
   },
   {

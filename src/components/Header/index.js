@@ -3,6 +3,7 @@ import { NavLink, matchPath } from 'react-router-dom'
 
 import routes from 'constants/routesPaths'
 import Anchor from 'components/Anchor'
+import { deleteUserData } from 'utils/authentication'
 import Logo from './Logo'
 
 const isActive = path =>
@@ -39,6 +40,22 @@ const Header = () => (
           className="d-inline-block mc-pr-3"
         >
           Create Suite
+        </Anchor>
+      </NavLink>
+      <NavLink to={routes.register}>
+        <Anchor
+          isActive={isActive(routes.register)}
+          className="d-inline-block mc-pr-3"
+        >
+          Register New User
+        </Anchor>
+      </NavLink>
+      <NavLink to={routes.login} onClick={deleteUserData}>
+        <Anchor
+          isActive={isActive(routes.login)}
+          className="d-inline-block mc-pr-3"
+        >
+          Logout
         </Anchor>
       </NavLink>
     </div>

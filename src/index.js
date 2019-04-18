@@ -4,7 +4,7 @@ import { Provider } from 'react-redux'
 import { AppContainer, setConfig } from 'react-hot-loader'
 
 import configureStore from 'state/store/configureStore'
-import App from 'containers/App'
+import App from 'components/App'
 import 'styles/styles.scss'
 
 require('./favicon.ico') // Tell webpack to load favicon.ico
