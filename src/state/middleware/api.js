@@ -1,5 +1,4 @@
 import fetch from 'api'
-// import normalize from 'json-api-normalizer'
 
 export const API_DATA_REQUEST = '@@API_DATA_REQUEST'
 export const API_DATA_SUCCESS = '@@API_DATA_SUCCESS'

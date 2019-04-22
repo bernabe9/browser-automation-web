@@ -9,27 +9,27 @@ import TreeView from 'components/TreeView'
 import LeftWrapper from './LeftWrapper'
 import TestPanel from './TestPanel'
 
-const MainPanel = ({ executions, stressExecutions, history }) => {
+const MainPanel = ({ executions, stressExecutions, history, match }) => {
   const [structure, setStructure] = useState()
   const [cursor, setCursor] = useState()
 
   const queryPath = queryString.parse(history.location.search)
 
   useEffect(() => {
-    const { repositoryName, repositoryOwner, repositoryRef } = queryPath
+    const { repositoryName, repositoryOwner, repositoryRef } = match.params
     const path = applyQueryParams('/folders', {
       repositoryName,
       repositoryOwner,
       repositoryRef
     })
-    api(path, { remote: true }).then(setStructure)
+    api(path, { url: 'remote' }).then(setStructure)
   }, [])
 
   const onToggle = node => {
     const search = queryString.stringify({ ...queryPath, path: node.path })
     if (node.type === 'file') {
       history.push({
-        pathname: routes.test,
+        pathname: routes.test(match.params),
         search
       })
       setCursor(node)

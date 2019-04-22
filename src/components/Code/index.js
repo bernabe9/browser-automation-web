@@ -12,7 +12,7 @@ const Code = ({ test, onCodeLoaded }) => {
   useEffect(() => {
     const queryPath = queryString.parse(window.location.search)
     api(applyQueryParams('/file', { ...queryPath, path: test }), {
-      remote: true
+      url: 'remote'
     }).then(({ content }) => {
       setCode(content)
       onCodeLoaded()

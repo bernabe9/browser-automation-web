@@ -2,6 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { AppContainer, setConfig } from 'react-hot-loader'
+import { sessionService } from 'redux-react-session'
 
 import configureStore from 'state/store/configureStore'
 import App from 'components/App'
@@ -29,7 +30,19 @@ const renderApp = Component => {
   )
 }
 
-renderApp(App)
+sessionService.initSessionService(store).then(() => {
+  sessionService.saveSession({
+    accessToken: '9188448dbd40b002aa89cb0e0037684b93cb99cb',
+    scope: 'repo,user:email',
+    tokenType: 'bearer'
+  })
+  sessionService.saveUser({
+    accessToken: '9188448dbd40b002aa89cb0e0037684b93cb99cb',
+    scope: 'repo,user:email',
+    tokenType: 'bearer'
+  })
+  renderApp(App)
+})
 
 setConfig({ logLevel: 'no-errors-please' })
 
