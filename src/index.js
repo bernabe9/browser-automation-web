@@ -31,16 +31,6 @@ const renderApp = Component => {
 }
 
 sessionService.initSessionService(store).then(() => {
-  sessionService.saveSession({
-    accessToken: '9188448dbd40b002aa89cb0e0037684b93cb99cb',
-    scope: 'repo,user:email',
-    tokenType: 'bearer'
-  })
-  sessionService.saveUser({
-    accessToken: '9188448dbd40b002aa89cb0e0037684b93cb99cb',
-    scope: 'repo,user:email',
-    tokenType: 'bearer'
-  })
   renderApp(App)
 })
 
