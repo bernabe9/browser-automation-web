@@ -80,7 +80,8 @@ Header.propTypes = {
   accessToken: PropTypes.string.isRequired,
   fetchUser: PropTypes.func.isRequired,
   user: PropTypes.object,
-  match: PropTypes.object
+  match: PropTypes.object,
+  showLinks: PropTypes.bool
 }
 
 export default withRouter(Header)

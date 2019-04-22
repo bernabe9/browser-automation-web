@@ -69,7 +69,8 @@ const MainPanel = ({ executions, stressExecutions, history, match }) => {
 MainPanel.propTypes = {
   executions: PropTypes.array.isRequired,
   stressExecutions: PropTypes.array.isRequired,
-  history: PropTypes.object
+  history: PropTypes.object,
+  match: PropTypes.object
 }
 
 export default MainPanel
