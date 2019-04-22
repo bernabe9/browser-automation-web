@@ -39,7 +39,7 @@ const LoginPage = ({ history }) => {
         <h3 className="mc-text-h3 mc-mb-4">Welcome to Browser Automation</h3>
         <h5 className="mc-text-h5 mc-my-3">Login with GitHub to continue</h5>
         {error && <p>{error}</p>}
-        <a href="https://github.com/login/oauth/authorize?scope=repo%read:user%20read:org&client_id=3a749ceca76d3116e27e">
+        <a href="https://github.com/login/oauth/authorize?scope=repo%20read:user%20read:org&client_id=3a749ceca76d3116e27e">
           <Button kind="secondary" loading={loading}>
             <GitHubIcon />
             LOGIN WITH GITHUB
