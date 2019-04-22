@@ -1,8 +1,9 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Separator } from 'mc-components'
+import { Separator, Button } from 'mc-components'
 import distanceInWords from 'date-fns/distance_in_words_to_now'
 
+import { applyQueryParams } from 'utils/helpers'
 import StatusBadge from 'components/StatusBadge'
 import TestResults from 'components/TestResults'
 import Timer from 'components/Timer'
@@ -16,9 +17,15 @@ const ExecutionRow = ({
   errorMessage,
   startedAt,
   endedAt,
-  testResults
+  testResults,
+  repositoryName,
+  repositoryOwner,
+  repositoryRef,
+  rerunEnabled = false,
+  onRerunSuccess
 }) => {
   const [showData, setShowData] = useState(false)
+  const [loadingRerun, setLoadingRerun] = useState(false)
 
   const getDistance = () =>
     distanceInWords(new Date(startedAt), {
@@ -34,11 +41,28 @@ const ExecutionRow = ({
 
   const onToggle = () => setShowData(!showData)
 
+  const onRerun = () => {
+    const path = applyQueryParams(`${process.env.API_URL}/rerun`, {
+      id
+    })
+    setLoadingRerun(true)
+    fetch(path)
+      .then(async res => {
+        if (res.ok) {
+          const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
+          await timeout(1000)
+          setLoadingRerun(false)
+          onRerunSuccess()
+        }
+      })
+      .catch(() => setLoadingRerun(false))
+  }
+
   return (
     <Fragment>
       <div className="mc-mb-3">
         <div className="mc-mb-4">
-          {distance && <p>{`${distance} ago`}</p>}
+          {startedAt && <p>{`${distance} ago`}</p>}
           <div>
             <span>status: </span>
             <StatusBadge status={status} small />
@@ -61,6 +85,15 @@ const ExecutionRow = ({
             {url}
           </a>
         </p>
+        {repositoryName && repositoryOwner && (
+          <p>repository: {`${repositoryOwner}/${repositoryName}`}</p>
+        )}
+        {repositoryRef && <p>ref: {repositoryRef}</p>}
+        {status !== 'running' && rerunEnabled && (
+          <Button className="mc-mt-4" onClick={onRerun} loading={loadingRerun}>
+            RERUN
+          </Button>
+        )}
       </div>
       {!!testResults && (
         <Fragment>
@@ -96,7 +129,12 @@ ExecutionRow.propTypes = {
   startedAt: PropTypes.number.isRequired,
   testResults: PropTypes.string,
   endedAt: PropTypes.number,
-  errorMessage: PropTypes.string
+  errorMessage: PropTypes.string,
+  rerunEnabled: PropTypes.bool,
+  onRerunSuccess: PropTypes.func,
+  repositoryName: PropTypes.string,
+  repositoryOwner: PropTypes.string,
+  repositoryRef: PropTypes.string
 }
 
 export default ExecutionRow

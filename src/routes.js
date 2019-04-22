@@ -4,6 +4,7 @@ import CreateTestSuite from 'containers/CreateTestSuite'
 import TestPage from 'containers/TestPage'
 import SuitePage from 'containers/SuitePage'
 import NotFoundPage from 'containers/NotFoundPage'
+import SuiteExecutionPage from 'containers/SuiteExecutionPage'
 
 const routes = [
   {
@@ -18,12 +19,16 @@ const routes = [
   },
   {
     path: routesPaths.test,
-    component: TestPage,
+    component: TestPage
+  },
+  {
+    path: routesPaths.suite(),
+    component: SuitePage,
     exact: true
   },
   {
-    path: routesPaths.suite,
-    component: SuitePage,
+    path: routesPaths.suiteExecution(),
+    component: SuiteExecutionPage,
     exact: true
   },
   {

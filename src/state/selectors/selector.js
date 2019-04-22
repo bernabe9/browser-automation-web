@@ -1,4 +1,5 @@
 import { denormalize } from 'normalizr'
+import filter from 'lodash/filter'
 
 export default class Selector {
   constructor({ topLevelObj = 'data', objName = 'none', schema } = {}) {
@@ -34,10 +35,10 @@ export default class Selector {
     }
 
     if (Array.isArray(state)) {
-      return state.filter(options)
+      return filter(state, options)
     }
 
-    return this.getAll(state).filter(options)
+    return filter(this.getAll(state), options)
   }
 
   find = (state, fn) => {

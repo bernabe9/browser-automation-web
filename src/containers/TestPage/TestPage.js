@@ -4,6 +4,7 @@ import { Separator } from 'mc-components'
 
 import Executions from 'components/Executions'
 import Header from 'components/Header'
+import Environment from 'components/Environment'
 import MainPanel from './MainPanel'
 
 const TestPage = ({
@@ -21,6 +22,7 @@ const TestPage = ({
   return (
     <div>
       <Header />
+      <Environment />
       {executions && stressExecutions && (
         <Fragment>
           <MainPanel
@@ -28,7 +30,7 @@ const TestPage = ({
             stressExecutions={stressExecutions}
             history={history}
           />
-          <div className="container mc-mt-5 mc-p-5 mc-invert mc-background--color-light">
+          <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
             <h5 className="mc-text-h5">All Executions</h5>
             <Separator />
             <Executions executions={executions} />

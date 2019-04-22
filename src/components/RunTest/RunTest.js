@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Input, FormGroup, Button } from 'mc-components'
+import queryString from 'query-string'
 
 import { applyQueryParams } from 'utils/helpers'
 
@@ -15,9 +16,17 @@ const RunTest = ({ test, fetchExecutions }) => {
       return
     }
     setLoading(true)
+    const {
+      repositoryName,
+      repositoryOwner,
+      repositoryRef
+    } = queryString.parse(window.location.search)
     const path = applyQueryParams(`${process.env.API_URL}/trigger`, {
       test,
-      url
+      url,
+      repositoryName,
+      repositoryOwner,
+      repositoryRef
     })
     fetch(path)
       .then(async res => {

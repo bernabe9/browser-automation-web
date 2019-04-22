@@ -4,6 +4,7 @@ import { Separator } from 'mc-components'
 
 import api from 'api'
 import Header from 'components/Header'
+import Environment from 'components/Environment'
 import TestSuiteForm from './TestSuiteForm'
 import TestsPicker from './TestsPicker'
 import SelectedTests from './SelectedTests'
@@ -40,7 +41,8 @@ const CreateTestSuite = ({ history }) => {
   return (
     <div>
       <Header />
-      <div className="container mc-mt-5 mc-p-5 mc-invert mc-background--color-light">
+      <Environment />
+      <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
         <h5 className="mc-text-h5">Create Test Suite</h5>
         <Separator />
         <div className="row mc-my-4">
