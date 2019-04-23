@@ -10,7 +10,7 @@ const userSelector = new UserSelector()
 const mapState = state => {
   const { accessToken } = state.session.user
   const user = userSelector.getAll(state)
-  return { accessToken, user }
+  return { accessToken, user, environment: state.environment }
 }
 
 const mapDispatch = dispatch => {

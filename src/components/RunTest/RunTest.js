@@ -64,7 +64,8 @@ const RunTest = ({ test, fetchExecutions, match }) => {
 
 RunTest.propTypes = {
   fetchExecutions: PropTypes.func.isRequired,
-  test: PropTypes.string.isRequired
+  test: PropTypes.string.isRequired,
+  match: PropTypes.object.isRequired
 }
 
 export default withRouter(RunTest)

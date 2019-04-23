@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { NavLink, matchPath, withRouter } from 'react-router-dom'
+import { NavLink, matchPath } from 'react-router-dom'
 import { sessionService } from 'redux-react-session'
 
 import routes from 'constants/routesPaths'
@@ -16,7 +16,13 @@ const isActive = path =>
     strict: false
   })
 
-const Header = ({ user, accessToken, fetchUser, match, showLinks = true }) => {
+const Header = ({
+  user,
+  accessToken,
+  fetchUser,
+  environment,
+  showLinks = true
+}) => {
   useEffect(() => {
     !user && fetchUser(accessToken)
   }, [])
@@ -36,7 +42,7 @@ const Header = ({ user, accessToken, fetchUser, match, showLinks = true }) => {
         <div className="mc-py-1">
           {showLinks && (
             <div>
-              <NavLink to={routes.dashboard(match.params)}>
+              <NavLink to={routes.dashboard(environment)}>
                 <Anchor
                   isActive={isActive(routes.dashboard())}
                   className="d-inline-block mc-pr-3"
@@ -44,7 +50,7 @@ const Header = ({ user, accessToken, fetchUser, match, showLinks = true }) => {
                   Dashboard
                 </Anchor>
               </NavLink>
-              <NavLink to={routes.test(match.params)}>
+              <NavLink to={routes.test(environment)}>
                 <Anchor
                   isActive={isActive(routes.test())}
                   className="d-inline-block mc-pr-3"
@@ -52,7 +58,7 @@ const Header = ({ user, accessToken, fetchUser, match, showLinks = true }) => {
                   Tests
                 </Anchor>
               </NavLink>
-              <NavLink to={routes.createTestSuite(match.params)}>
+              <NavLink to={routes.createTestSuite(environment)}>
                 <Anchor
                   isActive={isActive(routes.createTestSuite())}
                   className="d-inline-block mc-pr-3"
@@ -80,8 +86,8 @@ Header.propTypes = {
   accessToken: PropTypes.string.isRequired,
   fetchUser: PropTypes.func.isRequired,
   user: PropTypes.object,
-  match: PropTypes.object,
+  environment: PropTypes.object,
   showLinks: PropTypes.bool
 }
 
-export default withRouter(Header)
+export default Header

@@ -38,7 +38,8 @@ TestSuiteRow.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   tests: PropTypes.array.isRequired,
-  lastSuiteExecution: PropTypes.object
+  lastSuiteExecution: PropTypes.object,
+  match: PropTypes.object
 }
 
 export default TestSuiteRow
