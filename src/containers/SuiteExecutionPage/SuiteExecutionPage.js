@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 
 import Header from 'components/Header'
+import Environment from 'components/Environment'
 import SuiteExecution from './SuiteExecution'
 
 const SuiteExecutionPage = ({ suiteExecution, fetchSuiteExecution }) => {
@@ -12,6 +13,7 @@ const SuiteExecutionPage = ({ suiteExecution, fetchSuiteExecution }) => {
   return (
     <div>
       <Header />
+      <Environment />
       {suiteExecution && (
         <SuiteExecution
           {...suiteExecution}

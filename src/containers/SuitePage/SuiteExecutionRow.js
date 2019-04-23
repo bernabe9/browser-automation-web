@@ -4,11 +4,15 @@ import { Link } from 'react-router-dom'
 import { Separator } from 'mc-components'
 import format from 'date-fns/format'
 
+import routes from 'constants/routesPaths'
 import StatusBadge from 'components/StatusBadge'
 
-const SuiteExecutionRow = ({ id, createdAt, url, status }) => (
+const SuiteExecutionRow = ({ id, createdAt, url, status, match }) => (
   <div className="mc-mb-3">
-    <Link className="mc-text-h6 mc-mr-2" to={`/suite-execution/${id}`}>
+    <Link
+      className="mc-text-h6 mc-mr-2"
+      to={routes.suiteExecution({ ...match.params, id })}
+    >
       {id}
     </Link>
     <div>

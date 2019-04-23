@@ -15,8 +15,20 @@ const routes = {
     repositoryName = ':repositoryName',
     repositoryRef = ':repositoryRef'
   } = {}) => `/${repositoryOwner}/${repositoryName}/${repositoryRef}/tests`,
-  suite: (id = ':id') => `/test-suites/${id}`,
-  suiteExecution: (id = ':id') => `/suite-execution/${id}`,
+  suite: ({
+    repositoryOwner = ':repositoryOwner',
+    repositoryName = ':repositoryName',
+    repositoryRef = ':repositoryRef',
+    id = ':id'
+  } = {}) =>
+    `/${repositoryOwner}/${repositoryName}/${repositoryRef}/suites/${id}`,
+  suiteExecution: ({
+    repositoryOwner = ':repositoryOwner',
+    repositoryName = ':repositoryName',
+    repositoryRef = ':repositoryRef',
+    id = ':id'
+  } = {}) =>
+    `/${repositoryOwner}/${repositoryName}/${repositoryRef}/suite-execution/${id}`,
   login: '/login'
 }
 

@@ -5,6 +5,7 @@ import { Separator } from 'mc-components'
 import api from 'api'
 import Header from 'components/Header'
 import routes from 'constants/routesPaths'
+import RepositoryLink from './RepositoryLink'
 
 const RepositoriesPage = () => {
   const [repositories, setRepositories] = useState()
@@ -31,9 +32,9 @@ const RepositoriesPage = () => {
                       repositoryRef: repository.defaultRef
                     })}
                   >
-                    <h6 className="mc-text-h6 mc-mb-2">
+                    <RepositoryLink className="mc-text-h6 mc-mb-2">
                       {repository.fullName}
-                    </h6>
+                    </RepositoryLink>
                   </Link>
                   <p>Default ref: {repository.defaultRef}</p>
                   <Separator />

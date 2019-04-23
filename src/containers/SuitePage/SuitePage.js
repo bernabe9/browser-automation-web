@@ -17,7 +17,8 @@ const SuitePage = ({
   fetchSuite,
   fetchSuiteExecutions,
   suite,
-  suiteExecutions
+  suiteExecutions,
+  match
 }) => {
   const [url, setUrl] = useState()
   const [urlEnabled, setUrlEnabled] = useState(false)
@@ -110,7 +111,11 @@ const SuitePage = ({
           <h5 className="mc-text-h5 mc-my-4">Suite Executions</h5>
           <div>
             {suiteExecutions.map(suiteExecution => (
-              <SuiteExecutionRow key={suiteExecution.id} {...suiteExecution} />
+              <SuiteExecutionRow
+                key={suiteExecution.id}
+                {...suiteExecution}
+                match={match}
+              />
             ))}
           </div>
         </div>
