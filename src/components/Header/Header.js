@@ -6,8 +6,10 @@ import { sessionService } from 'redux-react-session'
 import routes from 'constants/routesPaths'
 import Anchor from 'components/Anchor'
 import Flex from 'components/Flex'
-import Logo from './Logo'
+import ColWrapper from './ColWrapper'
 import Avatar from './Avatar'
+import Logo from './Logo'
+import Wordmark from './Wordmark'
 
 const isActive = path =>
   !!matchPath(window.location.pathname, {
@@ -33,13 +35,18 @@ const Header = ({
 
   return (
     <Fragment>
-      <Logo className="mc-mt-3" />
-      <h2 className="mc-text-h2 mc-m-4 mc-text--center">Browser Automation</h2>
+      <Logo
+        src={require('assets/logo_invert.png')}
+        alt="browser automation logo"
+      />
+      <Wordmark className="mc-text-h4 mc-m-4 mc-text--center">
+        Browser Automation
+      </Wordmark>
       <Flex
         justifyContent="space-between"
         className="container mc-mt-5 mc-px-5 mc-py-4 mc-invert mc-background--color-light"
       >
-        <div className="mc-py-1">
+        <ColWrapper>
           {showLinks && (
             <div>
               <NavLink to={routes.dashboard(environment)}>
@@ -68,14 +75,22 @@ const Header = ({
               </NavLink>
             </div>
           )}
-        </div>
+        </ColWrapper>
         {user && (
-          <Flex>
+          <ColWrapper>
+            <NavLink to={routes.index}>
+              <Anchor
+                isActive={isActive(routes.index)}
+                className="d-inline-block mc-pr-3"
+              >
+                Repositories
+              </Anchor>
+            </NavLink>
             <Anchor onClick={logout} className="d-inline-block mc-pr-3">
               LOGOUT
             </Anchor>
             <Avatar src={user.avatarUrl} alt="github avatar" />
-          </Flex>
+          </ColWrapper>
         )}
       </Flex>
     </Fragment>

@@ -5,11 +5,12 @@ import { Separator } from 'mc-components'
 import api from 'api'
 import Header from 'components/Header'
 import Environment from 'components/Environment'
+import routes from 'constants/routesPaths'
 import TestSuiteForm from './TestSuiteForm'
 import TestsPicker from './TestsPicker'
 import SelectedTests from './SelectedTests'
 
-const CreateTestSuite = ({ history }) => {
+const CreateTestSuite = ({ history, match }) => {
   const [selectedTests, setSelectedTests] = useState(new Set([]))
   const [submitted, setSubmitted] = useState(false)
 
@@ -30,11 +31,13 @@ const CreateTestSuite = ({ history }) => {
     if (selectedTests.size === 0) {
       return
     }
+    const { repositoryOwner, repositoryName } = match.params
+    const repository = `${repositoryOwner}/${repositoryName}`
     return api('/suites', {
       method: 'post',
-      body: { ...suite, tests: selectedTests }
+      body: { ...suite, tests: selectedTests, repository }
     }).then(() => {
-      history.push('/')
+      history.push(routes.dashboard(match.params))
     })
   }
 
@@ -67,7 +70,8 @@ const CreateTestSuite = ({ history }) => {
 }
 
 CreateTestSuite.propTypes = {
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
 }
 
 export default CreateTestSuite

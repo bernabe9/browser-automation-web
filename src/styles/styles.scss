@@ -1,5 +1,10 @@
 @import 'mc-components/dist/styles/scss/index.scss';
 
+body {
+  font-family: montserrat !important;
+  letter-spacing: 0.01em;
+}
+
 :export {
   mcColorGray200: $mc-color-gray-200;
   mcColorGray400: $mc-color-gray-400;

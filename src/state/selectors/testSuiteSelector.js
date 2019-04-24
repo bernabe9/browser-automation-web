@@ -28,14 +28,12 @@ export default class TestSuiteSelector extends Selector {
     return suite
   }
 
-  getAllSuites = state => {
+  getSuitesByRepository = state => {
     const suites = this.getAll(state)
-    if (Array.isArray(suites)) {
-      suites.forEach(suite => {
-        suite.status = this.getStatus(suite)
-      })
-      return suites
-    }
-    return suites
+    const { repositoryOwner, repositoryName } = state.environment
+    return this.filter(
+      suites,
+      suite => suite.repository === `${repositoryOwner}/${repositoryName}`
+    )
   }
 }
