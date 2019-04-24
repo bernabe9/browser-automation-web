@@ -4,15 +4,19 @@ import { Link } from 'react-router-dom'
 import format from 'date-fns/format'
 
 import StatusBadge from 'components/StatusBadge'
+import routes from 'constants/routesPaths'
 import TestSuiteRowWrapper from './TestSuiteRowWrapper'
 
-const TestSuiteRow = ({ id, name, tests, lastSuiteExecution }) => {
+const TestSuiteRow = ({ id, name, tests, lastSuiteExecution, match }) => {
   const testsCount = tests.length
 
   return (
     <TestSuiteRowWrapper className="mc-p-3 mc-my-3">
       <div>
-        <Link className="mc-text-h6 mc-mr-2" to={`/test-suites/${id}`}>
+        <Link
+          className="mc-text-h6 mc-mr-2"
+          to={routes.suite({ id, ...match.params })}
+        >
           {name}
         </Link>
         {lastSuiteExecution && (
@@ -34,7 +38,8 @@ TestSuiteRow.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   tests: PropTypes.array.isRequired,
-  lastSuiteExecution: PropTypes.object
+  lastSuiteExecution: PropTypes.object,
+  match: PropTypes.object
 }
 
 export default TestSuiteRow

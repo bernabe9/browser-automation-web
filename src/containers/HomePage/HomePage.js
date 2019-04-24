@@ -4,6 +4,7 @@ import { Separator } from 'mc-components'
 
 import TestSuites from 'components/TestSuites'
 import Header from 'components/Header'
+import Environment from 'components/Environment'
 
 const HomePage = ({ fetchTestSuites, testSuites }) => {
   useEffect(() => {
@@ -13,6 +14,7 @@ const HomePage = ({ fetchTestSuites, testSuites }) => {
   return (
     <div>
       <Header />
+      <Environment />
       <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
         <h5 className="mc-text-h5">Test Suites</h5>
         <Separator />

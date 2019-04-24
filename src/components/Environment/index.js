@@ -1,31 +1,46 @@
-import React, { useState, useEffect } from 'react'
-import queryString from 'query-string'
+import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-import api from 'api'
+import { setEnvironment } from 'state/modules/environment'
 
-const Environment = () => {
-  const [environment, setEnvironment] = useState()
-
+const Environment = ({
+  match,
+  setEnvironment,
+  repositoryName,
+  repositoryOwner,
+  repositoryRef
+}) => {
   useEffect(() => {
-    api('/environment', { remote: true }).then(setEnvironment)
+    setEnvironment(match.params)
   }, [])
-
-  if (!environment) {
-    return null
-  }
-
-  const queryPath = queryString.parse(window.location.search)
-  const { repositoryName, repositoryOwner, repositoryRef } = {
-    ...environment,
-    ...queryPath
-  }
 
   return (
     <div className="container mc-mt-5 mc-p-1">
       <p>Repository: {`${repositoryOwner}/${repositoryName}`}</p>
-      <p>Ref: {repositoryRef}</p>
+      {repositoryRef && <p>Ref: {repositoryRef}</p>}
     </div>
   )
 }
 
-export default Environment
+Environment.propTypes = {
+  match: PropTypes.object.isRequired,
+  setEnvironment: PropTypes.func.isRequired,
+  repositoryName: PropTypes.string,
+  repositoryOwner: PropTypes.string,
+  repositoryRef: PropTypes.string
+}
+
+const mapState = state => ({
+  repositoryName: state.environment.repositoryName,
+  repositoryOwner: state.environment.repositoryOwner,
+  repositoryRef: state.environment.repositoryRef
+})
+
+const mapDispatch = { setEnvironment }
+
+export default connect(
+  mapState,
+  mapDispatch
+)(withRouter(Environment))

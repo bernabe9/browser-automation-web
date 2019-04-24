@@ -12,7 +12,8 @@ const TestPage = ({
   fetchStressExecutions,
   executions,
   stressExecutions,
-  history
+  history,
+  match
 }) => {
   useEffect(() => {
     fetchExecutions()
@@ -29,6 +30,7 @@ const TestPage = ({
             executions={executions}
             stressExecutions={stressExecutions}
             history={history}
+            match={match}
           />
           <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
             <h5 className="mc-text-h5">All Executions</h5>
@@ -46,7 +48,8 @@ TestPage.propTypes = {
   fetchStressExecutions: PropTypes.func.isRequired,
   executions: PropTypes.array,
   stressExecutions: PropTypes.array,
-  history: PropTypes.object
+  history: PropTypes.object,
+  match: PropTypes.object
 }
 
 export default TestPage

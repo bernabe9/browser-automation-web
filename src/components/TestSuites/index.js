@@ -1,12 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 
 import TestSuiteRow from './TestSuiteRow'
 
-const TestSuites = ({ testSuites }) => (
+const TestSuites = ({ testSuites, match }) => (
   <div>
     {testSuites &&
-      testSuites.map(suite => <TestSuiteRow key={suite.id} {...suite} />)}
+      testSuites.map(suite => (
+        <TestSuiteRow key={suite.id} {...suite} match={match} />
+      ))}
   </div>
 )
 
@@ -17,7 +20,8 @@ TestSuites.propTypes = {
       name: PropTypes.string.isRequired,
       tests: PropTypes.array.isRequired
     }).isRequired
-  )
+  ),
+  match: PropTypes.object.isRequired
 }
 
-export default TestSuites
+export default withRouter(TestSuites)

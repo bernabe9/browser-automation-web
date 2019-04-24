@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
 import { Input, FormGroup, Button } from 'mc-components'
-import queryString from 'query-string'
 
 import { applyQueryParams } from 'utils/helpers'
+import api from 'api'
 
-const RunTest = ({ test, fetchExecutions }) => {
+const RunTest = ({ test, fetchExecutions, match }) => {
   const [url, setUrl] = useState('')
   const [urlError, setUrlError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -16,26 +17,20 @@ const RunTest = ({ test, fetchExecutions }) => {
       return
     }
     setLoading(true)
-    const {
-      repositoryName,
-      repositoryOwner,
-      repositoryRef
-    } = queryString.parse(window.location.search)
-    const path = applyQueryParams(`${process.env.API_URL}/trigger`, {
+    const { repositoryName, repositoryOwner, repositoryRef } = match.params
+    const path = applyQueryParams(`/trigger`, {
       test,
       url,
       repositoryName,
       repositoryOwner,
       repositoryRef
     })
-    fetch(path)
-      .then(async res => {
+    api(path)
+      .then(async () => {
         setLoading(false)
-        if (res.ok) {
-          const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
-          await timeout(1000)
-          fetchExecutions()
-        }
+        const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
+        await timeout(1000)
+        fetchExecutions()
       })
       .catch(() => setLoading(false))
   }
@@ -69,7 +64,8 @@ const RunTest = ({ test, fetchExecutions }) => {
 
 RunTest.propTypes = {
   fetchExecutions: PropTypes.func.isRequired,
-  test: PropTypes.string.isRequired
+  test: PropTypes.string.isRequired,
+  match: PropTypes.object.isRequired
 }
 
-export default RunTest
+export default withRouter(RunTest)

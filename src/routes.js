@@ -5,30 +5,48 @@ import TestPage from 'containers/TestPage'
 import SuitePage from 'containers/SuitePage'
 import NotFoundPage from 'containers/NotFoundPage'
 import SuiteExecutionPage from 'containers/SuiteExecutionPage'
+import LoginPage from 'containers/LoginPage'
+import RepositoriesPage from 'containers/RepositoriesPage'
 
 const routes = [
   {
     path: routesPaths.index,
+    component: RepositoriesPage,
+    exact: true,
+    private: true
+  },
+  {
+    path: routesPaths.dashboard(),
     component: HomePage,
-    exact: true
+    exact: true,
+    private: true
   },
   {
-    path: routesPaths.createTestSuite,
+    path: routesPaths.createTestSuite(),
     component: CreateTestSuite,
-    exact: true
+    exact: true,
+    private: true
   },
   {
-    path: routesPaths.test,
-    component: TestPage
+    path: routesPaths.test(),
+    component: TestPage,
+    private: true
   },
   {
     path: routesPaths.suite(),
     component: SuitePage,
-    exact: true
+    exact: true,
+    private: true
   },
   {
     path: routesPaths.suiteExecution(),
     component: SuiteExecutionPage,
+    exact: true,
+    private: true
+  },
+  {
+    path: routesPaths.login,
+    component: LoginPage,
     exact: true
   },
   {

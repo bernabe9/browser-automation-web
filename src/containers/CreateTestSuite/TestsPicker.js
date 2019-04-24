@@ -1,28 +1,27 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Button, Modal, ModalClose, ModalContent } from 'mc-components'
-import queryString from 'query-string'
+import { withRouter } from 'react-router-dom'
 
 import api from 'api'
 import { applyQueryParams } from 'utils/helpers'
 import TreeView from 'components/TreeView'
 import Code from 'components/Code'
 
-const TestsPicker = ({ onAddTest, onRemoveTest, selectedTests }) => {
+const TestsPicker = ({ onAddTest, onRemoveTest, selectedTests, match }) => {
   const [structure, setStructure] = useState()
   const [cursor, setCursor] = useState()
   const [showCode, setShowCode] = useState(false)
   const [loadingCode, setLoadingCode] = useState(false)
 
   useEffect(() => {
-    const queryPath = queryString.parse(window.location.search)
-    const { repositoryName, repositoryOwner, repositoryRef } = queryPath
+    const { repositoryName, repositoryOwner, repositoryRef } = match.params
     const path = applyQueryParams('/folders', {
       repositoryName,
       repositoryOwner,
       repositoryRef
     })
-    api(path, { remote: true }).then(setStructure)
+    api(path, { url: 'remote' }).then(setStructure)
   }, [])
 
   const onToggle = node => {
@@ -99,7 +98,8 @@ const TestsPicker = ({ onAddTest, onRemoveTest, selectedTests }) => {
 TestsPicker.propTypes = {
   onAddTest: PropTypes.func.isRequired,
   onRemoveTest: PropTypes.func.isRequired,
-  selectedTests: PropTypes.object.isRequired
+  selectedTests: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
 }
 
-export default TestsPicker
+export default withRouter(TestsPicker)

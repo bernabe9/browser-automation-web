@@ -2,6 +2,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { AppContainer, setConfig } from 'react-hot-loader'
+import { sessionService } from 'redux-react-session'
 
 import configureStore from 'state/store/configureStore'
 import App from 'components/App'
@@ -29,7 +30,9 @@ const renderApp = Component => {
   )
 }
 
-renderApp(App)
+sessionService.initSessionService(store).then(() => {
+  renderApp(App)
+})
 
 setConfig({ logLevel: 'no-errors-please' })
 
