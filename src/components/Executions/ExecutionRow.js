@@ -7,6 +7,7 @@ import { applyQueryParams } from 'utils/helpers'
 import StatusBadge from 'components/StatusBadge'
 import TestResults from 'components/TestResults'
 import Timer from 'components/Timer'
+import Anchor from 'components/Anchor'
 import ResultWrapper from './ResultsWrapper'
 
 const ExecutionRow = ({
@@ -97,12 +98,7 @@ const ExecutionRow = ({
       </div>
       {!!testResults && (
         <Fragment>
-          <a
-            className="mc-text-h8 mc-text--uppercase mc-text--muted"
-            onClick={onToggle}
-          >
-            Toggle results
-          </a>
+          <Anchor onClick={onToggle}>Toggle results</Anchor>
           {showData && (
             <ResultWrapper className="mc-p-4 mc-my-3">
               <TestResults testResults={JSON.parse(testResults)} />

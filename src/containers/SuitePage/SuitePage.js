@@ -68,9 +68,7 @@ const SuitePage = ({
           <Fragment>
             <div>
               <div>
-                <h5 className="d-inline mc-text-h5 mc-text--uppercase mc-mr-2">
-                  {suite.name}
-                </h5>
+                <h5 className="d-inline mc-text-h5 mc-mr-2">{suite.name}</h5>
                 {suite.lastSuiteExecution && (
                   <StatusBadge status={suite.lastSuiteExecution.status} />
                 )}
@@ -138,7 +136,9 @@ SuitePage.propTypes = {
     status: PropTypes.string,
     tests: PropTypes.array
   }),
-  suiteExecutions: PropTypes.array
+  suiteExecutions: PropTypes.array,
+  loadingSuite: PropTypes.bool,
+  loadingSuiteExecutions: PropTypes.bool
 }
 
 export default SuitePage

@@ -37,7 +37,7 @@ const LoginPage = ({ history }) => {
 
   return (
     <div className="container">
-      <div className="col-8 offset-2 mc-my-8 mc-p-5 mc-invert mc-background--color-light">
+      <div className="col-6 offset-3 mc-my-8 mc-p-5 mc-invert mc-background--color-light">
         <div>
           <Logo
             src={require('assets/logo.png')}
@@ -48,9 +48,8 @@ const LoginPage = ({ history }) => {
           </Wordmark>
         </div>
         <Flex flexDirection="column" className="mc-my-6">
-          <h5 className="mc-text-large mc-my-3">
-            Login with GitHub to continue
-          </h5>
+          <h5 className="mc-text-large">Welcome</h5>
+          <p className="mc-mb-3">Login with GitHub to continue</p>
           {error && <p>{error}</p>}
           <a href="https://github.com/login/oauth/authorize?scope=repo%20read:user%20read:org&client_id=3a749ceca76d3116e27e">
             <Button kind="secondary" loading={loading}>

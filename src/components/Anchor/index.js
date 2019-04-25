@@ -5,6 +5,8 @@ import cn from 'classnames'
 
 const Anchor = styled.div`
   cursor: pointer;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 
   &:hover {
     opacity: 1 !important;
@@ -18,7 +20,7 @@ const StyledAnchor = ({
   ...props
 }) => {
   const classNames = cn(
-    'mc-text-h8 mc-text--uppercase',
+    'mc-text-h8',
     { 'mc-text--muted': !isActive },
     { [className]: !!className }
   )

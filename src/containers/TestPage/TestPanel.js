@@ -105,7 +105,11 @@ TestPanel.propTypes = {
   cursor: PropTypes.shape({
     path: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  fetchExecutions: PropTypes.func.isRequired,
+  fetchStressExecutions: PropTypes.func.isRequired,
+  loadingExecutions: PropTypes.bool,
+  loadingStress: PropTypes.bool
 }
 
 export default TestPanel
