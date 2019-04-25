@@ -126,7 +126,7 @@ ExecutionRow.propTypes = {
   test: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
-  startedAt: PropTypes.number.isRequired,
+  startedAt: PropTypes.number,
   testResults: PropTypes.string,
   endedAt: PropTypes.number,
   errorMessage: PropTypes.string,

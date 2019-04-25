@@ -39,7 +39,7 @@ const Header = ({
         src={require('assets/logo_invert.png')}
         alt="browser automation logo"
       />
-      <Wordmark className="mc-text-h4 mc-m-4 mc-text--center">
+      <Wordmark className="mc-text-large mc-mb-4 mc-mt-2 mc-text--center">
         Browser Automation
       </Wordmark>
       <Flex

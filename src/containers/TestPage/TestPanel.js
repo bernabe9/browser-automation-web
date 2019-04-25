@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Separator, Button } from 'mc-components'
 
@@ -8,10 +8,24 @@ import RunTest from 'components/RunTest'
 import RunStressTest from 'components/RunStressTest'
 import Code from 'components/Code'
 import Executions from 'components/Executions'
+import Spinner from 'components/Spinner'
 
-const TestPanel = ({ executions, stressExecutions, cursor }) => {
+const TestPanel = ({
+  testExecutions,
+  stressExecutions,
+  fetchExecutions,
+  fetchStressExecutions,
+  cursor,
+  loadingExecutions,
+  loadingStress
+}) => {
   const [showCode, setShowCode] = useState(false)
   const [loadingCode, setLoadingCode] = useState(false)
+
+  useEffect(() => {
+    fetchExecutions()
+    fetchStressExecutions()
+  }, [cursor])
 
   const onToggleCode = () => {
     if (!showCode) {
@@ -22,14 +36,15 @@ const TestPanel = ({ executions, stressExecutions, cursor }) => {
 
   const onCodeLoaded = () => setLoadingCode(false)
 
-  const stressTestExecutions = stressExecutions.filter(
-    ({ test }) => test === cursor.path
-  )
-  const testExecutions = executions.filter(({ test }) => test === cursor.path)
+  const onSuccessRun = () => {
+    fetchExecutions()
+    fetchStressExecutions()
+  }
+
   const testStatus = getTestStatus(testExecutions)
 
   return (
-    <div className="col-9">
+    <div className="col-8">
       <div>
         <span className="mc-text-h5 mc-mb-3 mc-mr-3">{cursor.name}</span>
         {testStatus && <StatusBadge status={testStatus} />}
@@ -48,31 +63,45 @@ const TestPanel = ({ executions, stressExecutions, cursor }) => {
       <Separator />
       <div className="mc-my-6">
         <h6 className="mc-text-h6">Run test</h6>
-        <RunTest test={cursor.path} />
+        <RunTest test={cursor.path} onSuccess={onSuccessRun} />
       </div>
       <Separator />
       <div className="mc-my-6">
         <h6 className="mc-text-h6">Stress Testing</h6>
         <p>Run this test multiple times to check how stable it is</p>
-        <RunStressTest test={cursor.path} />
+        <RunStressTest
+          test={cursor.path}
+          lastStressExecution={stressExecutions && stressExecutions[0]}
+          onSuccess={onSuccessRun}
+        />
       </div>
       <Separator />
       <div className="mc-my-6">
         <h6 className="mc-text-h6 mc-mb-4">Stress Executions</h6>
-        <Executions executions={stressTestExecutions} stress />
+        {loadingStress && <Spinner />}
+        {!loadingExecutions && !loadingStress && !stressExecutions && (
+          <p>This test doesn&#39;t have any stress execution yet.</p>
+        )}
+        {stressExecutions && (
+          <Executions executions={stressExecutions} stress />
+        )}
       </div>
       <Separator />
       <div className="mc-my-6">
         <h6 className="mc-text-h6 mc-mb-4">Executions</h6>
-        <Executions executions={testExecutions} />
+        {loadingExecutions && <Spinner />}
+        {!loadingExecutions && !testExecutions.length && (
+          <p>This test doesn&#39;t have any execution yet.</p>
+        )}
+        {testExecutions && <Executions executions={testExecutions} />}
       </div>
     </div>
   )
 }
 
 TestPanel.propTypes = {
-  executions: PropTypes.array.isRequired,
-  stressExecutions: PropTypes.array.isRequired,
+  testExecutions: PropTypes.array.isRequired,
+  stressExecutions: PropTypes.array,
   cursor: PropTypes.shape({
     path: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired

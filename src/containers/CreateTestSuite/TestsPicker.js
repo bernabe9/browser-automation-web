@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom'
 import api from 'api'
 import { applyQueryParams } from 'utils/helpers'
 import TreeView from 'components/TreeView'
+import Spinner from 'components/Spinner'
 import Code from 'components/Code'
 
 const TestsPicker = ({ onAddTest, onRemoveTest, selectedTests, match }) => {
@@ -43,6 +44,8 @@ const TestsPicker = ({ onAddTest, onRemoveTest, selectedTests, match }) => {
   return (
     <div className="row">
       <div className="col-5">
+        <p className="mc-text-h8 mc-mb-3">Directories</p>
+        {!structure && <Spinner />}
         {structure && (
           <TreeView
             data={structure}

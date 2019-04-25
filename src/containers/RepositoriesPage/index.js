@@ -5,13 +5,19 @@ import { Separator } from 'mc-components'
 import api from 'api'
 import Header from 'components/Header'
 import routes from 'constants/routesPaths'
+import Spinner from 'components/Spinner'
 import RepositoryLink from './RepositoryLink'
 
 const RepositoriesPage = () => {
   const [repositories, setRepositories] = useState()
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    api('/repositories').then(setRepositories)
+    setLoading(true)
+    api('/repositories').then(repositories => {
+      setRepositories(repositories)
+      setLoading(false)
+    })
   }, [])
 
   return (
@@ -20,6 +26,12 @@ const RepositoriesPage = () => {
       <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
         <h5 className="mc-text-h5">Repositories</h5>
         <Separator />
+        {loading && <Spinner />}
+        {!loading && !repositories && (
+          <p className="mc-my-5">
+            We didn&#39;t found any repository for your account
+          </p>
+        )}
         <div className="row">
           <div className="col-6">
             {!!repositories &&

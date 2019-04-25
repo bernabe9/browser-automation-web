@@ -8,22 +8,27 @@ import HomePage from './HomePage'
 
 const testSuiteSelector = new TestSuiteSelector()
 
-const mapState = state => ({
-  testSuites: testSuiteSelector.getSuitesByRepository(state)
+const suitesPath = props => {
+  const { repositoryName, repositoryOwner } = props.match.params
+  const repository = `${repositoryOwner}/${repositoryName}`
+  return applyQueryParams('/suites', { repository })
+}
+
+const mapState = (state, ownProps) => ({
+  testSuites: testSuiteSelector.getSuitesByRepository(state),
+  loading:
+    !!state.data.meta[suitesPath(ownProps)] &&
+    state.data.meta[suitesPath(ownProps)].loading
 })
 
-const mapDispatch = (dispatch, ownProps) => {
-  const { repositoryName, repositoryOwner } = ownProps.match.params
-  const repository = `${repositoryOwner}/${repositoryName}`
-  return {
-    fetchTestSuites: () =>
-      dispatch(
-        request(applyQueryParams('/suites', { repository }), {
-          normalizer: normalizeData
-        })
-      )
-  }
-}
+const mapDispatch = (dispatch, ownProps) => ({
+  fetchTestSuites: () =>
+    dispatch(
+      request(suitesPath(ownProps), {
+        normalizer: normalizeData
+      })
+    )
+})
 
 export default connect(
   mapState,

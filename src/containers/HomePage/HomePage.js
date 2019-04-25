@@ -5,8 +5,9 @@ import { Separator } from 'mc-components'
 import TestSuites from 'components/TestSuites'
 import Header from 'components/Header'
 import Environment from 'components/Environment'
+import Spinner from 'components/Spinner'
 
-const HomePage = ({ fetchTestSuites, testSuites }) => {
+const HomePage = ({ fetchTestSuites, testSuites, loading }) => {
   useEffect(() => {
     fetchTestSuites()
   }, [])
@@ -18,6 +19,12 @@ const HomePage = ({ fetchTestSuites, testSuites }) => {
       <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
         <h5 className="mc-text-h5">Test Suites</h5>
         <Separator />
+        {loading && <Spinner />}
+        {!loading && !testSuites.length && (
+          <p className="mc-my-5">
+            This repository doesn&#39;t have any test suite yet.
+          </p>
+        )}
         <div className="row">
           <div className="col-6">
             {!!testSuites && <TestSuites testSuites={testSuites} />}
@@ -36,7 +43,8 @@ HomePage.propTypes = {
       name: PropTypes.string.isRequired,
       tests: PropTypes.array.isRequired
     })
-  )
+  ),
+  loading: PropTypes.bool.isRequired
 }
 
 export default HomePage
