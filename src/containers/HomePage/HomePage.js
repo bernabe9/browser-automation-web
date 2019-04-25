@@ -19,17 +19,19 @@ const HomePage = ({ fetchTestSuites, testSuites, loading }) => {
       <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
         <h5 className="mc-text-h5">Test Suites</h5>
         <Separator />
-        {loading && <Spinner />}
+        {loading && !testSuites.length && <Spinner />}
         {!loading && !testSuites.length && (
           <p className="mc-my-5">
             This repository doesn&#39;t have any test suite yet.
           </p>
         )}
-        <div className="row">
-          <div className="col-6">
-            {!!testSuites && <TestSuites testSuites={testSuites} />}
+        {!!testSuites.length && (
+          <div className="row">
+            <div className="col-6">
+              {!!testSuites && <TestSuites testSuites={testSuites} />}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   )

@@ -63,7 +63,7 @@ const SuitePage = ({
       <Header />
       <Environment />
       <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
-        {loadingSuite && <Spinner />}
+        {loadingSuite && !suite && <Spinner />}
         {suite && suite.tests && (
           <Fragment>
             <div>
@@ -112,6 +112,9 @@ const SuitePage = ({
             <Separator />
             <h5 className="mc-text-h5 mc-my-4">Suite Executions</h5>
             {loadingSuiteExecutions && <Spinner />}
+            {!loadingSuiteExecutions && !suiteExecutions.length && (
+              <p>This test suite doesn&#39;t have any execution yet.</p>
+            )}
             <div>
               {suiteExecutions.map(suiteExecution => (
                 <SuiteExecutionRow
