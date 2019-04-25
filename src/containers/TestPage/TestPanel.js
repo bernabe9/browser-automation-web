@@ -43,6 +43,12 @@ const TestPanel = ({
 
   const testStatus = getTestStatus(testExecutions)
 
+  const showStressEmpty =
+    !loadingExecutions &&
+    (!stressExecutions || !stressExecutions.length) &&
+    !loadingStress
+  const showExecutionsEmpty = !loadingExecutions && !testExecutions.length
+
   return (
     <div className="col-8">
       <div>
@@ -79,7 +85,7 @@ const TestPanel = ({
       <div className="mc-my-6">
         <h6 className="mc-text-h6 mc-mb-4">Stress Executions</h6>
         {loadingStress && <Spinner />}
-        {!loadingExecutions && !loadingStress && !stressExecutions && (
+        {showStressEmpty && (
           <p>This test doesn&#39;t have any stress execution yet.</p>
         )}
         {stressExecutions && (
@@ -90,7 +96,7 @@ const TestPanel = ({
       <div className="mc-my-6">
         <h6 className="mc-text-h6 mc-mb-4">Executions</h6>
         {loadingExecutions && <Spinner />}
-        {!loadingExecutions && !testExecutions.length && (
+        {showExecutionsEmpty && (
           <p>This test doesn&#39;t have any execution yet.</p>
         )}
         {testExecutions && <Executions executions={testExecutions} />}

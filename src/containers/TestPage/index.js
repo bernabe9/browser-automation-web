@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import Header from 'components/Header'
 import Environment from 'components/Environment'
-import MainPanel from './MainPanel'
+import MainPanel from './MainPanelConnected'
 
 const TestPage = ({ history, match }) => (
   <div>

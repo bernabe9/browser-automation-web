@@ -10,7 +10,7 @@ import Spinner from 'components/Spinner'
 import LeftWrapper from './LeftWrapper'
 import TestPanel from './TestPanelConnected'
 
-const MainPanel = ({ history, match }) => {
+const MainPanel = ({ history, match, executions, fetchExecutions }) => {
   const [structure, setStructure] = useState()
   const [cursor, setCursor] = useState()
 
@@ -25,6 +25,24 @@ const MainPanel = ({ history, match }) => {
     })
     api(path, { url: 'remote' }).then(setStructure)
   }, [])
+
+  const getFiles = structure => {
+    if (structure.type === 'file') {
+      return [structure.path]
+    }
+    const childrenFiles = structure.children.reduce((filesAcc, child) => {
+      const files = getFiles(child)
+      return [...filesAcc, ...files]
+    }, [])
+    return childrenFiles
+  }
+
+  useEffect(() => {
+    if (structure) {
+      const tests = getFiles(structure)
+      fetchExecutions(tests)
+    }
+  }, [structure])
 
   const onToggle = node => {
     const search = queryString.stringify({ ...queryPath, path: node.path })
@@ -48,7 +66,7 @@ const MainPanel = ({ history, match }) => {
               <TreeView
                 queryPath={queryPath.path}
                 data={structure}
-                executions={[]}
+                executions={executions || []}
                 onToggle={onToggle}
                 activeNode={cursor && cursor.path}
                 isExpanded
