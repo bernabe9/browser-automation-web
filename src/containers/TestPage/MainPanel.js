@@ -81,8 +81,10 @@ const MainPanel = ({ history, match, executions, fetchExecutions }) => {
 }
 
 MainPanel.propTypes = {
+  fetchExecutions: PropTypes.func.isRequired,
   history: PropTypes.object,
-  match: PropTypes.object
+  match: PropTypes.object,
+  executions: PropTypes.array
 }
 
 export default MainPanel
