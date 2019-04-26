@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 
+import api from 'api'
 import { setEnvironment } from 'state/modules/environment'
 
 const Environment = ({
@@ -14,6 +15,18 @@ const Environment = ({
 }) => {
   useEffect(() => {
     setEnvironment(match.params)
+    const { repositoryName, repositoryOwner, repositoryRef } = match.params
+    if (!repositoryRef && !!repositoryName && !!repositoryOwner) {
+      api(`/repository?repository=${repositoryOwner}/${repositoryName}`).then(
+        repository => {
+          setEnvironment({
+            repositoryName: repository.name,
+            repositoryOwner: repository.owner,
+            repositoryRef: repository.defaultRef
+          })
+        }
+      )
+    }
   }, [])
 
   return (
