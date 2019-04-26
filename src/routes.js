@@ -7,6 +7,7 @@ import NotFoundPage from 'containers/NotFoundPage'
 import SuiteExecutionPage from 'containers/SuiteExecutionPage'
 import LoginPage from 'containers/LoginPage'
 import RepositoriesPage from 'containers/RepositoriesPage'
+import CreateRepositoryPage from 'containers/CreateRepositoryPage'
 
 const routes = [
   {
@@ -41,6 +42,12 @@ const routes = [
   {
     path: routesPaths.suiteExecution(),
     component: SuiteExecutionPage,
+    exact: true,
+    private: true
+  },
+  {
+    path: routesPaths.createRepository,
+    component: CreateRepositoryPage,
     exact: true,
     private: true
   },
