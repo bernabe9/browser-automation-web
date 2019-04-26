@@ -66,7 +66,8 @@ StressExecutionRow.propTypes = {
   times: PropTypes.number.isRequired,
   test: PropTypes.string.isRequired,
   createdAt: PropTypes.number.isRequired,
-  executions: PropTypes.array.isRequired
+  executions: PropTypes.array.isRequired,
+  repositoryRef: PropTypes.string.isRequired
 }
 
 export default StressExecutionRow

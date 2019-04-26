@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import { Separator } from 'mc-components'
 
 import api from 'api'
@@ -43,6 +44,10 @@ const CreateRepositoryPage = ({ history }) => {
       </div>
     </div>
   )
+}
+
+CreateRepositoryPage.propTypes = {
+  history: PropTypes.object.isRequired
 }
 
 export default CreateRepositoryPage
