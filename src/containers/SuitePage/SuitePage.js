@@ -43,7 +43,7 @@ const SuitePage = ({
 
   const handleRunSuite = () => {
     setLoading(true)
-    const params = { suite: suite.id }
+    const params = { suite: suite.id, repositoryRef }
     if (concurrencyEnabled && concurrency) {
       params.concurrencyCount = parseInt(concurrency, 10)
     }
@@ -149,7 +149,10 @@ SuitePage.propTypes = {
   }),
   suiteExecutions: PropTypes.array,
   loadingSuite: PropTypes.bool,
-  loadingSuiteExecutions: PropTypes.bool
+  loadingSuiteExecutions: PropTypes.bool,
+  repositoryOwner: PropTypes.string,
+  repositoryName: PropTypes.string,
+  repositoryRef: PropTypes.string
 }
 
 export default SuitePage

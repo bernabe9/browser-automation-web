@@ -23,26 +23,30 @@ const handleError = status => {
 
 const urls = {
   default: process.env.API_URL,
-  remote: process.env.API_URL_REMOTE,
   github: 'https://api.github.com'
 }
 
-const api = async (path, opt = {}) => {
-  const { remote, ...options } = opt
-  const url = urls[opt.url || 'default']
-  const sessionHeaders = await getSessionHeaders()
-  const headers = { ...opt.headers, ...sessionHeaders }
-  const response = await fetch(`${url}${path}`, {
-    ...options,
-    ...(options.body && { body: JSON.stringify(options.body) }),
-    headers
+const api = (path, opt = {}) =>
+  new Promise(async (resolve, reject) => {
+    const { remote, ...options } = opt
+    const url = urls[opt.url || 'default']
+    const sessionHeaders = await getSessionHeaders()
+    const headers = { ...opt.headers, ...sessionHeaders }
+    const response = await fetch(`${url}${path}`, {
+      ...options,
+      ...(options.body && { body: JSON.stringify(options.body) }),
+      headers
+    })
+    if (!response.ok) {
+      handleError(response.status)
+      const json = await response.json()
+      const error = json || { message: response.status }
+      reject(error)
+      return
+    }
+    const json = await response.json()
+    resolve(humps.camelizeKeys(json))
   })
-  if (!response.ok) {
-    handleError(response.status)
-  }
-  const json = await response.json()
-  return humps.camelizeKeys(json)
-}
 
 const formatBodyData = data => JSON.stringify(humps.decamelizeKeys(data))
 

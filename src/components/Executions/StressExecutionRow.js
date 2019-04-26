@@ -12,6 +12,7 @@ const StressExecutionRow = ({
   errorCount,
   test,
   times,
+  repositoryRef,
   createdAt,
   executions
 }) => {
@@ -39,6 +40,7 @@ const StressExecutionRow = ({
         </div>
         <p>{`id: ${id}`}</p>
         <p>{`test: ${test}`}</p>
+        <p>{`repository ref: ${repositoryRef}`}</p>
         <p>{`times: ${times}`}</p>
         <p>{`success count: ${successCount}`}</p>
         <p>{`error count: ${errorCount}`}</p>
@@ -64,7 +66,8 @@ StressExecutionRow.propTypes = {
   times: PropTypes.number.isRequired,
   test: PropTypes.string.isRequired,
   createdAt: PropTypes.number.isRequired,
-  executions: PropTypes.array.isRequired
+  executions: PropTypes.array.isRequired,
+  repositoryRef: PropTypes.string.isRequired
 }
 
 export default StressExecutionRow

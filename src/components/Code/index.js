@@ -10,12 +10,12 @@ const Code = ({ test, onCodeLoaded, match }) => {
   const [code, setCode] = useState()
 
   useEffect(() => {
-    api(applyQueryParams('/file', { ...match.params, path: test }), {
-      url: 'remote'
-    }).then(({ content }) => {
-      setCode(content)
-      onCodeLoaded()
-    })
+    api(applyQueryParams('/file', { ...match.params, path: test })).then(
+      ({ content }) => {
+        setCode(content)
+        onCodeLoaded()
+      }
+    )
   }, [test])
 
   return (
