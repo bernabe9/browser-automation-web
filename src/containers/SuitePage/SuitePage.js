@@ -20,7 +20,10 @@ const SuitePage = ({
   suite,
   suiteExecutions,
   loadingSuite,
-  loadingSuiteExecutions
+  loadingSuiteExecutions,
+  repositoryOwner,
+  repositoryName,
+  repositoryRef
 }) => {
   const [url, setUrl] = useState()
   const [urlEnabled, setUrlEnabled] = useState(false)
@@ -81,7 +84,12 @@ const SuitePage = ({
                 </a>
               </p>
             </div>
-            <TestList tests={suite.tests} />
+            <TestList
+              tests={suite.tests}
+              repositoryOwner={repositoryOwner}
+              repositoryName={repositoryName}
+              repositoryRef={repositoryRef}
+            />
             <Separator />
             <h5 className="mc-text-h5 mc-my-4">Run Suite</h5>
             <ConcurrencyInput

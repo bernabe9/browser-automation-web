@@ -44,6 +44,9 @@ const mapState = (state, ownProps) => {
   const loadingSuiteExecutions =
     suiteExecutionsMeta && suiteExecutionsMeta.loading
   return {
+    repositoryName: state.environment.repositoryName,
+    repositoryOwner: state.environment.repositoryOwner,
+    repositoryRef: state.environment.repositoryRef,
     suite,
     suiteExecutions: sortedExecutions,
     loadingSuite,

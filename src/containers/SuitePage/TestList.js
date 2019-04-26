@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import routes from 'constants/routesPaths'
 import Anchor from 'components/Anchor'
 
-const TestList = ({ tests }) => {
+const TestList = ({ tests, ...props }) => {
   const [show, setShow] = useState(false)
 
   const onToggle = () => setShow(!show)
@@ -19,7 +19,7 @@ const TestList = ({ tests }) => {
       {show &&
         tests.map(test => (
           <div key={test}>
-            <Link to={`${routes.test}?path=${test}`}>{test}</Link>
+            <Link to={`${routes.test(props)}?path=${test}`}>{test}</Link>
           </div>
         ))}
     </div>
