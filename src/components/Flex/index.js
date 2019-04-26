@@ -4,6 +4,7 @@ const Flex = styled.div`
   display: flex;
   align-items: ${({ alignItems = 'center' }) => alignItems};
   justify-content: ${({ justifyContent = 'flex-start' }) => justifyContent};
+  flex-direction: ${({ flexDirection = 'row' }) => flexDirection};
 `
 
 export default Flex

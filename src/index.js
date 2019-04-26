@@ -8,7 +8,13 @@ import configureStore from 'state/store/configureStore'
 import App from 'components/App'
 import 'styles/styles.scss'
 
-require('./favicon.ico') // Tell webpack to load favicon.ico
+// Tell webpack to load favicon
+require('assets/favicon/android-chrome-192x192.png')
+require('assets/favicon/android-chrome-512x512.png')
+require('assets/favicon/apple-touch-icon.png')
+require('assets/favicon/favicon-16x16.png')
+require('assets/favicon/favicon-32x32.png')
+require('assets/favicon/favicon.ico')
 
 // Load service worker
 if (process.env.ENABLE_PWA) {

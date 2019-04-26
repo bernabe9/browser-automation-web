@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Separator, Button } from 'mc-components'
 
@@ -6,6 +6,7 @@ import api from 'api'
 import Header from 'components/Header'
 import Environment from 'components/Environment'
 import StatusBadge from 'components/StatusBadge'
+import Spinner from 'components/Spinner'
 import { applyQueryParams } from 'utils/helpers'
 import ConcurrencyInput from './ConcurrencyInput'
 import TestList from './TestList'
@@ -17,7 +18,9 @@ const SuitePage = ({
   fetchSuite,
   fetchSuiteExecutions,
   suite,
-  suiteExecutions
+  suiteExecutions,
+  loadingSuite,
+  loadingSuiteExecutions
 }) => {
   const [url, setUrl] = useState()
   const [urlEnabled, setUrlEnabled] = useState(false)
@@ -59,62 +62,70 @@ const SuitePage = ({
     <div>
       <Header />
       <Environment />
-      {suite && suite.tests && (
-        <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
-          <div>
+      <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
+        {loadingSuite && !suite && <Spinner />}
+        {suite && suite.tests && (
+          <Fragment>
             <div>
-              <h5 className="d-inline mc-text-h5 mc-text--uppercase mc-mr-2">
-                {suite.name}
-              </h5>
-              {suite.lastSuiteExecution && (
-                <StatusBadge status={suite.lastSuiteExecution.status} />
-              )}
+              <div>
+                <h5 className="d-inline mc-text-h5 mc-mr-2">{suite.name}</h5>
+                {suite.lastSuiteExecution && (
+                  <StatusBadge status={suite.lastSuiteExecution.status} />
+                )}
+              </div>
+              <p>{suite.description}</p>
+              <p className="mc-text--hinted">
+                Default URL:{' '}
+                <a href={suite.url} target="_blank" rel="noopener noreferrer">
+                  {suite.url}
+                </a>
+              </p>
             </div>
-            <p>{suite.description}</p>
-            <p className="mc-text--hinted">
-              Default URL:{' '}
-              <a href={suite.url} target="_blank" rel="noopener noreferrer">
-                {suite.url}
-              </a>
-            </p>
-          </div>
-          <TestList tests={suite.tests} />
-          <Separator />
-          <h5 className="mc-text-h5 mc-my-4">Run Suite</h5>
-          <ConcurrencyInput
-            enabled={concurrencyEnabled}
-            onToggle={() => setConcurrencyEnabled(!concurrencyEnabled)}
-            concurrency={concurrency}
-            onChange={setConcurrency}
-          />
-          <URLInput
-            enabled={urlEnabled}
-            onToggle={() => setUrlEnabled(!urlEnabled)}
-            url={url}
-            onChange={setUrl}
-          />
-          <WebhookInput
-            enabled={webhookEnabled}
-            onToggle={() => setWebhookEnabled(!webhookEnabled)}
-            webhook={webhook}
-            onChange={setWebhook}
-          />
-          <Button
-            className="mc-mb-4"
-            onClick={handleRunSuite}
-            loading={loading}
-          >
-            Run Entire suite
-          </Button>
-          <Separator />
-          <h5 className="mc-text-h5 mc-my-4">Suite Executions</h5>
-          <div>
-            {suiteExecutions.map(suiteExecution => (
-              <SuiteExecutionRow key={suiteExecution.id} {...suiteExecution} />
-            ))}
-          </div>
-        </div>
-      )}
+            <TestList tests={suite.tests} />
+            <Separator />
+            <h5 className="mc-text-h5 mc-my-4">Run Suite</h5>
+            <ConcurrencyInput
+              enabled={concurrencyEnabled}
+              onToggle={() => setConcurrencyEnabled(!concurrencyEnabled)}
+              concurrency={concurrency}
+              onChange={setConcurrency}
+            />
+            <URLInput
+              enabled={urlEnabled}
+              onToggle={() => setUrlEnabled(!urlEnabled)}
+              url={url}
+              onChange={setUrl}
+            />
+            <WebhookInput
+              enabled={webhookEnabled}
+              onToggle={() => setWebhookEnabled(!webhookEnabled)}
+              webhook={webhook}
+              onChange={setWebhook}
+            />
+            <Button
+              className="mc-mb-4"
+              onClick={handleRunSuite}
+              loading={loading}
+            >
+              Run Entire suite
+            </Button>
+            <Separator />
+            <h5 className="mc-text-h5 mc-my-4">Suite Executions</h5>
+            {loadingSuiteExecutions && <Spinner />}
+            {!loadingSuiteExecutions && !suiteExecutions.length && (
+              <p>This test suite doesn&#39;t have any execution yet.</p>
+            )}
+            <div>
+              {suiteExecutions.map(suiteExecution => (
+                <SuiteExecutionRow
+                  key={suiteExecution.id}
+                  {...suiteExecution}
+                />
+              ))}
+            </div>
+          </Fragment>
+        )}
+      </div>
     </div>
   )
 }
@@ -128,7 +139,9 @@ SuitePage.propTypes = {
     status: PropTypes.string,
     tests: PropTypes.array
   }),
-  suiteExecutions: PropTypes.array
+  suiteExecutions: PropTypes.array,
+  loadingSuite: PropTypes.bool,
+  loadingSuiteExecutions: PropTypes.bool
 }
 
 export default SuitePage

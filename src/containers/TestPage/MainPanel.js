@@ -6,10 +6,11 @@ import api from 'api'
 import { applyQueryParams } from 'utils/helpers'
 import routes from 'constants/routesPaths'
 import TreeView from 'components/TreeView'
+import Spinner from 'components/Spinner'
 import LeftWrapper from './LeftWrapper'
-import TestPanel from './TestPanel'
+import TestPanel from './TestPanelConnected'
 
-const MainPanel = ({ executions, stressExecutions, history, match }) => {
+const MainPanel = ({ history, match, executions, fetchExecutions }) => {
   const [structure, setStructure] = useState()
   const [cursor, setCursor] = useState()
 
@@ -25,6 +26,24 @@ const MainPanel = ({ executions, stressExecutions, history, match }) => {
     api(path, { url: 'remote' }).then(setStructure)
   }, [])
 
+  const getFiles = structure => {
+    if (structure.type === 'file') {
+      return [structure.path]
+    }
+    const childrenFiles = structure.children.reduce((filesAcc, child) => {
+      const files = getFiles(child)
+      return [...filesAcc, ...files]
+    }, [])
+    return childrenFiles
+  }
+
+  useEffect(() => {
+    if (structure) {
+      const tests = getFiles(structure)
+      fetchExecutions(tests)
+    }
+  }, [structure])
+
   const onToggle = node => {
     const search = queryString.stringify({ ...queryPath, path: node.path })
     if (node.type === 'file') {
@@ -37,16 +56,17 @@ const MainPanel = ({ executions, stressExecutions, history, match }) => {
   }
 
   return (
-    <div className="container mc-mt-5 mc-p-5 mc-invert mc-background--color-light">
+    <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
       <div className="row">
-        <div className="col-3">
+        <div className="col-4">
           <LeftWrapper>
             <h5 className="mc-text-h5 mc-mb-3">Directories</h5>
+            {!structure && <Spinner />}
             {structure && (
               <TreeView
                 queryPath={queryPath.path}
                 data={structure}
-                executions={executions}
+                executions={executions || []}
                 onToggle={onToggle}
                 activeNode={cursor && cursor.path}
                 isExpanded
@@ -54,23 +74,17 @@ const MainPanel = ({ executions, stressExecutions, history, match }) => {
             )}
           </LeftWrapper>
         </div>
-        {cursor && (
-          <TestPanel
-            executions={executions}
-            stressExecutions={stressExecutions}
-            cursor={cursor}
-          />
-        )}
+        {cursor && <TestPanel cursor={cursor} match={match} />}
       </div>
     </div>
   )
 }
 
 MainPanel.propTypes = {
-  executions: PropTypes.array.isRequired,
-  stressExecutions: PropTypes.array.isRequired,
+  fetchExecutions: PropTypes.func.isRequired,
   history: PropTypes.object,
-  match: PropTypes.object
+  match: PropTypes.object,
+  executions: PropTypes.array
 }
 
 export default MainPanel

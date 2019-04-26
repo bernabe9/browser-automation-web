@@ -31,7 +31,7 @@ SuiteExecutionPage.propTypes = {
     suiteId: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
     createdAt: PropTypes.number.isRequired,
-    execution: PropTypes.array.isRequired
+    executions: PropTypes.array.isRequired
   }),
   fetchSuiteExecution: PropTypes.func.isRequired
 }

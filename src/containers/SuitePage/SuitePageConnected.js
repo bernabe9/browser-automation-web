@@ -1,5 +1,4 @@
 import { connect } from 'react-redux'
-import queryString from 'query-string'
 
 import request from 'state/modules/request'
 import { normalizeDataSuite as suiteNormalizer } from 'state/schemas/testSuite'
@@ -12,6 +11,22 @@ import SuitePage from './SuitePage'
 const testSuiteSelector = new TestSuiteSelector()
 const suiteExecutionSelector = new SuiteExecutionSelector()
 
+const suiteExecutionsPath = props => {
+  const {
+    id,
+    repositoryName,
+    repositoryOwner,
+    repositoryRef
+  } = props.match.params
+  return applyQueryParams('/suite-executions', {
+    suite: id,
+    repositoryName,
+    repositoryOwner,
+    repositoryRef
+  })
+}
+const suitePath = props => `/suites/${props.match.params.id}`
+
 const mapState = (state, ownProps) => {
   const suiteId = ownProps.match.params.id
   const suite = testSuiteSelector.getSuite(state, suite => suite.id === suiteId)
@@ -23,31 +38,29 @@ const mapState = (state, ownProps) => {
     suiteExecutions,
     'createdAt'
   )
-  return { suite, suiteExecutions: sortedExecutions }
-}
-
-const mapDispatch = (dispatch, ownProps) => {
-  const suiteId = ownProps.match.params.id
-  const { repositoryName, repositoryOwner, repositoryRef } = queryString.parse(
-    ownProps.history.location.search
-  )
-  const suiteExecutionPath = applyQueryParams('/suite-executions', {
-    suite: suiteId,
-    repositoryName,
-    repositoryOwner,
-    repositoryRef
-  })
+  const suiteMeta = state.data.meta[suitePath(ownProps)]
+  const loadingSuite = suiteMeta && suiteMeta.loading
+  const suiteExecutionsMeta = state.data.meta[suiteExecutionsPath(ownProps)]
+  const loadingSuiteExecutions =
+    suiteExecutionsMeta && suiteExecutionsMeta.loading
   return {
-    fetchSuite: () =>
-      dispatch(request(`/suites/${suiteId}`, { normalizer: suiteNormalizer })),
-    fetchSuiteExecutions: () =>
-      dispatch(
-        request(suiteExecutionPath, {
-          normalizer: suiteExecutionNormalizer
-        })
-      )
+    suite,
+    suiteExecutions: sortedExecutions,
+    loadingSuite,
+    loadingSuiteExecutions
   }
 }
+
+const mapDispatch = (dispatch, ownProps) => ({
+  fetchSuite: () =>
+    dispatch(request(suitePath(ownProps), { normalizer: suiteNormalizer })),
+  fetchSuiteExecutions: () =>
+    dispatch(
+      request(suiteExecutionsPath(ownProps), {
+        normalizer: suiteExecutionNormalizer
+      })
+    )
+})
 
 export default connect(
   mapState,
