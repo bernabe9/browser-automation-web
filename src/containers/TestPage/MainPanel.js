@@ -23,7 +23,7 @@ const MainPanel = ({ history, match, executions, fetchExecutions }) => {
       repositoryOwner,
       repositoryRef
     })
-    api(path, { url: 'remote' }).then(setStructure)
+    api(path).then(setStructure)
   }, [])
 
   const getFiles = structure => {

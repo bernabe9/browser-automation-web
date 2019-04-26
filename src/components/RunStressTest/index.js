@@ -31,13 +31,14 @@ const RunStressTest = ({ test, lastStressExecution, onSuccess, match }) => {
       return
     }
     setLoading(true)
-    const { repositoryOwner, repositoryName } = match.params
-    const repository = `${repositoryOwner}/${repositoryName}`
+    const { repositoryOwner, repositoryName, repositoryRef } = match.params
     const path = applyQueryParams('/stress', {
       test,
-      repository,
       url,
-      times
+      times,
+      repositoryOwner,
+      repositoryName,
+      repositoryRef
     })
     api(path)
       .then(async () => {

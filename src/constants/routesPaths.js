@@ -18,8 +18,10 @@ const routes = {
   suite: ({
     repositoryOwner = ':repositoryOwner',
     repositoryName = ':repositoryName',
+    repositoryRef = ':repositoryRef',
     id = ':id'
-  } = {}) => `/${repositoryOwner}/${repositoryName}/suites/${id}`,
+  } = {}) =>
+    `/${repositoryOwner}/${repositoryName}/${repositoryRef}/suites/${id}`,
   suiteExecution: ({
     repositoryOwner = ':repositoryOwner',
     repositoryName = ':repositoryName',

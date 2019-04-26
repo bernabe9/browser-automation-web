@@ -22,7 +22,7 @@ const TestsPicker = ({ onAddTest, onRemoveTest, selectedTests, match }) => {
       repositoryOwner,
       repositoryRef
     })
-    api(path, { url: 'remote' }).then(setStructure)
+    api(path).then(setStructure)
   }, [])
 
   const onToggle = node => {
