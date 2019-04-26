@@ -48,7 +48,17 @@ const SuiteExecution = ({
         <StatusBadge status={status} />
       </div>
       <p>suite id: {suiteId}</p>
-      <p>URL: {url}</p>
+      <p>
+        URL:{' '}
+        <a
+          className="mc-text--link"
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {url}
+        </a>
+      </p>
       <p>created at: {format(new Date(createdAt), 'MM/DD/YYYY HH:mm')}</p>
       {repositoryOwner && repositoryName && (
         <p>repository: {`${repositoryOwner}/${repositoryName}`}</p>

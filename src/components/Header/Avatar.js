@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
 const Avatar = styled.img`
-  width: 30px;
-  height: 30px;
+  width: ${({ width = '30px' }) => width};
+  height: ${({ height = '30px' }) => height};
   border-radius: 50%;
 `
 
