@@ -43,7 +43,7 @@ const SuiteExecution = ({
         <span className="d-inline mc-text-h5 mc-mr-2">{id}</span>
         <StatusBadge status={status} />
       </div>
-      <p>suite id: {suiteId}</p>
+      {suiteId && <p>suite id: {suiteId}</p>}
       <p>
         URL:{' '}
         <a
@@ -62,7 +62,7 @@ const SuiteExecution = ({
       {repositoryRef && <p>ref: {repositoryRef}</p>}
       {concurrencyCount && <p>concurrency: {concurrencyCount}</p>}
       {webhook && <p>webhook: {webhook}</p>}
-      {status !== 'running' && (
+      {!['running', 'pending'].includes(status) && (
         <Button className="mc-my-3" onClick={onRerunAll} loading={loadingRerun}>
           RERUN ALL
         </Button>

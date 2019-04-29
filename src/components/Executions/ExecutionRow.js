@@ -127,7 +127,7 @@ const ExecutionRow = ({
             )}
           </Flex>
         )}
-        {status !== 'running' && rerunEnabled && (
+        {!['running', 'pending'].includes(status) && rerunEnabled && (
           <Button className="mc-mt-4" onClick={onRerun} loading={loadingRerun}>
             RERUN
           </Button>
