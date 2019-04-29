@@ -79,7 +79,12 @@ const SuitePage = ({
               <p>{suite.description}</p>
               <p className="mc-text--hinted">
                 Default URL:{' '}
-                <a href={suite.url} target="_blank" rel="noopener noreferrer">
+                <a
+                  className="mc-text--link"
+                  href={suite.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {suite.url}
                 </a>
               </p>

@@ -4,10 +4,13 @@ import { Separator, Button } from 'mc-components'
 import distanceInWords from 'date-fns/distance_in_words_to_now'
 
 import { applyQueryParams } from 'utils/helpers'
+import api from 'api'
 import StatusBadge from 'components/StatusBadge'
 import TestResults from 'components/TestResults'
 import Timer from 'components/Timer'
 import Anchor from 'components/Anchor'
+import Flex from 'components/Flex'
+import Avatar from 'components/Header/Avatar'
 import ResultWrapper from './ResultsWrapper'
 
 const ExecutionRow = ({
@@ -23,10 +26,12 @@ const ExecutionRow = ({
   repositoryOwner,
   repositoryRef,
   rerunEnabled = false,
-  onRerunSuccess
+  onRerunSuccess,
+  user
 }) => {
   const [showData, setShowData] = useState(false)
   const [loadingRerun, setLoadingRerun] = useState(false)
+  const [githubUser, setGithubUser] = useState()
 
   const getDistance = () =>
     distanceInWords(new Date(startedAt), {
@@ -40,21 +45,25 @@ const ExecutionRow = ({
     return () => clearInterval(interval)
   })
 
+  useEffect(() => {
+    if (user) {
+      api(`/users/${user}`, { url: 'github' }).then(setGithubUser)
+    }
+  }, [])
+
   const onToggle = () => setShowData(!showData)
 
   const onRerun = () => {
-    const path = applyQueryParams(`${process.env.API_URL}/rerun`, {
+    const path = applyQueryParams(`/rerun`, {
       id
     })
     setLoadingRerun(true)
-    fetch(path)
-      .then(async res => {
-        if (res.ok) {
-          const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
-          await timeout(1000)
-          setLoadingRerun(false)
-          onRerunSuccess()
-        }
+    api(path)
+      .then(async () => {
+        const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
+        await timeout(1000)
+        setLoadingRerun(false)
+        onRerunSuccess()
       })
       .catch(() => setLoadingRerun(false))
   }
@@ -82,7 +91,12 @@ const ExecutionRow = ({
         <p>{`test: ${test}`}</p>
         <p>
           URL:{' '}
-          <a href={url} target="_blank" rel="noopener noreferrer">
+          <a
+            className="mc-text--link"
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {url}
           </a>
         </p>
@@ -90,6 +104,29 @@ const ExecutionRow = ({
           <p>repository: {`${repositoryOwner}/${repositoryName}`}</p>
         )}
         {repositoryRef && <p>ref: {repositoryRef}</p>}
+        {user && (
+          <Flex>
+            <span>user: </span>
+            {githubUser && (
+              <Fragment>
+                <Avatar
+                  className="mc-mx-2"
+                  src={githubUser.avatarUrl}
+                  width="26px"
+                  height="26px"
+                />
+                <a
+                  className="mc-text--link"
+                  href={githubUser.htmlUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {user}
+                </a>
+              </Fragment>
+            )}
+          </Flex>
+        )}
         {status !== 'running' && rerunEnabled && (
           <Button className="mc-mt-4" onClick={onRerun} loading={loadingRerun}>
             RERUN
@@ -122,6 +159,7 @@ ExecutionRow.propTypes = {
   test: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
   status: PropTypes.string.isRequired,
+  user: PropTypes.string,
   startedAt: PropTypes.number,
   testResults: PropTypes.string,
   endedAt: PropTypes.number,

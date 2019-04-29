@@ -34,7 +34,12 @@ const SuiteExecutionRow = ({
     </div>
     <p>
       URL:{' '}
-      <a href={url} target="_blank" rel="noopener noreferrer">
+      <a
+        className="mc-text--link"
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         {url}
       </a>
     </p>
