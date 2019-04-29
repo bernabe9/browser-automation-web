@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import format from 'date-fns/format'
 import { Separator, Button } from 'mc-components'
@@ -7,6 +7,13 @@ import { applyQueryParams } from 'utils/helpers'
 import api from 'api'
 import StatusBadge from 'components/StatusBadge'
 import ExecutionRow from 'components/Executions/ExecutionRow'
+
+const statusesConst = {
+  running: 'running',
+  success: 'success',
+  pending: 'pending',
+  error: 'error'
+}
 
 const SuiteExecution = ({
   id,
@@ -23,6 +30,36 @@ const SuiteExecution = ({
   onRerunSuccess
 }) => {
   const [loadingRerun, setLoadingRerun] = useState(false)
+  const [suiteExecutionStatus, setSuiteExecutionStatus] = useState(status)
+
+  const getGlobalStatus = statuses =>
+    statuses.reduce((status, globalStatus) => {
+      if (globalStatus === statusesConst.running) {
+        return statusesConst.running
+      }
+      if (status === statusesConst.running) {
+        return statusesConst.running
+      }
+      if (status === statusesConst.pending) {
+        return statusesConst.pending
+      }
+      if (status === statusesConst.error) {
+        return statusesConst.error
+      }
+      if (
+        status === statusesConst.success &&
+        (!globalStatus || globalStatus === statusesConst.success)
+      ) {
+        return statusesConst.success
+      }
+      return globalStatus
+    })
+
+  useEffect(() =>
+    setSuiteExecutionStatus(
+      getGlobalStatus(executions.map(({ status }) => status))
+    )
+  )
 
   const onRerunAll = () => {
     const path = applyQueryParams(`/rerun-suite-execution`, { id })
@@ -41,7 +78,7 @@ const SuiteExecution = ({
     <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
       <div className="mc-mb-4">
         <span className="d-inline mc-text-h5 mc-mr-2">{id}</span>
-        <StatusBadge status={status} />
+        <StatusBadge status={suiteExecutionStatus} />
       </div>
       {suiteId && <p>suite id: {suiteId}</p>}
       <p>
@@ -62,7 +99,7 @@ const SuiteExecution = ({
       {repositoryRef && <p>ref: {repositoryRef}</p>}
       {concurrencyCount && <p>concurrency: {concurrencyCount}</p>}
       {webhook && <p>webhook: {webhook}</p>}
-      {!['running', 'pending'].includes(status) && (
+      {!['running', 'pending'].includes(suiteExecutionStatus) && (
         <Button className="mc-my-3" onClick={onRerunAll} loading={loadingRerun}>
           RERUN ALL
         </Button>

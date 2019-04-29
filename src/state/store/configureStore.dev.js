@@ -9,6 +9,7 @@ import _ from 'lodash'
 
 import rootReducer from 'state/modules'
 import api from 'state/middleware/api'
+import websockets from 'state/middleware/websockets'
 
 export default function configureStore(initialState) {
   const logger = createLogger({
@@ -17,7 +18,7 @@ export default function configureStore(initialState) {
       !_.startsWith(type, '@@router') && !_.startsWith(type, '@@redux-form')
   })
 
-  const middewares = [thunkMiddleware, api, logger]
+  const middewares = [thunkMiddleware, api, websockets, logger]
 
   const store = createStore(
     rootReducer,

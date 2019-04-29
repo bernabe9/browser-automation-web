@@ -32,7 +32,7 @@ const Timer = ({ children, startDate, endDate }) => {
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [endDate])
 
   return !!minutes && !!seconds && children(minutes, seconds)
 }
