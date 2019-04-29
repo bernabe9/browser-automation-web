@@ -4,6 +4,7 @@ import format from 'date-fns/format'
 import { Separator, Button } from 'mc-components'
 
 import { applyQueryParams } from 'utils/helpers'
+import api from 'api'
 import StatusBadge from 'components/StatusBadge'
 import ExecutionRow from 'components/Executions/ExecutionRow'
 
@@ -24,19 +25,14 @@ const SuiteExecution = ({
   const [loadingRerun, setLoadingRerun] = useState(false)
 
   const onRerunAll = () => {
-    const path = applyQueryParams(
-      `${process.env.API_URL}/rerun-suite-execution`,
-      { id }
-    )
+    const path = applyQueryParams(`/rerun-suite-execution`, { id })
     setLoadingRerun(true)
-    fetch(path)
-      .then(async res => {
-        if (res.ok) {
-          const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
-          await timeout(1000)
-          setLoadingRerun(false)
-          onRerunSuccess()
-        }
+    api(path)
+      .then(async () => {
+        const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
+        await timeout(1000)
+        setLoadingRerun(false)
+        onRerunSuccess()
       })
       .catch(() => setLoadingRerun(false))
   }

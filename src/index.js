@@ -37,12 +37,6 @@ const renderApp = Component => {
 }
 
 sessionService.initSessionService(store).then(() => {
-  sessionService.saveSession({
-    accessToken: '82f32065e7ea455de13a29436a51a1819c5d58f9'
-  })
-  sessionService.saveUser({
-    accessToken: '82f32065e7ea455de13a29436a51a1819c5d58f9'
-  })
   renderApp(App)
 })
 

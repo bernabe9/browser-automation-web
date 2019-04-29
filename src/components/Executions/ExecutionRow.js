@@ -54,18 +54,16 @@ const ExecutionRow = ({
   const onToggle = () => setShowData(!showData)
 
   const onRerun = () => {
-    const path = applyQueryParams(`${process.env.API_URL}/rerun`, {
+    const path = applyQueryParams(`/rerun`, {
       id
     })
     setLoadingRerun(true)
-    fetch(path)
-      .then(async res => {
-        if (res.ok) {
-          const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
-          await timeout(1000)
-          setLoadingRerun(false)
-          onRerunSuccess()
-        }
+    api(path)
+      .then(async () => {
+        const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
+        await timeout(1000)
+        setLoadingRerun(false)
+        onRerunSuccess()
       })
       .catch(() => setLoadingRerun(false))
   }
@@ -119,7 +117,7 @@ const ExecutionRow = ({
                 />
                 <a
                   className="mc-text--link"
-                  href={githubUser.url}
+                  href={githubUser.htmlUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
