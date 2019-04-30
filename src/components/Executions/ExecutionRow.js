@@ -33,16 +33,24 @@ const ExecutionRow = ({
   const [loadingRerun, setLoadingRerun] = useState(false)
   const [githubUser, setGithubUser] = useState()
 
-  const getDistance = () =>
+  const getDistance = startedAt =>
     distanceInWords(new Date(startedAt), {
       includeSeconds: true
     })
 
-  const [distance, setDistance] = useState(getDistance())
+  const [distance, setDistance] = useState()
 
   useEffect(() => {
-    const interval = setInterval(() => setDistance(getDistance()), 60000)
-    return () => clearInterval(interval)
+    if (!distance && startedAt) {
+      setDistance(getDistance(startedAt))
+    }
+    if (startedAt) {
+      const interval = setInterval(
+        () => setDistance(getDistance(startedAt)),
+        10000
+      )
+      return () => clearInterval(interval)
+    }
   })
 
   useEffect(() => {
