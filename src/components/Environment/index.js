@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { Button } from 'mc-components'
 
 import api from 'api'
 import { setEnvironment } from 'state/modules/environment'
+import RefInput from './RefInput'
 
 const Environment = ({
   match,
@@ -29,10 +31,30 @@ const Environment = ({
     }
   }, [])
 
+  const [changeReference, setChangeReference] = useState(false)
+  const [ref, setRef] = useState(repositoryRef)
+
+  const handleChangeRef = () => {
+    window.location = window.location.pathname.replace(
+      `${repositoryRef}`,
+      `${ref}`
+    )
+  }
+
   return (
     <div className="container mc-mt-5 mc-p-1">
       <p>Repository: {`${repositoryOwner}/${repositoryName}`}</p>
       {repositoryRef && <p>Ref: {repositoryRef}</p>}
+      <div className="mc-mt-4">
+        <RefInput
+          defaultRef={repositoryRef}
+          enabled={changeReference}
+          onToggle={() => setChangeReference(!changeReference)}
+          repository={ref}
+          onChange={setRef}
+        />
+        {changeReference && <Button onClick={handleChangeRef}>Change</Button>}
+      </div>
     </div>
   )
 }
