@@ -53,7 +53,15 @@ const RepositoriesPage = () => {
                     {repository.baseFolder && (
                       <p>Base folder: {repository.baseFolder}</p>
                     )}
-                    <Anchor className="mc-mt-2">SETTINGS</Anchor>
+                    <Link
+                      to={routes.editRepository({
+                        repositoryName: repository.name,
+                        repositoryOwner: repository.owner,
+                        repositoryRef: repository.defaultRef
+                      })}
+                    >
+                      <Anchor className="mc-mt-2">EDIT</Anchor>
+                    </Link>
                     <Separator />
                   </div>
                 ))}

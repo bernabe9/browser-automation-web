@@ -29,6 +29,12 @@ const routes = {
     id = ':id'
   } = {}) =>
     `/${repositoryOwner}/${repositoryName}/${repositoryRef}/suite-execution/${id}`,
+  editRepository: ({
+    repositoryOwner = ':repositoryOwner',
+    repositoryName = ':repositoryName',
+    repositoryRef = ':repositoryRef'
+  } = {}) =>
+    `/${repositoryOwner}/${repositoryName}/${repositoryRef}/edit-repository`,
   createRepository: '/new-repository',
   login: '/login'
 }

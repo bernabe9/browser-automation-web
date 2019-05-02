@@ -8,6 +8,7 @@ import SuiteExecutionPage from 'containers/SuiteExecutionPage'
 import LoginPage from 'containers/LoginPage'
 import RepositoriesPage from 'containers/RepositoriesPage'
 import CreateRepositoryPage from 'containers/CreateRepositoryPage'
+import EditRepositoryPage from 'containers/EditRepositoryPage'
 
 const routes = [
   {
@@ -48,6 +49,12 @@ const routes = [
   {
     path: routesPaths.createRepository,
     component: CreateRepositoryPage,
+    exact: true,
+    private: true
+  },
+  {
+    path: routesPaths.editRepository(),
+    component: EditRepositoryPage,
     exact: true,
     private: true
   },
