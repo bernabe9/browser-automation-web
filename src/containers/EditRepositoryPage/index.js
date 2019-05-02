@@ -4,8 +4,8 @@ import { Separator } from 'mc-components'
 
 import api from 'api'
 import Header from 'components/Header'
+import RepositoryForm from 'components/RepositoryForm'
 import routes from 'constants/routesPaths'
-import RepositoryForm from '../../components/RepositoryForm'
 
 const EditRepositoryPage = ({ history, match }) => {
   const { repositoryName, repositoryOwner, repositoryRef } = match.params
