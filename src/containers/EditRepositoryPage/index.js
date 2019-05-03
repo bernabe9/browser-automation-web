@@ -7,12 +7,14 @@ import Header from 'components/Header'
 import RepositoryForm from 'components/RepositoryForm'
 import routes from 'constants/routesPaths'
 
-const CreateRepositoryPage = ({ history }) => {
+const EditRepositoryPage = ({ history, match }) => {
+  const { repositoryName, repositoryOwner, repositoryRef } = match.params
+
   const [error, setError] = useState()
 
   const onSubmit = repository => {
     return api('/repository', {
-      method: 'post',
+      method: 'put',
       body: repository
     })
       .then(() => {
@@ -27,12 +29,20 @@ const CreateRepositoryPage = ({ history }) => {
     <div>
       <Header showLinks={false} />
       <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
-        <h5 className="mc-text-h5">New Repository</h5>
+        <h5 className="mc-text-h5">Edit Repository</h5>
         <Separator />
         <div className="row">
           <div className="col-6">
             <div className="mc-my-5">
-              <RepositoryForm onSubmit={onSubmit} />
+              <RepositoryForm
+                initialValues={{
+                  owner: repositoryOwner,
+                  name: repositoryName,
+                  defaultRef: repositoryRef
+                }}
+                onSubmit={onSubmit}
+                edit
+              />
               {error && (
                 <p className="mc-my-3 mc-text--center mc-text--error">
                   {error}
@@ -46,8 +56,9 @@ const CreateRepositoryPage = ({ history }) => {
   )
 }
 
-CreateRepositoryPage.propTypes = {
-  history: PropTypes.object.isRequired
+EditRepositoryPage.propTypes = {
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
 }
 
-export default CreateRepositoryPage
+export default EditRepositoryPage

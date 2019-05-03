@@ -4,7 +4,7 @@ import { reduxForm, Field } from 'redux-form'
 import { Button, InputField } from 'mc-components'
 import validate from 'validate.js'
 
-const RepositoryForm = ({ submitting, handleSubmit }) => (
+const RepositoryForm = ({ submitting, handleSubmit, edit = false }) => (
   <form onSubmit={handleSubmit} noValidate>
     <Field
       component={InputField}
@@ -12,6 +12,7 @@ const RepositoryForm = ({ submitting, handleSubmit }) => (
       label="Repository Owner *"
       required
       placeholder="owner"
+      disabled={edit}
     />
 
     <Field
@@ -20,6 +21,7 @@ const RepositoryForm = ({ submitting, handleSubmit }) => (
       label="Repository Name *"
       required
       placeholder="repository"
+      disabled={edit}
     />
 
     <Field
@@ -44,7 +46,8 @@ const RepositoryForm = ({ submitting, handleSubmit }) => (
 
 RepositoryForm.propTypes = {
   submitting: PropTypes.bool,
-  handleSubmit: PropTypes.func.isRequired
+  handleSubmit: PropTypes.func.isRequired,
+  edit: PropTypes.bool
 }
 
 const constraints = {
