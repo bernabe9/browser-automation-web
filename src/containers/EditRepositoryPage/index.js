@@ -8,6 +8,7 @@ import RepositoryForm from 'components/RepositoryForm'
 import routes from 'constants/routesPaths'
 
 const EditRepositoryPage = ({ history, match }) => {
+  const { baseFolder } = history.location.state
   const { repositoryName, repositoryOwner, repositoryRef } = match.params
 
   const [error, setError] = useState()
@@ -38,7 +39,8 @@ const EditRepositoryPage = ({ history, match }) => {
                 initialValues={{
                   owner: repositoryOwner,
                   name: repositoryName,
-                  defaultRef: repositoryRef
+                  defaultRef: repositoryRef,
+                  baseFolder
                 }}
                 onSubmit={onSubmit}
                 edit
