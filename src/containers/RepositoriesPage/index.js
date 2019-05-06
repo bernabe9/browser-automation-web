@@ -54,11 +54,16 @@ const RepositoriesPage = () => {
                       <p>Base folder: {repository.baseFolder}</p>
                     )}
                     <Link
-                      to={routes.editRepository({
-                        repositoryName: repository.name,
-                        repositoryOwner: repository.owner,
-                        repositoryRef: repository.defaultRef
-                      })}
+                      to={{
+                        pathname: routes.editRepository({
+                          repositoryName: repository.name,
+                          repositoryOwner: repository.owner,
+                          repositoryRef: repository.defaultRef
+                        }),
+                        state: {
+                          baseFolder: repository.baseFolder
+                        }
+                      }}
                     >
                       <Anchor className="mc-mt-2">EDIT</Anchor>
                     </Link>
