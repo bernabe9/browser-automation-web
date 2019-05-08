@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Button, Separator } from 'mc-components'
+import { Separator } from 'mc-components'
 
 import api from 'api'
+import Anchor from 'components/Anchor'
 import Header from 'components/Header'
 import Environment from 'components/Environment'
 import routes from 'constants/routesPaths'
@@ -57,9 +58,9 @@ const EditTestSuite = ({ history, match }) => {
       <Header />
       <Environment />
       <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
-        <div className="d-flex align-items-center">
+        <div className="d-flex align-items-center justify-content-between">
           <h5 className="mc-text-h5 mc-mr-2">Edit Test Suite</h5>
-          <Button onClick={onDelete}>Delete Suite</Button>
+          <Anchor onClick={onDelete}>Delete Suite</Anchor>
         </div>
         <Separator />
         <div className="row mc-my-4">
