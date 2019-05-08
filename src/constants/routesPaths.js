@@ -10,6 +10,13 @@ const routes = {
     repositoryName = ':repositoryName',
     repositoryRef = ':repositoryRef'
   } = {}) => `/${repositoryOwner}/${repositoryName}/${repositoryRef}/new-suite`,
+  editTestSuite: ({
+    repositoryOwner = ':repositoryOwner',
+    repositoryName = ':repositoryName',
+    repositoryRef = ':repositoryRef',
+    id = ':id'
+  } = {}) =>
+    `/${repositoryOwner}/${repositoryName}/${repositoryRef}/edit-suite/${id}`,
   test: ({
     repositoryOwner = ':repositoryOwner',
     repositoryName = ':repositoryName',
