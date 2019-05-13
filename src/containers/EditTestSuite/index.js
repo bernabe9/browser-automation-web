@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Separator } from 'mc-components'
 
 import api from 'api'
+import Anchor from 'components/Anchor'
 import Header from 'components/Header'
 import Environment from 'components/Environment'
 import routes from 'constants/routesPaths'
@@ -10,8 +11,9 @@ import TestsPicker from 'components/TestPicker'
 import TestSuiteForm from 'components/TestSuiteForm'
 import SelectedTests from 'components/SelectedTests'
 
-const CreateTestSuite = ({ history, match }) => {
-  const [selectedTests, setSelectedTests] = useState(new Set([]))
+const EditTestSuite = ({ history, match }) => {
+  const { name, url, description, tests } = history.location.state
+  const [selectedTests, setSelectedTests] = useState(new Set([...tests]))
   const [submitted, setSubmitted] = useState(false)
 
   const onAddTest = test => {
@@ -31,13 +33,23 @@ const CreateTestSuite = ({ history, match }) => {
     if (selectedTests.size === 0) {
       return
     }
-    const { repositoryOwner, repositoryName } = match.params
+    const { id, repositoryOwner, repositoryName } = match.params
     const repository = `${repositoryOwner}/${repositoryName}`
     return api('/suites', {
-      method: 'post',
-      body: { ...suite, tests: selectedTests, repository }
+      method: 'put',
+      body: { id, ...suite, tests: selectedTests, repository }
     }).then(() => {
       history.push(routes.dashboard(match.params))
+    })
+  }
+
+  const onDelete = () => {
+    const { id } = match.params
+    return api('/suites', {
+      method: 'delete',
+      body: { id }
+    }).then(() => {
+      window.location = routes.dashboard(match.params)
     })
   }
 
@@ -46,7 +58,10 @@ const CreateTestSuite = ({ history, match }) => {
       <Header />
       <Environment />
       <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
-        <h5 className="mc-text-h5">Create Test Suite</h5>
+        <div className="d-flex align-items-center justify-content-between">
+          <h5 className="mc-text-h5 mc-mr-2">Edit Test Suite</h5>
+          <Anchor onClick={onDelete}>Delete Suite</Anchor>
+        </div>
         <Separator />
         <div className="row mc-my-4">
           <div className="col-7">
@@ -61,7 +76,14 @@ const CreateTestSuite = ({ history, match }) => {
               selectedTests={selectedTests}
               showError={submitted && selectedTests.size === 0}
             />
-            <TestSuiteForm onSubmit={onSubmit} />
+            <TestSuiteForm
+              onSubmit={onSubmit}
+              initialValues={{
+                name,
+                url,
+                description
+              }}
+            />
           </div>
         </div>
       </div>
@@ -69,9 +91,9 @@ const CreateTestSuite = ({ history, match }) => {
   )
 }
 
-CreateTestSuite.propTypes = {
+EditTestSuite.propTypes = {
   history: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired
 }
 
-export default CreateTestSuite
+export default EditTestSuite

@@ -5,9 +5,19 @@ import format from 'date-fns/format'
 
 import StatusBadge from 'components/StatusBadge'
 import routes from 'constants/routesPaths'
+import Anchor from 'components/Anchor'
 import TestSuiteRowWrapper from './TestSuiteRowWrapper'
 
-const TestSuiteRow = ({ id, name, tests, lastSuiteExecution, match }) => {
+const TestSuiteRow = ({
+  id,
+  name,
+  url,
+  description,
+  tests,
+  lastSuiteExecution,
+  match
+}) => {
+  const { repositoryName, repositoryOwner, repositoryRef } = match.params
   const testsCount = tests.length
 
   return (
@@ -29,6 +39,24 @@ const TestSuiteRow = ({ id, name, tests, lastSuiteExecution, match }) => {
             {format(new Date(lastSuiteExecution.createdAt), 'MM/DD/YYYY HH:mm')}
           </p>
         )}
+        <Link
+          to={{
+            pathname: routes.editTestSuite({
+              repositoryName,
+              repositoryOwner,
+              repositoryRef,
+              id
+            }),
+            state: {
+              name,
+              url,
+              description,
+              tests
+            }
+          }}
+        >
+          <Anchor className="mc-mt-2">EDIT</Anchor>
+        </Link>
       </div>
     </TestSuiteRowWrapper>
   )
@@ -37,6 +65,8 @@ const TestSuiteRow = ({ id, name, tests, lastSuiteExecution, match }) => {
 TestSuiteRow.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   tests: PropTypes.array.isRequired,
   lastSuiteExecution: PropTypes.object,
   match: PropTypes.object
