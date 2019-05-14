@@ -9,7 +9,7 @@ const suiteExecutionSelector = new SuiteExecutionSelector()
 
 const mapState = (state, ownProps) => {
   const { id } = ownProps.match.params
-  const suiteExecution = suiteExecutionSelector.find(
+  const suiteExecution = suiteExecutionSelector.findOrdered(
     state,
     suite => suite.id === id
   )
