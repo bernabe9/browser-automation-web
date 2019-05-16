@@ -6,6 +6,7 @@ import TestSuites from 'components/TestSuites'
 import Header from 'components/Header'
 import Environment from 'components/Environment'
 import Spinner from 'components/Spinner'
+import RunAllTest from 'components/RunAllTests'
 
 const HomePage = ({ fetchTestSuites, testSuites, loading }) => {
   useEffect(() => {
@@ -16,6 +17,15 @@ const HomePage = ({ fetchTestSuites, testSuites, loading }) => {
     <div>
       <Header />
       <Environment />
+      <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
+        <div className="row">
+          <div className="col-6">
+            <h5 className="mc-text-h5">Run All Tests</h5>
+            <Separator />
+            <RunAllTest />
+          </div>
+        </div>
+      </div>
       <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
         <h5 className="mc-text-h5">Test Suites</h5>
         <Separator />

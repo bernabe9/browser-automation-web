@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import queryString from 'query-string'
 
 import api from 'api'
-import { applyQueryParams } from 'utils/helpers'
+import { applyQueryParams, getFiles } from 'utils/helpers'
 import routes from 'constants/routesPaths'
 import TreeView from 'components/TreeView'
 import Spinner from 'components/Spinner'
@@ -25,17 +25,6 @@ const MainPanel = ({ history, match, executions, fetchExecutions }) => {
     })
     api(path).then(setStructure)
   }, [])
-
-  const getFiles = structure => {
-    if (structure.type === 'file') {
-      return [structure.path]
-    }
-    const childrenFiles = structure.children.reduce((filesAcc, child) => {
-      const files = getFiles(child)
-      return [...filesAcc, ...files]
-    }, [])
-    return childrenFiles
-  }
 
   useEffect(() => {
     if (structure) {
