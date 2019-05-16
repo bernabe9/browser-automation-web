@@ -28,3 +28,14 @@ export const testStatus = testExecutions => {
   }
   return sortedExecutions[0].status
 }
+
+export const getFiles = structure => {
+  if (structure.type === 'file') {
+    return [structure.path]
+  }
+  const childrenFiles = structure.children.reduce((filesAcc, child) => {
+    const files = getFiles(child)
+    return [...filesAcc, ...files]
+  }, [])
+  return childrenFiles
+}
