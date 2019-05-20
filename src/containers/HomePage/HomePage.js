@@ -7,7 +7,7 @@ import Header from 'components/Header'
 import Environment from 'components/Environment'
 import Spinner from 'components/Spinner'
 import RunAllTest from 'components/RunAllTests'
-import RunGithubCheck from 'components/RunBACheck'
+import RunGithubCheck from 'components/RunGithubCheck'
 
 const HomePage = ({ fetchTestSuites, testSuites, loading }) => {
   useEffect(() => {

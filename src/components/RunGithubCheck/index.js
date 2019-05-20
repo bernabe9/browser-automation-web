@@ -7,10 +7,8 @@ import api from 'api'
 
 const RunGithubCheck = ({ match }) => {
   const [url, setUrl] = useState('')
-  const [sha, setSha] = useState('')
   const [prNumber, setPrNumber] = useState('')
   const [urlError, setUrlError] = useState('')
-  const [shaError, setShaError] = useState('')
   const [prNumberError, setPrNumberError] = useState('')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState('')
@@ -30,10 +28,6 @@ const RunGithubCheck = ({ match }) => {
       setPrNumberError("PR can't be empty ")
       return
     }
-    if (!sha) {
-      setShaError("SHA can't be empty ")
-      return
-    }
     setSuccess(false)
     setLoading(true)
 
@@ -43,7 +37,6 @@ const RunGithubCheck = ({ match }) => {
       body: {
         url,
         prNumber,
-        sha,
         repositoryName,
         repositoryOwner
       }
@@ -55,29 +48,20 @@ const RunGithubCheck = ({ match }) => {
 
   return (
     <div className="mc-my-4">
-      <FormGroup label="URL" name="url" error={urlError} touched={!!urlError}>
-        <Input
-          onChange={e => setUrl(e.target.value)}
-          value={url}
-          placeholder="https://beta.masterclass.com"
-          error={urlError}
-          touched={!!urlError}
-        />
-      </FormGroup>
       <div className="row">
         <div className="col-8">
           <FormGroup
-            label="SHA"
-            name="sha"
-            error={shaError}
-            touched={!!shaError}
+            label="URL"
+            name="url"
+            error={urlError}
+            touched={!!urlError}
           >
             <Input
-              onChange={e => setSha(e.target.value)}
-              value={sha}
-              placeholder="Commit sha"
-              error={shaError}
-              touched={!!shaError}
+              onChange={e => setUrl(e.target.value)}
+              value={url}
+              placeholder="https://beta.masterclass.com"
+              error={urlError}
+              touched={!!urlError}
             />
           </FormGroup>
         </div>
