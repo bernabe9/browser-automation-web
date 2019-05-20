@@ -23,6 +23,7 @@ const handleError = status => {
 
 const urls = {
   default: process.env.API_URL,
+  githubBA: process.env.API_URL_GITHUB,
   github: 'https://api.github.com'
 }
 
