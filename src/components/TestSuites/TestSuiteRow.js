@@ -13,6 +13,7 @@ const TestSuiteRow = ({
   name,
   url,
   description,
+  production,
   tests,
   lastSuiteExecution,
   match
@@ -51,6 +52,7 @@ const TestSuiteRow = ({
               name,
               url,
               description,
+              production,
               tests
             }
           }}

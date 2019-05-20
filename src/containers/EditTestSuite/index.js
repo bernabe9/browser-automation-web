@@ -12,7 +12,7 @@ import TestSuiteForm from 'components/TestSuiteForm'
 import SelectedTests from 'components/SelectedTests'
 
 const EditTestSuite = ({ history, match }) => {
-  const { name, url, description, tests } = history.location.state
+  const { name, url, description, production, tests } = history.location.state
   const [selectedTests, setSelectedTests] = useState(new Set([...tests]))
   const [submitted, setSubmitted] = useState(false)
 
@@ -81,7 +81,8 @@ const EditTestSuite = ({ history, match }) => {
               initialValues={{
                 name,
                 url,
-                description
+                description,
+                production
               }}
             />
           </div>

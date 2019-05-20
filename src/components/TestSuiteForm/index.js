@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { reduxForm, Field } from 'redux-form'
-import { Button, InputField, TextareaField } from 'mc-components'
+import { Button, InputField, TextareaField, CheckboxField } from 'mc-components'
 import validate from 'validate.js'
 
 const TestSuiteForm = ({ submitting, handleSubmit }) => (
@@ -27,6 +27,13 @@ const TestSuiteForm = ({ submitting, handleSubmit }) => (
       name="description"
       label="Description"
       required
+    />
+
+    <Field
+      className="mc-mb-4"
+      component={CheckboxField}
+      name="production"
+      label="Only for production"
     />
 
     <Button type="submit" loading={submitting} fullWidth className="mc-mt-3">
