@@ -27,9 +27,10 @@ const SuiteExecution = ({
   repositoryName,
   repositoryOwner,
   repositoryRef,
-  onRerunSuccess
+  fetchSuiteExecution
 }) => {
   const [loadingRerun, setLoadingRerun] = useState(false)
+  const [loadingCancel, setLoadingCancel] = useState(false)
   const [suiteExecutionStatus, setSuiteExecutionStatus] = useState(status)
 
   const getGlobalStatus = statuses =>
@@ -55,11 +56,13 @@ const SuiteExecution = ({
       return globalStatus
     })
 
-  useEffect(() =>
-    setSuiteExecutionStatus(
-      getGlobalStatus(executions.map(({ status }) => status))
-    )
-  )
+  useEffect(() => {
+    const globalStatus =
+      status === 'cancelled'
+        ? status
+        : getGlobalStatus(executions.map(({ status }) => status))
+    setSuiteExecutionStatus(globalStatus)
+  })
 
   const onRerunAll = () => {
     const path = applyQueryParams(`/rerun-suite-execution`, { id })
@@ -69,9 +72,22 @@ const SuiteExecution = ({
         const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
         await timeout(1000)
         setLoadingRerun(false)
-        onRerunSuccess()
+        fetchSuiteExecution()
       })
       .catch(() => setLoadingRerun(false))
+  }
+
+  const onCancel = () => {
+    const path = applyQueryParams(`/cancel-suite-execution`, { id })
+    setLoadingCancel(true)
+    api(path)
+      .then(async () => {
+        const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
+        await timeout(1000)
+        setLoadingCancel(false)
+        fetchSuiteExecution()
+      })
+      .catch(() => setLoadingCancel(false))
   }
 
   return (
@@ -104,6 +120,16 @@ const SuiteExecution = ({
           RERUN ALL
         </Button>
       )}
+      {['running', 'pending'].includes(suiteExecutionStatus) && (
+        <Button
+          className="mc-my-3"
+          onClick={onCancel}
+          loading={loadingCancel}
+          kind="secondary"
+        >
+          CANCEL
+        </Button>
+      )}
       <Separator />
       <div className="mc-my-4">
         <h5 className="mc-text-h5 mc-my-5">Test Executions</h5>
@@ -112,7 +138,7 @@ const SuiteExecution = ({
             key={execution.id}
             {...execution}
             rerunEnabled
-            onRerunSuccess={onRerunSuccess}
+            onRerunSuccess={fetchSuiteExecution}
           />
         ))}
       </div>
@@ -127,7 +153,7 @@ SuiteExecution.propTypes = {
   url: PropTypes.string.isRequired,
   createdAt: PropTypes.number.isRequired,
   executions: PropTypes.array.isRequired,
-  onRerunSuccess: PropTypes.func.isRequired,
+  fetchSuiteExecution: PropTypes.func.isRequired,
   concurrencyCount: PropTypes.number,
   webhook: PropTypes.string,
   repositoryName: PropTypes.string,

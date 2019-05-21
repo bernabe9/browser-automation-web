@@ -8,9 +8,9 @@ const bgColor = ({ theme, status }) => {
 }
 
 const Wrapper = styled.span`
-  padding: 4px 12px;
-  color: ${({ theme }) => theme.mcColorLight};
   background-color: ${bgColor};
+  color: ${({ theme }) => theme.mcColorLight};
+  padding: 4px 12px;
 `
 
 export default Wrapper

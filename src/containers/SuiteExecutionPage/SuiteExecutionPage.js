@@ -17,7 +17,7 @@ const SuiteExecutionPage = ({ suiteExecution, fetchSuiteExecution }) => {
       {suiteExecution && (
         <SuiteExecution
           {...suiteExecution}
-          onRerunSuccess={fetchSuiteExecution}
+          fetchSuiteExecution={fetchSuiteExecution}
         />
       )}
     </div>

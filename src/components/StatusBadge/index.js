@@ -17,8 +17,14 @@ const StatusBadge = ({ status, small = false }) => {
 }
 
 StatusBadge.propTypes = {
-  status: PropTypes.oneOf(['ready', 'pending', 'running', 'success', 'error'])
-    .isRequired,
+  status: PropTypes.oneOf([
+    'ready',
+    'pending',
+    'running',
+    'success',
+    'error',
+    'cancelled'
+  ]).isRequired,
   small: PropTypes.bool
 }
 
