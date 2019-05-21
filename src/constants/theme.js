@@ -7,6 +7,7 @@ const theme = {
     running: '#61b5f4',
     success: '#049b4a',
     error: '#f24646',
+    cancelled: '#777777',
     skipped: variables.mcColorGray500
   },
   // fonts
