@@ -27,7 +27,8 @@ const ExecutionRow = ({
   repositoryRef,
   rerunEnabled = false,
   onRerunSuccess,
-  user
+  user,
+  production
 }) => {
   const [showData, setShowData] = useState(false)
   const [loadingRerun, setLoadingRerun] = useState(false)
@@ -135,6 +136,7 @@ const ExecutionRow = ({
             )}
           </Flex>
         )}
+        {production && <p className="mc-mt-4">Only for production</p>}
         {!['running', 'pending'].includes(status) && rerunEnabled && (
           <Button className="mc-mt-4" onClick={onRerun} loading={loadingRerun}>
             RERUN
@@ -176,7 +178,8 @@ ExecutionRow.propTypes = {
   onRerunSuccess: PropTypes.func,
   repositoryName: PropTypes.string,
   repositoryOwner: PropTypes.string,
-  repositoryRef: PropTypes.string
+  repositoryRef: PropTypes.string,
+  production: PropTypes.string
 }
 
 export default ExecutionRow
