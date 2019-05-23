@@ -59,10 +59,7 @@ const RepositoriesPage = () => {
                           repositoryName: repository.name,
                           repositoryOwner: repository.owner,
                           repositoryRef: repository.defaultRef
-                        }),
-                        state: {
-                          baseFolder: repository.baseFolder
-                        }
+                        })
                       }}
                     >
                       <Anchor className="mc-mt-2">EDIT</Anchor>
