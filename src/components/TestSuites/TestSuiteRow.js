@@ -69,7 +69,7 @@ TestSuiteRow.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
-  production: PropTypes.string.isRequired,
+  production: PropTypes.bool,
   description: PropTypes.string.isRequired,
   tests: PropTypes.array.isRequired,
   lastSuiteExecution: PropTypes.object,

@@ -179,7 +179,7 @@ ExecutionRow.propTypes = {
   repositoryName: PropTypes.string,
   repositoryOwner: PropTypes.string,
   repositoryRef: PropTypes.string,
-  production: PropTypes.string
+  production: PropTypes.bool
 }
 
 export default ExecutionRow
