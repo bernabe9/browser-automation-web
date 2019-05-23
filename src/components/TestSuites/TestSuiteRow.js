@@ -13,6 +13,7 @@ const TestSuiteRow = ({
   name,
   url,
   description,
+  production,
   tests,
   lastSuiteExecution,
   match
@@ -39,6 +40,7 @@ const TestSuiteRow = ({
             {format(new Date(lastSuiteExecution.createdAt), 'MM/DD/YYYY HH:mm')}
           </p>
         )}
+        {production && <p>Only for production</p>}
         <Link
           to={{
             pathname: routes.editTestSuite({
@@ -51,6 +53,7 @@ const TestSuiteRow = ({
               name,
               url,
               description,
+              production,
               tests
             }
           }}
@@ -66,6 +69,7 @@ TestSuiteRow.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   url: PropTypes.string.isRequired,
+  production: PropTypes.bool,
   description: PropTypes.string.isRequired,
   tests: PropTypes.array.isRequired,
   lastSuiteExecution: PropTypes.object,
