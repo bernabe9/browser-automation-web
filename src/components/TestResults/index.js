@@ -9,7 +9,11 @@ const TestResults = ({ testResults }) => {
     <div>
       {testResults.map((testResult, index) => (
         <AncestorTitles key={index} ancestors={testResult.ancestorTitles}>
-          <Result status={testResult.status} title={testResult.title} />
+          <Result
+            status={testResult.status}
+            title={testResult.title}
+            screenshots={testResult.screenshots}
+          />
         </AncestorTitles>
       ))}
     </div>
