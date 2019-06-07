@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import CheckIcon from './CheckIcon'
 import ErrorIcon from './ErrorIcon'
 import ResultTitle from './ResultTitle'
+import Screenshots from './Screenshots'
 import SkippedIcon from './SkippedIcon'
 
 const Icons = {
@@ -18,7 +19,7 @@ const messages = {
   pending: 'Skipped'
 }
 
-const Result = ({ status, title }) => {
+const Result = ({ status, title, screenshots }) => {
   const Icon = Icons[status]
   return (
     <div>
@@ -26,13 +27,15 @@ const Result = ({ status, title }) => {
         messages[status]
       }`}</ResultTitle>
       <Icon />
+      {screenshots && <Screenshots screenshots={screenshots} />}
     </div>
   )
 }
 
 Result.propTypes = {
   status: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired,
+  screenshots: PropTypes.object
 }
 
 export default Result
