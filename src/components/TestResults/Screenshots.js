@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from 'react'
 import PropTypes from 'prop-types'
+import cn from 'classnames'
 import { Modal, ModalClose, ModalContent } from 'mc-components'
 
 import Anchor from 'components/Anchor'
@@ -7,6 +8,7 @@ import Screenshot from './Screenshot'
 
 const Screenshots = ({ screenshots }) => {
   const [showScreenshots, setShowScreenshots] = useState(false)
+  const currentScreenshotCn = cn('col-6', { 'offset-3': !screenshots.new })
 
   return (
     <Fragment>
@@ -18,7 +20,7 @@ const Screenshots = ({ screenshots }) => {
             <div className="mc-my-10">
               <div className="row mc-mb-4">
                 {screenshots.current && (
-                  <div className={`col-6 ${screenshots.new ? '' : 'offset-3'}`}>
+                  <div className={currentScreenshotCn}>
                     <Screenshot
                       title="Current screenshot"
                       src={screenshots.current}
