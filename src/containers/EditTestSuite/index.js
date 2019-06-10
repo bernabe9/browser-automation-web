@@ -82,7 +82,7 @@ const EditTestSuite = ({ history, match }) => {
                 name,
                 url,
                 description,
-                production
+                production: production || false
               }}
             />
           </div>
