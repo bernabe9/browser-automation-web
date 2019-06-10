@@ -24,7 +24,8 @@ const RunAllTests = ({ history, match }) => {
     const path = applyQueryParams('/folders', {
       repositoryName,
       repositoryOwner,
-      repositoryRef
+      repositoryRef,
+      exclude: '__visual-regression-tests__'
     })
 
     api(path)
