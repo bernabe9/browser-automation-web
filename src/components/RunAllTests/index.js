@@ -25,7 +25,7 @@ const RunAllTests = ({ history, match }) => {
       repositoryName,
       repositoryOwner,
       repositoryRef,
-      exclude: 'visual-regression-tests'
+      exclude: '__visual-regression-tests__'
     })
 
     api(path)
