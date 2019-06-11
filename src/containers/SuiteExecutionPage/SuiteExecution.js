@@ -33,28 +33,31 @@ const SuiteExecution = ({
   const [loadingCancel, setLoadingCancel] = useState(false)
   const [suiteExecutionStatus, setSuiteExecutionStatus] = useState(status)
 
-  const getGlobalStatus = statuses =>
-    statuses.reduce((status, globalStatus) => {
-      if (globalStatus === statusesConst.running) {
-        return statusesConst.running
-      }
-      if (status === statusesConst.running) {
-        return statusesConst.running
-      }
-      if (status === statusesConst.pending) {
-        return statusesConst.pending
-      }
-      if (status === statusesConst.error) {
-        return statusesConst.error
-      }
-      if (
-        status === statusesConst.success &&
-        (!globalStatus || globalStatus === statusesConst.success)
-      ) {
-        return statusesConst.success
-      }
-      return globalStatus
-    })
+  const getGlobalStatus = statuses => {
+    const statusCondition = {
+      [statusesConst.running]: statuses.some(
+        status => status === statusesConst.running
+      ),
+      [statusesConst.error]:
+        statuses.some(status => status === statusesConst.error) &&
+        statuses.every(status =>
+          [statusesConst.error, statusesConst.success].includes(status)
+        ),
+      [statusesConst.success]: statuses.every(
+        status => status === statusesConst.success
+      ),
+      [statusesConst.pending]: statuses.some(
+        status => status === statusesConst.pending
+      ),
+      [statusesConst.queued]: statuses.some(
+        status => status === statusesConst.queued
+      ),
+      [statusesConst.queuedForReTry]: statuses.some(
+        status => status === statusesConst.queuedForReTry
+      )
+    }
+    return Object.keys(statusCondition).find(key => statusCondition[key])
+  }
 
   useEffect(() => {
     const globalStatus =
