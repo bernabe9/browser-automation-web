@@ -32,7 +32,6 @@ const ExecutionRow = ({
 }) => {
   const [showData, setShowData] = useState(false)
   const [loadingRerun, setLoadingRerun] = useState(false)
-  const [githubUser, setGithubUser] = useState()
 
   const getDistance = startedAt =>
     distanceInWords(new Date(startedAt), {
@@ -53,12 +52,6 @@ const ExecutionRow = ({
       return () => clearInterval(interval)
     }
   })
-
-  useEffect(() => {
-    if (user) {
-      api(`/users/${user}`, { url: 'github' }).then(setGithubUser)
-    }
-  }, [])
 
   const onToggle = () => setShowData(!showData)
 
@@ -116,17 +109,17 @@ const ExecutionRow = ({
         {user && (
           <Flex>
             <span>user: </span>
-            {githubUser && (
+            {user && (
               <Fragment>
                 <Avatar
                   className="mc-mx-2"
-                  src={githubUser.avatarUrl}
+                  src={`https://github.com/${user}.png`}
                   width="26px"
                   height="26px"
                 />
                 <a
                   className="mc-text--link"
-                  href={githubUser.htmlUrl}
+                  href={`https://github.com/${user}`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

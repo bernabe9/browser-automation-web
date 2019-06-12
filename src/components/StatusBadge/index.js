@@ -23,7 +23,9 @@ StatusBadge.propTypes = {
     'running',
     'success',
     'error',
-    'cancelled'
+    'cancelled',
+    'queued',
+    'queued for retry'
   ]).isRequired,
   small: PropTypes.bool
 }
