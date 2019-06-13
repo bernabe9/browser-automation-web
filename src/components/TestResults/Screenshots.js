@@ -6,13 +6,26 @@ import { Modal, ModalClose, ModalContent } from 'mc-components'
 import Anchor from 'components/Anchor'
 import Screenshot from './Screenshot'
 
-const Screenshots = ({ screenshots }) => {
+const Screenshots = ({ screenshots, onRerun }) => {
+  const [toggleRerun, setToggleRerun] = useState(
+    onRerun && screenshots.current && screenshots.new && screenshots.diff
+  )
   const [showScreenshots, setShowScreenshots] = useState(false)
   const currentScreenshotCn = cn('col-6', { 'offset-3': !screenshots.new })
+
+  const handleAcceptAndRerun = () => {
+    onRerun(true)
+    setToggleRerun(false)
+  }
 
   return (
     <Fragment>
       <Anchor onClick={() => setShowScreenshots(true)}>Show Screenshots</Anchor>
+      {toggleRerun && (
+        <Anchor className="mc-mt-1" onClick={handleAcceptAndRerun}>
+          Accept new screenshot and rerun
+        </Anchor>
+      )}
       <Modal onClose={() => setShowScreenshots(false)} show={showScreenshots}>
         <ModalClose />
         <div className="container">
@@ -45,7 +58,8 @@ const Screenshots = ({ screenshots }) => {
 }
 
 Screenshots.propTypes = {
-  screenshots: PropTypes.object
+  screenshots: PropTypes.object,
+  onRerun: PropTypes.func
 }
 
 export default Screenshots

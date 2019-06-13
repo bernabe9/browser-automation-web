@@ -19,7 +19,7 @@ const messages = {
   pending: 'Skipped'
 }
 
-const Result = ({ status, title, screenshots }) => {
+const Result = ({ status, title, screenshots, onRerun }) => {
   const Icon = Icons[status]
   return (
     <div>
@@ -27,7 +27,9 @@ const Result = ({ status, title, screenshots }) => {
         messages[status]
       }`}</ResultTitle>
       <Icon />
-      {screenshots && <Screenshots screenshots={screenshots} />}
+      {screenshots && (
+        <Screenshots screenshots={screenshots} onRerun={onRerun} />
+      )}
     </div>
   )
 }
@@ -35,7 +37,8 @@ const Result = ({ status, title, screenshots }) => {
 Result.propTypes = {
   status: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  screenshots: PropTypes.object
+  screenshots: PropTypes.object,
+  onRerun: PropTypes.func
 }
 
 export default Result
