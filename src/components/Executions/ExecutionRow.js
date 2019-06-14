@@ -5,6 +5,7 @@ import distanceInWords from 'date-fns/distance_in_words_to_now'
 
 import { applyQueryParams } from 'utils/helpers'
 import api from 'api'
+import statuses from 'constants/status'
 import StatusBadge from 'components/StatusBadge'
 import TestResults from 'components/TestResults'
 import Timer from 'components/Timer'
@@ -55,9 +56,10 @@ const ExecutionRow = ({
 
   const onToggle = () => setShowData(!showData)
 
-  const onRerun = () => {
+  const onRerun = (replaceScreenshots = false) => {
     const path = applyQueryParams(`/rerun`, {
-      id
+      id,
+      replaceScreenshots
     })
     setLoadingRerun(true)
     api(path)
@@ -141,7 +143,10 @@ const ExecutionRow = ({
           <Anchor onClick={onToggle}>Toggle results</Anchor>
           {showData && (
             <ResultWrapper className="mc-p-4 mc-my-3">
-              <TestResults testResults={JSON.parse(testResults)} />
+              <TestResults
+                testResults={JSON.parse(testResults)}
+                onRerun={status === statuses.error ? onRerun : undefined}
+              />
               {errorMessage && (
                 <Fragment>
                   <p>Error:</p>
