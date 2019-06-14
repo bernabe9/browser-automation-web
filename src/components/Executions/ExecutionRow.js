@@ -145,7 +145,7 @@ const ExecutionRow = ({
             <ResultWrapper className="mc-p-4 mc-my-3">
               <TestResults
                 testResults={JSON.parse(testResults)}
-                onRerun={status === statuses.error ? onRerun : null}
+                onRerun={status === statuses.error ? onRerun : undefined}
               />
               {errorMessage && (
                 <Fragment>
