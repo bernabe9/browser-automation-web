@@ -36,7 +36,7 @@ const Screenshots = ({ screenshots, onRerun }) => {
                   <div className={currentScreenshotCn}>
                     <Screenshot
                       title="Current screenshot"
-                      src={screenshots.current}
+                      src={`${screenshots.current}?${new Date().getTime()}`}
                     />
                   </div>
                 )}
