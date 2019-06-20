@@ -36,8 +36,8 @@ const Environment = ({
 
   const handleChangeRef = () => {
     window.location = window.location.pathname.replace(
-      `${repositoryRef}`,
-      `${ref}`
+      repositoryRef,
+      encodeURIComponent(ref)
     )
   }
 
