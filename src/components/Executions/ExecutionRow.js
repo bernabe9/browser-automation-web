@@ -56,10 +56,11 @@ const ExecutionRow = ({
 
   const onToggle = () => setShowData(!showData)
 
-  const onRerun = (replaceScreenshots = false) => {
+  const onRerun = (replaceScreenshots = false, index) => {
     const path = applyQueryParams(`/rerun`, {
       id,
-      replaceScreenshots
+      replaceScreenshots,
+      index
     })
     setLoadingRerun(true)
     api(path)

@@ -6,7 +6,7 @@ import { Modal, ModalClose, ModalContent } from 'mc-components'
 import Anchor from 'components/Anchor'
 import Screenshot from './Screenshot'
 
-const Screenshots = ({ screenshots, onRerun }) => {
+const Screenshots = ({ index, screenshots, onRerun }) => {
   const [toggleRerun, setToggleRerun] = useState(
     onRerun && screenshots.current && screenshots.new && screenshots.diff
   )
@@ -14,7 +14,7 @@ const Screenshots = ({ screenshots, onRerun }) => {
   const currentScreenshotCn = cn('col-6', { 'offset-3': !screenshots.new })
 
   const handleAcceptAndRerun = () => {
-    onRerun(true)
+    onRerun(true, index)
     setToggleRerun(false)
   }
 
@@ -58,6 +58,7 @@ const Screenshots = ({ screenshots, onRerun }) => {
 }
 
 Screenshots.propTypes = {
+  index: PropTypes.number,
   screenshots: PropTypes.object,
   onRerun: PropTypes.func
 }
