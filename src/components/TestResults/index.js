@@ -10,6 +10,7 @@ const TestResults = ({ testResults, onRerun }) => {
       {testResults.map((testResult, index) => (
         <AncestorTitles key={index} ancestors={testResult.ancestorTitles}>
           <Result
+            index={index}
             status={testResult.status}
             title={testResult.title}
             screenshots={testResult.screenshots}
