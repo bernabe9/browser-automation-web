@@ -21,7 +21,7 @@ const StyledAnchor = ({
 }) => {
   const classNames = cn(
     'mc-text-h8',
-    { 'mc-text--muted': !isActive },
+    { 'mc-opacity--muted': !isActive },
     { [className]: !!className }
   )
   return (

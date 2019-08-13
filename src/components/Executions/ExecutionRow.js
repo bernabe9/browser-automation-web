@@ -32,6 +32,7 @@ const ExecutionRow = ({
   production
 }) => {
   const [showData, setShowData] = useState(false)
+  const [showExpanded, setShowExpanded] = useState(false)
   const [loadingRerun, setLoadingRerun] = useState(false)
 
   const getDistance = startedAt =>
@@ -54,6 +55,7 @@ const ExecutionRow = ({
     }
   })
 
+  const onExpand = () => setShowExpanded(!showExpanded)
   const onToggle = () => setShowData(!showData)
 
   const onRerun = (replaceScreenshots = false, index) => {
@@ -75,73 +77,96 @@ const ExecutionRow = ({
 
   return (
     <Fragment>
-      <div className="mc-mb-3">
-        <div className="mc-mb-4">
-          {startedAt && <p>{`${distance} ago`}</p>}
-          <div>
-            <span>status: </span>
-            <StatusBadge status={status} small />
-          </div>
-          {startedAt && (
-            <Timer startDate={startedAt} endDate={endedAt}>
-              {(minutes, seconds) => (
-                <p>
-                  duration: {minutes}:{seconds}
-                </p>
+      <Flex alignItems="flex-start" justifyContent="space-between">
+        <div>
+          <div className="mc-mb-3">
+            <div className="mc-mb-4">
+              {startedAt && <p>{`${distance} ago`}</p>}
+              <p>{`test: ${test}`}</p>
+              {startedAt && (
+                <Timer startDate={startedAt} endDate={endedAt}>
+                  {(minutes, seconds) => (
+                    <p>
+                      duration: {minutes}:{seconds}
+                    </p>
+                  )}
+                </Timer>
               )}
-            </Timer>
-          )}
+              <Flex>
+                <span>status: </span>
+                <span className="mc-ml-2">
+                  <StatusBadge status={status} small />
+                </span>
+              </Flex>
+            </div>
+          </div>
+
+          <Anchor className="mc-my-4" onClick={onExpand}>
+            {!showExpanded ? 'More' : 'Less'}
+          </Anchor>
         </div>
-        <p>{`id: ${id}`}</p>
-        <p>{`test: ${test}`}</p>
-        <p>
-          URL:{' '}
-          <a
-            className="mc-text--link"
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {url}
-          </a>
-        </p>
-        {repositoryName && repositoryOwner && (
-          <p>repository: {`${repositoryOwner}/${repositoryName}`}</p>
-        )}
-        {repositoryRef && <p>ref: {repositoryRef}</p>}
-        {user && (
+
+        <div>
           <Flex>
-            <span>user: </span>
-            {user && (
-              <Fragment>
-                <Avatar
-                  className="mc-mx-2"
-                  src={`https://github.com/${user}.png`}
-                  width="26px"
-                  height="26px"
-                />
-                <a
-                  className="mc-text--link"
-                  href={`https://github.com/${user}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {user}
-                </a>
-              </Fragment>
+            {rerunEnabled && (
+              <Button onClick={onRerun} loading={loadingRerun}>
+                Rerun
+              </Button>
+            )}
+            {!!testResults && (
+              <Button kind="secondary" className="mc-ml-2" onClick={onToggle}>
+                Toggle Results
+              </Button>
             )}
           </Flex>
-        )}
-        {production && <p className="mc-mt-4">Only for production</p>}
-        {rerunEnabled && (
-          <Button className="mc-mt-4" onClick={onRerun} loading={loadingRerun}>
-            RERUN
-          </Button>
-        )}
-      </div>
+        </div>
+      </Flex>
+      {showExpanded && (
+        <div className="mc-mt-2">
+          <p>{`id: ${id}`}</p>
+          <p>
+            URL:{' '}
+            <a
+              className="mc-text--link"
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {url}
+            </a>
+          </p>
+          {repositoryName && repositoryOwner && (
+            <p>repository: {`${repositoryOwner}/${repositoryName}`}</p>
+          )}
+          {repositoryRef && <p>ref: {repositoryRef}</p>}
+          {user && (
+            <Flex>
+              <span>user: </span>
+              {user && (
+                <Fragment>
+                  <Avatar
+                    className="mc-mx-2"
+                    src={`https://github.com/${user}.png`}
+                    width="26px"
+                    height="26px"
+                  />
+                  <a
+                    className="mc-text--link"
+                    href={`https://github.com/${user}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {user}
+                  </a>
+                </Fragment>
+              )}
+            </Flex>
+          )}
+          {production && <p className="mc-mt-4">Only for production</p>}
+        </div>
+      )}
       {!!testResults && (
         <Fragment>
-          <Anchor onClick={onToggle}>Toggle results</Anchor>
           {showData && (
             <ResultWrapper className="mc-p-4 mc-my-3">
               <TestResults

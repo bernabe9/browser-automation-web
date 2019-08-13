@@ -7,6 +7,7 @@ import validate from 'validate.js'
 const TestSuiteForm = ({ submitting, handleSubmit }) => (
   <form onSubmit={handleSubmit} noValidate>
     <Field
+      className="mc-mb-6"
       component={InputField}
       name="name"
       label="Name"
@@ -15,6 +16,7 @@ const TestSuiteForm = ({ submitting, handleSubmit }) => (
     />
 
     <Field
+      className="mc-mb-6"
       component={InputField}
       name="url"
       label="URL"
@@ -23,6 +25,7 @@ const TestSuiteForm = ({ submitting, handleSubmit }) => (
     />
 
     <Field
+      className="mc-mb-6"
       component={TextareaField}
       name="description"
       label="Description"

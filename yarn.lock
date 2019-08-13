@@ -6569,13 +6569,14 @@ mathml-tag-names@^2.0.1:
   resolved "https://registry.yarnpkg.com/mathml-tag-names/-/mathml-tag-names-2.1.0.tgz#490b70e062ee24636536e3d9481e333733d00f2c"
   integrity sha512-3Zs9P/0zzwTob2pdgT0CHZuMbnSUSp8MB1bddfm+HDmnFWHGT4jvEZRf+2RuPoa+cjdn/z25SEt5gFTqdhvJAg==
 
-mc-components@1.1.4:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/mc-components/-/mc-components-1.1.4.tgz#b9c505b93101306047697c758fb9a297c14d6a4f"
-  integrity sha512-mwqWIJqLU4mpe/ZBGYLUbw7RcPnBBHuxksKesyahcH6Te1L6LafWRr6hH10i6yA746Hbu1+U31SpDbvYVHPEWw==
+mc-components@^1.8.2:
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/mc-components/-/mc-components-1.8.2.tgz#b96b550798f0438235468f6b8311da35f64cd1db"
+  integrity sha512-0QawbyxpdzeIKFBDE1yQzLClSWnh++L7NdDfHIhLe4rK5ddYGXAY3Nym1HWVCyRIdrxiBSZNWk3j1mAUz5wjOQ==
   dependencies:
     bootstrap "^4.3.0"
     classnames "^2.2.5"
+    popper.js "^1.15.0"
     react-select "^2.3.0"
     react-slick "^0.23.1"
     slick-carousel "^1.8.1"
@@ -7806,6 +7807,11 @@ pn@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pn/-/pn-1.1.0.tgz#e2f4cef0e219f463c179ab37463e4e1ecdccbafb"
   integrity sha512-2qHaIQr2VLRFoxe2nASzsV6ef4yOOH+Fi9FBOVH6cqeSgUnoyySPZkxzLuzd+RYOQTRpROA0ztTMqxROKSb/nA==
+
+popper.js@^1.15.0:
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.15.0.tgz#5560b99bbad7647e9faa475c6b8056621f5a4ff2"
+  integrity sha512-w010cY1oCUmI+9KwwlWki+r5jxKfTFDVoadl7MSrIujHU5MJ5OR6HTDj6Xo8aoR/QsA56x8jKjA59qGH4ELtrA==
 
 posix-character-classes@^0.1.0:
   version "0.1.1"
