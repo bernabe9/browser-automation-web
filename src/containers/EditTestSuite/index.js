@@ -73,6 +73,7 @@ const EditTestSuite = ({ history, match }) => {
           </div>
           <div className="col-5">
             <SelectedTests
+              onRemoveTest={onRemoveTest}
               selectedTests={selectedTests}
               showError={submitted && selectedTests.size === 0}
             />
