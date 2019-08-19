@@ -60,7 +60,7 @@ const RunStressTest = ({ test, lastStressExecution, onSuccess, match }) => {
           )}%`}</span>
         </div>
       )}
-      <div className="row">
+      <div className="row mc-my-2">
         <div className="col-6">
           <FormGroup
             label="URL"

@@ -5,6 +5,13 @@ body {
   letter-spacing: 0.01em;
 }
 
+// work around scroll issue on mc-components modal
+// v1.8.2
+.mc-modal > div > div {
+  height: 100%;
+  overflow: auto;
+}
+
 :export {
   mcColorGray200: $mc-color-gray-200;
   mcColorGray400: $mc-color-gray-400;

@@ -48,7 +48,7 @@ const RunGithubCheck = ({ match }) => {
 
   return (
     <div className="mc-my-4">
-      <div className="row">
+      <div className="row mc-my-2">
         <div className="col-8">
           <FormGroup
             label="URL"

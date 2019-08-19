@@ -41,7 +41,7 @@
     "humps": "2.0.1",
     "isomorphic-fetch": "2.2.1",
     "lodash": "4.17.11",
-    "mc-components": "1.1.4",
+    "mc-components": "^1.8.2",
     "normalizr": "3.3.0",
     "prop-types": "15.6.2",
     "query-string": "5.1.1",

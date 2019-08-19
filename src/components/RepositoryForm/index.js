@@ -7,6 +7,7 @@ import validate from 'validate.js'
 const RepositoryForm = ({ submitting, handleSubmit, edit = false }) => (
   <form onSubmit={handleSubmit} noValidate>
     <Field
+      className="mc-mb-6"
       component={InputField}
       name="owner"
       label="Repository Owner *"
@@ -16,6 +17,7 @@ const RepositoryForm = ({ submitting, handleSubmit, edit = false }) => (
     />
 
     <Field
+      className="mc-mb-6"
       component={InputField}
       name="name"
       label="Repository Name *"
@@ -25,6 +27,7 @@ const RepositoryForm = ({ submitting, handleSubmit, edit = false }) => (
     />
 
     <Field
+      className="mc-mb-6"
       component={InputField}
       name="defaultRef"
       label="Default git reference *"
@@ -33,6 +36,7 @@ const RepositoryForm = ({ submitting, handleSubmit, edit = false }) => (
     />
 
     <Field
+      className="mc-mb-6"
       component={InputField}
       name="baseFolder"
       label="Browser automation base folder"

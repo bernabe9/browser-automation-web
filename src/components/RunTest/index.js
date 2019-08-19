@@ -37,7 +37,7 @@ const RunTest = ({ test, onSuccess, match }) => {
 
   return (
     <div className="mc-my-4">
-      <div className="row">
+      <div className="row mc-my-2">
         <div className="col-6">
           <FormGroup
             label="URL"
