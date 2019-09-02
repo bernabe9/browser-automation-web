@@ -10,6 +10,7 @@ import api from 'api'
 const RunAllTests = ({ history, match }) => {
   const [url, setUrl] = useState('')
   const [concurrency, setConcurrency] = useState(5)
+  const [forceParams, setForceParams] = useState('')
   const [urlError, setUrlError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -37,6 +38,7 @@ const RunAllTests = ({ history, match }) => {
           repositoryOwner,
           repositoryRef,
           tests: tests.join(','),
+          forceParams,
           url
         })
         return api(applyQueryParams(path))
@@ -80,6 +82,15 @@ const RunAllTests = ({ history, match }) => {
               min={1}
               onChange={e => setConcurrency(e.target.value)}
               value={concurrency}
+            />
+          </FormGroup>
+        </div>
+        <div className="col-8">
+          <FormGroup label="Force Params" name="forceParams">
+            <Input
+              onChange={e => setForceParams(e.target.value)}
+              value={forceParams}
+              placeholder="experiment_a=variation&experiment_b=control"
             />
           </FormGroup>
         </div>

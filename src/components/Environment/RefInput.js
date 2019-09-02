@@ -12,7 +12,7 @@ const RefInput = ({ defaultRef, enabled, repository, onToggle, onChange }) => {
           {enabled ? 'use current reference' : 'change reference'}
         </Anchor>
         {enabled && (
-          <div className="mc-mt-4">
+          <div className="mc-my-4">
             <FormGroup label="Ref" name="ref">
               <Input
                 onChange={e => onChange(e.target.value)}
