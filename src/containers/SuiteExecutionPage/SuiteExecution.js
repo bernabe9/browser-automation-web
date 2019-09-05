@@ -27,7 +27,8 @@ const SuiteExecution = ({
   repositoryName,
   repositoryOwner,
   repositoryRef,
-  fetchSuiteExecution
+  fetchSuiteExecution,
+  forceParams
 }) => {
   const [loadingRerun, setLoadingRerun] = useState(false)
   const [loadingCancel, setLoadingCancel] = useState(false)
@@ -117,6 +118,7 @@ const SuiteExecution = ({
       )}
       {repositoryRef && <p>ref: {repositoryRef}</p>}
       {concurrencyCount && <p>concurrency: {concurrencyCount}</p>}
+      {forceParams && <p>force params: {forceParams}</p>}
       {webhook && <p>webhook: {webhook}</p>}
       {!['running', 'pending'].includes(suiteExecutionStatus) && (
         <Button className="mc-my-3" onClick={onRerunAll} loading={loadingRerun}>
@@ -161,7 +163,8 @@ SuiteExecution.propTypes = {
   webhook: PropTypes.string,
   repositoryName: PropTypes.string,
   repositoryOwner: PropTypes.string,
-  repositoryRef: PropTypes.string
+  repositoryRef: PropTypes.string,
+  forceParams: PropTypes.string
 }
 
 export default SuiteExecution
