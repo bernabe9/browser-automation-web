@@ -36,9 +36,21 @@ const renderApp = Component => {
   )
 }
 
-sessionService.initSessionService(store).then(() => {
-  renderApp(App)
-})
+if (process.env.NODE_ENV === 'development') {
+  sessionService.initSessionService(store).then(() => {
+    sessionService.saveSession({
+      accessToken: process.env.ACCESS_TOKEN
+    })
+    sessionService.saveUser({
+      accessToken: process.env.ACCESS_TOKEN
+    })
+    renderApp(App)
+  })
+} else {
+  sessionService.initSessionService(store).then(() => {
+    renderApp(App)
+  })
+}
 
 setConfig({ logLevel: 'no-errors-please' })
 
