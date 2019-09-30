@@ -69,14 +69,16 @@ const RunTest = ({ test, onSuccess, match }) => {
         {!showOptions ? 'More Options' : 'Less Options'}
       </Anchor>
       {showOptions && (
-        <div className="mc-mb-4">
-          <FormGroup label="Force Params" name="forceParams">
-            <Input
-              onChange={e => setForceParams(e.target.value)}
-              value={forceParams}
-              placeholder="experiment_a=variation&experiment_b=control"
-            />
-          </FormGroup>
+        <div className="row mc-mb-4">
+          <div className="col-6">
+            <FormGroup label="Force Params" name="forceParams">
+              <Input
+                onChange={e => setForceParams(e.target.value)}
+                value={forceParams}
+                placeholder="experiment_a=variation&experiment_b=control"
+              />
+            </FormGroup>
+          </div>
         </div>
       )}
       <Button onClick={onSubmit} loading={loading}>
