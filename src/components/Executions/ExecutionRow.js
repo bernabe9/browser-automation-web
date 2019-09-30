@@ -28,6 +28,7 @@ const ExecutionRow = ({
   repositoryRef,
   rerunEnabled = false,
   onRerunSuccess,
+  forceParams,
   user,
   production
 }) => {
@@ -139,6 +140,7 @@ const ExecutionRow = ({
             <p>repository: {`${repositoryOwner}/${repositoryName}`}</p>
           )}
           {repositoryRef && <p>ref: {repositoryRef}</p>}
+          {forceParams && <p>force params: {forceParams}</p>}
           {user && (
             <Flex>
               <span>user: </span>
@@ -203,6 +205,7 @@ ExecutionRow.propTypes = {
   repositoryName: PropTypes.string,
   repositoryOwner: PropTypes.string,
   repositoryRef: PropTypes.string,
+  forceParams: PropTypes.string,
   production: PropTypes.bool
 }
 

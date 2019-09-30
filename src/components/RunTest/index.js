@@ -5,11 +5,14 @@ import { Input, FormGroup, Button } from 'mc-components'
 
 import { applyQueryParams } from 'utils/helpers'
 import api from 'api'
+import Anchor from 'components/Anchor'
 
 const RunTest = ({ test, onSuccess, match }) => {
   const [url, setUrl] = useState('')
   const [urlError, setUrlError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showOptions, setShowOptions] = useState(false)
+  const [forceParams, setForceParams] = useState('')
 
   const onSubmit = () => {
     if (!url) {
@@ -23,7 +26,8 @@ const RunTest = ({ test, onSuccess, match }) => {
       url,
       repositoryName,
       repositoryOwner,
-      repositoryRef
+      repositoryRef,
+      forceParams
     })
     api(path)
       .then(async () => {
@@ -35,9 +39,15 @@ const RunTest = ({ test, onSuccess, match }) => {
       .catch(() => setLoading(false))
   }
 
+  const toggleOptions = () => {
+    setShowOptions(!showOptions)
+    // clean values
+    setForceParams('')
+  }
+
   return (
-    <div className="mc-my-4">
-      <div className="row mc-my-2">
+    <div>
+      <div className="row mc-mt-2">
         <div className="col-6">
           <FormGroup
             label="URL"
@@ -55,6 +65,20 @@ const RunTest = ({ test, onSuccess, match }) => {
           </FormGroup>
         </div>
       </div>
+      <Anchor className="mc-my-4" onClick={toggleOptions}>
+        {!showOptions ? 'More Options' : 'Less Options'}
+      </Anchor>
+      {showOptions && (
+        <div className="mc-mb-4">
+          <FormGroup label="Force Params" name="forceParams">
+            <Input
+              onChange={e => setForceParams(e.target.value)}
+              value={forceParams}
+              placeholder="experiment_a=variation&experiment_b=control"
+            />
+          </FormGroup>
+        </div>
+      )}
       <Button onClick={onSubmit} loading={loading}>
         RUN
       </Button>

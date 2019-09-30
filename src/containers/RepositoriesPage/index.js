@@ -62,7 +62,7 @@ const RepositoriesPage = () => {
                         })
                       }}
                     >
-                      <Anchor className="mc-mt-2">EDIT</Anchor>
+                      <Anchor className="mc-mt-2">SETTINGS</Anchor>
                     </Link>
                     <Separator />
                   </div>
