@@ -42,6 +42,14 @@ const RepositoryForm = ({ submitting, handleSubmit, edit = false }) => (
       label="Browser automation base folder"
     />
 
+    <Field
+      className="mc-mb-6"
+      component={InputField}
+      name="defaultForceParams"
+      label="Default force params"
+      placeholder="disable_feature=true&disable_feature2=true"
+    />
+
     <Button type="submit" loading={submitting} fullWidth className="mc-mt-3">
       SAVE CHANGES
     </Button>

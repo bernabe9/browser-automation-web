@@ -19,6 +19,20 @@ const HomePage = ({ fetchTestSuites, testSuites, loading }) => {
       <Header />
       <Environment />
       <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
+        <div className="row">
+          <div className="col-6">
+            <h5 className="mc-text-h5">Run All Tests</h5>
+            <Separator />
+            <RunAllTest />
+          </div>
+          <div className="col-6">
+            <h5 className="mc-text-h5">Run Github Check</h5>
+            <Separator />
+            <RunGithubCheck />
+          </div>
+        </div>
+      </div>
+      <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
         <h5 className="mc-text-h5">Test Suites</h5>
         <Separator />
         {loading && !testSuites.length && <Spinner />}
@@ -34,20 +48,6 @@ const HomePage = ({ fetchTestSuites, testSuites, loading }) => {
             </div>
           </div>
         )}
-      </div>
-      <div className="container mc-my-5 mc-p-5 mc-invert mc-background--color-light">
-        <div className="row">
-          <div className="col-6">
-            <h5 className="mc-text-h5">Run All Tests</h5>
-            <Separator />
-            <RunAllTest />
-          </div>
-          <div className="col-6">
-            <h5 className="mc-text-h5">Run Github Check</h5>
-            <Separator />
-            <RunGithubCheck />
-          </div>
-        </div>
       </div>
     </div>
   )

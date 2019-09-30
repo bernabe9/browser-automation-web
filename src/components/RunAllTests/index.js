@@ -6,6 +6,7 @@ import { Input, FormGroup, Button } from 'mc-components'
 import routes from 'constants/routesPaths'
 import { applyQueryParams, getFiles } from 'utils/helpers'
 import api from 'api'
+import Anchor from 'components/Anchor'
 
 const RunAllTests = ({ history, match }) => {
   const [url, setUrl] = useState('')
@@ -13,6 +14,7 @@ const RunAllTests = ({ history, match }) => {
   const [forceParams, setForceParams] = useState('')
   const [urlError, setUrlError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showOptions, setShowOptions] = useState(false)
 
   const onSubmit = () => {
     if (!url) {
@@ -56,6 +58,12 @@ const RunAllTests = ({ history, match }) => {
       })
   }
 
+  const toggleOptions = () => {
+    setShowOptions(!showOptions)
+    // clean values
+    setForceParams('')
+  }
+
   return (
     <div className="mc-my-4">
       <div className="row mc-my-2">
@@ -74,6 +82,23 @@ const RunAllTests = ({ history, match }) => {
               touched={!!urlError}
             />
           </FormGroup>
+          <Anchor className="mc-my-4" onClick={toggleOptions}>
+            {!showOptions ? 'More Options' : 'Less Options'}
+          </Anchor>
+          {showOptions && (
+            <div className="mc-mb-4">
+              <FormGroup label="Force Params" name="forceParams">
+                <Input
+                  onChange={e => setForceParams(e.target.value)}
+                  value={forceParams}
+                  placeholder="experiment_a=variation&experiment_b=control"
+                />
+              </FormGroup>
+            </div>
+          )}
+          <Button className="mc-mt-2" onClick={onSubmit} loading={loading}>
+            RUN
+          </Button>
         </div>
         <div className="col-3">
           <FormGroup label="Concurrency" name="concurrency">
@@ -85,19 +110,7 @@ const RunAllTests = ({ history, match }) => {
             />
           </FormGroup>
         </div>
-        <div className="col-8">
-          <FormGroup label="Force Params" name="forceParams">
-            <Input
-              onChange={e => setForceParams(e.target.value)}
-              value={forceParams}
-              placeholder="experiment_a=variation&experiment_b=control"
-            />
-          </FormGroup>
-        </div>
       </div>
-      <Button onClick={onSubmit} loading={loading}>
-        RUN
-      </Button>
     </div>
   )
 }

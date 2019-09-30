@@ -13,6 +13,7 @@ import TestList from './TestList'
 import SuiteExecutionRow from './SuiteExecutionRow'
 import URLInput from './URLInput'
 import WebhookInput from './WebhookInput'
+import ForceParamsInput from './ForceParamsInput'
 
 const SuitePage = ({
   fetchSuite,
@@ -32,6 +33,8 @@ const SuitePage = ({
   const [concurrencyEnabled, setConcurrencyEnabled] = useState(false)
   const [webhook, setWebhook] = useState()
   const [webhookEnabled, setWebhookEnabled] = useState(false)
+  const [forceParams, setForceParams] = useState()
+  const [forceParamsEnabled, setForceParamsEnabled] = useState(false)
 
   useEffect(() => {
     fetchSuite()
@@ -52,6 +55,9 @@ const SuitePage = ({
     }
     if (webhookEnabled && webhook) {
       params.webhook = webhook
+    }
+    if (forceParamsEnabled && forceParams) {
+      params.forceParams = forceParams
     }
     api(applyQueryParams('/run-suite', params)).then(async () => {
       const timeout = ms => new Promise(resolve => setTimeout(resolve, ms))
@@ -114,6 +120,12 @@ const SuitePage = ({
               onToggle={() => setWebhookEnabled(!webhookEnabled)}
               webhook={webhook}
               onChange={setWebhook}
+            />
+            <ForceParamsInput
+              enabled={forceParamsEnabled}
+              onToggle={() => setForceParamsEnabled(!forceParamsEnabled)}
+              forceParams={forceParams}
+              onChange={setForceParams}
             />
             <Button
               className="mc-mb-4"

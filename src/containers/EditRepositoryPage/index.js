@@ -68,7 +68,8 @@ const EditRepositoryPage = ({ history, match }) => {
                     owner: repository.owner,
                     name: repository.name,
                     defaultRef: repository.defaultRef,
-                    baseFolder: repository.baseFolder
+                    baseFolder: repository.baseFolder,
+                    defaultForceParams: repository.defaultForceParams
                   }}
                   onSubmit={onSubmit}
                   edit
