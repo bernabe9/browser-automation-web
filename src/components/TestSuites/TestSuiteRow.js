@@ -5,20 +5,16 @@ import format from 'date-fns/format'
 
 import StatusBadge from 'components/StatusBadge'
 import routes from 'constants/routesPaths'
-import Anchor from 'components/Anchor'
 import TestSuiteRowWrapper from './TestSuiteRowWrapper'
 
 const TestSuiteRow = ({
   id,
   name,
-  url,
-  description,
   production,
   tests,
   lastSuiteExecution,
   match
 }) => {
-  const { repositoryName, repositoryOwner, repositoryRef } = match.params
   const testsCount = tests.length
 
   return (
@@ -41,25 +37,6 @@ const TestSuiteRow = ({
           </p>
         )}
         {production && <p>Only for production</p>}
-        <Link
-          to={{
-            pathname: routes.editTestSuite({
-              repositoryName,
-              repositoryOwner,
-              repositoryRef,
-              id
-            }),
-            state: {
-              name,
-              url,
-              description,
-              production,
-              tests
-            }
-          }}
-        >
-          <Anchor className="mc-mt-2">EDIT</Anchor>
-        </Link>
       </div>
     </TestSuiteRowWrapper>
   )
@@ -68,9 +45,7 @@ const TestSuiteRow = ({
 TestSuiteRow.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
   production: PropTypes.bool,
-  description: PropTypes.string.isRequired,
   tests: PropTypes.array.isRequired,
   lastSuiteExecution: PropTypes.object,
   match: PropTypes.object
