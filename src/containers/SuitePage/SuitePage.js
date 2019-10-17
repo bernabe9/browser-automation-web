@@ -1,9 +1,13 @@
 import React, { useState, useEffect, Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { Separator, Button } from 'mc-components'
+import { Link } from 'react-router-dom'
 
 import api from 'api'
+import routes from 'constants/routesPaths'
 import Header from 'components/Header'
+import Anchor from 'components/Anchor'
+import Flex from 'components/Flex'
 import Environment from 'components/Environment'
 import StatusBadge from 'components/StatusBadge'
 import Spinner from 'components/Spinner'
@@ -76,12 +80,33 @@ const SuitePage = ({
         {suite && suite.tests && (
           <Fragment>
             <div>
-              <div>
+              <Flex alignItems="center">
                 <h5 className="d-inline mc-text-h5 mc-mr-2">{suite.name}</h5>
-                {suite.lastSuiteExecution && (
-                  <StatusBadge status={suite.lastSuiteExecution.status} />
-                )}
-              </div>
+                <div className="mc-mr-2">
+                  {suite.lastSuiteExecution && (
+                    <StatusBadge status={suite.lastSuiteExecution.status} />
+                  )}
+                </div>
+                <Link
+                  to={{
+                    pathname: routes.editTestSuite({
+                      repositoryName,
+                      repositoryOwner,
+                      repositoryRef,
+                      id: suite.id
+                    }),
+                    state: {
+                      name: suite.name,
+                      url: suite.url,
+                      description: suite.description,
+                      production: suite.production,
+                      tests: suite.tests
+                    }
+                  }}
+                >
+                  <Anchor>Edit</Anchor>
+                </Link>
+              </Flex>
               <p>{suite.description}</p>
               <p className="mc-text--hinted">
                 Default URL:{' '}
