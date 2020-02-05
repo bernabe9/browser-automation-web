@@ -18,15 +18,9 @@ const isActive = path =>
     strict: false
   })
 
-const Header = ({
-  user,
-  accessToken,
-  fetchUser,
-  environment,
-  showLinks = true
-}) => {
+const Header = ({ user, fetchUser, environment, showLinks = true }) => {
   useEffect(() => {
-    !user && fetchUser(accessToken)
+    !user && fetchUser()
   }, [])
 
   const logout = () => {
@@ -98,7 +92,6 @@ const Header = ({
 }
 
 Header.propTypes = {
-  accessToken: PropTypes.string.isRequired,
   fetchUser: PropTypes.func.isRequired,
   user: PropTypes.object,
   environment: PropTypes.object,
